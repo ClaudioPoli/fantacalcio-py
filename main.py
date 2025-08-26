@@ -35,6 +35,9 @@ def main():
 
         df_processed = data_processor.process_fpedia_data(df_fpedia)
         df_final = convenienza_calculator.calcola_convenienza_fpedia(df_processed)
+        
+        # Calcola il prezzo massimo consigliato
+        df_final = convenienza_calculator.calcola_prezzo_massimo_consigliato(df_final)
 
         df_final = df_final.sort_values(by="Convenienza Potenziale", ascending=False)
 
@@ -47,6 +50,7 @@ def main():
             # Calculated Indexes
             "Convenienza Potenziale",
             "Convenienza",
+            "Prezzo Massimo Consigliato",
             "Punteggio",
             # Current Season Stats
             f"Fantamedia anno {config.ANNO_CORRENTE-1}-{config.ANNO_CORRENTE}",
@@ -92,6 +96,9 @@ def main():
 
         df_processed = data_processor.process_FSTATS_data(df_FSTATS)
         df_final = convenienza_calculator.calcola_convenienza_FSTATS(df_processed)
+        
+        # Calcola il prezzo massimo consigliato
+        df_final = convenienza_calculator.calcola_prezzo_massimo_consigliato(df_final)
 
         df_final = df_final.sort_values(by="Convenienza Potenziale", ascending=False)
 
@@ -104,6 +111,7 @@ def main():
             # Calculated Indexes
             "Convenienza Potenziale",
             "Convenienza",
+            "Prezzo Massimo Consigliato",
             "fantacalcioFantaindex",
             # Key Performance Indicators
             "fanta_avg",

@@ -2,12 +2,12 @@
 
 Fantacalcio-PY è un tool che aiuta gli utenti a prepararsi per l'asta del fantacalcio. Il programma esegue le seguenti operazioni:
 
-1.  **Recupero Dati**: Scarica i dati dei calciatori da due fonti:
-    *   **FPEDIA**: per le statistiche della stagione in corso.
-    *   **FSTATS**: per le statistiche della stagione precedente.
-2.  **Elaborazione e Unione**: Pulisce, elabora e unisce i dati provenienti dalle diverse fonti in un unico dataset.
-3.  **Calcolo Indice di Convenienza**: Calcola un indice di "convenienza" per ogni giocatore. Questo indice mette in rapporto il valore di un giocatore (prezzo base all'asta) con il suo rendimento passato e attuale, aiutando a identificare giocatori sottovalutati.
-4.  **Salvataggio Risultati**: I risultati finali, ordinati per indice di convenienza, vengono salvati in un file Excel.
+1. **Recupero Dati**: Scarica i dati dei calciatori da due fonti:
+   * **FPEDIA**: per le statistiche della stagione in corso.
+   * **FSTATS**: per le statistiche della stagione precedente.
+2. **Elaborazione e Unione**: Pulisce, elabora e unisce i dati provenienti dalle diverse fonti in un unico dataset.
+3. **Calcolo Indice di Convenienza**: Calcola un indice di "convenienza" per ogni giocatore. Questo indice mette in rapporto il valore di un giocatore (prezzo base all'asta) con il suo rendimento passato e attuale, aiutando a identificare giocatori sottovalutati.
+4. **Salvataggio Risultati**: I risultati finali, ordinati per indice di convenienza, vengono salvati in un file Excel.
 
 ## Disclaimer
 
@@ -22,18 +22,20 @@ Per utilizzare questo progetto, è necessario avere installato **Python 3.10** o
 
 ## Installazione
 
-1.  **Clonare la repository (se non già fatto)**:
-    ```bash
-    git clone <url_della_repository>
-    cd fantacalcio-py-main
-    ```
+1. **Clonare la repository (se non già fatto)**:
 
-2.  **Installare le dipendenze**:
-    Questo progetto utilizza `poetry` per gestire le dipendenze. Per installarle, eseguire il seguente comando dalla root del progetto:
-    ```bash
-    poetry install
-    ```
-    Questo comando creerà un ambiente virtuale e installerà tutte le librerie necessarie specificate nel file `pyproject.toml`.
+   ```bash
+   git clone <url_della_repository>
+   cd fantacalcio-py-main
+   ```
+2. **Installare le dipendenze**:
+   Questo progetto utilizza `poetry` per gestire le dipendenze. Per installarle, eseguire il seguente comando dalla root del progetto:
+
+   ```bash
+   poetry install
+   ```
+
+   Questo comando creerà un ambiente virtuale e installerà tutte le librerie necessarie specificate nel file `pyproject.toml`.
 
 ## Configurazione
 
@@ -53,7 +55,7 @@ Lo script eseguirà tutti i passaggi (recupero, elaborazione, calcolo e salvatag
 
 ## Output
 
-Al termine dell'esecuzione, verranno creati dei file Excel nella directory `data/output`. 
+Al termine dell'esecuzione, verranno creati dei file Excel nella directory `data/output`.
 
 ## WIP
 
