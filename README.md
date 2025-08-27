@@ -5,33 +5,54 @@ Fantacalcio-PY è un tool avanzato che aiuta gli utenti a prepararsi strategicam
 ## 🎯 Funzionalità Principali
 
 ### 1. **Recupero Dati Multi-Source**
-   * **FPEDIA**: Statistiche qualitative e valutazioni esperte della stagione in corso
-   * **FSTATS**: Statistiche quantitative dettagliate della stagione precedente (gol, assist, presenze, indici tecnici)
+
+* **FPEDIA**: Statistiche qualitative e valutazioni esperte della stagione in corso
+* **FSTATS**: Statistiche quantitative dettagliate della stagione precedente (gol, assist, presenze, indici tecnici)
+
+### 2. **Perfect Excel Merger** 🆕
+
+Il sistema include un **Perfect Excel Merger** che garantisce la fusione intelligente dei dati provenienti da FPEDIA e FSTATS con:
+
+- **🎯 Copertura 100%**: Garantisce che tutti i giocatori del file più piccolo vengano matchati
+- **🧠 Matching Intelligente**: Algoritmo avanzato che gestisce differenze nei formati dei nomi (COGNOME NOME vs Nome Cognome)
+- **📊 Excel Strutturato**: Produce un file Excel con 5 fogli:
+  - `FPEDIA_All`: Tutti i giocatori FPEDIA originali
+  - `FSTATS_All`: Tutti i giocatori FSTATS originali
+  - `Matched`: Giocatori matchati con qualità del match
+  - `Unmatched`: Giocatori non matchati per identificare problemi
+  - `Statistics`: Statistiche complete del processo
 
 ### 2. **Calcolo Prezzo Massimo Consigliato**
+
 Il cuore del sistema è un algoritmo sofisticato che calcola il **"Prezzo Massimo Consigliato"** per ogni giocatore, utilizzando:
 
 #### **🔥 Attaccanti (Budget: ATT_1=180 crediti)**
+
 - **Focus su produttività offensiva**: Gol, assist, Expected Goals (xG)
 - **Differenziazione statistica**: Fino a 16 fasce di prezzo diverse
 - **Logica**: Premia i finalizzatori (Osimhen, Vlahović) e i assist-man (Lookman, Kvaratskhelia)
 
 #### **⚡ Centrocampisti (Budget: CEN_1=50 crediti)**
+
 - **Focus su contributi totali**: Gol + assist per partita, fantamedia, presenza
 - **Differenziazione per qualità**: Premia i centrocampisti più incisivi offensivamente
 - **Logica**: Valorizza chi fa la differenza (Barella, Pellegrini, Zielinski)
 
 #### **🛡️ Difensori (Budget: DIF_1=30 crediti)**
+
 - **Focus ULTRA-OFFENSIVO**: Priorità assoluta a gol e assist dei difensori
 - **Statistiche chiave**: Contributi offensivi, cross, presenza in area avversaria
 - **Logica**: I difensori che segnano/assistono valgono oro (Dimarco, Dumfries, Zortea)
 
 #### **🥅 Portieri (Budget: POR_1=28 crediti)**
+
 - **Focus su affidabilità**: Clean sheets, parate, titolarità
 - **Logica**: Stabilità e rendimento costante
 
 ### 3. **Sistema di Fasce di Prezzo**
+
 Il sistema rispetta rigorosamente le fasce di budget configurabili:
+
 ```python
 # Fasce Difensori
 DIF_1 = 30  # Elite offensivi (Dimarco, Dumfries)
@@ -51,6 +72,7 @@ ATT_3 = 20  # Discreti
 ```
 
 ### 4. **Indici di Convenienza**
+
 - **Convenienza Standard**: Rapporto qualità/prezzo base
 - **Convenienza Potenziale**: Considera il potenziale di crescita
 - **Analisi Comparativa**: Identifica occasioni e sopravvalutazioni
@@ -66,6 +88,7 @@ ATT_3 = 20  # Discreti
 5. **Bonus Statistici**: Bonus/malus basati su eccellenze o carenze specifiche
 
 ### **Esempio Pratico - Difensori**
+
 ```
 Dimarco: 4 gol + 7 assist = 0.333 contributi/partita → 30 crediti (DIF_1)
 Dumfries: 7 gol + 2 assist = 0.310 contributi/partita → 30 crediti (DIF_1)  
@@ -74,8 +97,9 @@ Bastoni: 1 gol + 3 assist = 0.121 contributi/partita → 20 crediti (DIF_3)
 ```
 
 ### **Vantaggi del Sistema**
+
 - ✅ **Oggettività**: Basato su dati reali, non opinioni
-- ✅ **Specificità**: Logiche ottimizzate per ogni ruolo  
+- ✅ **Specificità**: Logiche ottimizzate per ogni ruolo
 - ✅ **Differenziazione**: Identifica le sfumature tra giocatori simili
 - ✅ **Budget-Aware**: Rispetta i vincoli economici reali
 - ✅ **Statistiche Avanzate**: Usa Expected Goals, indici tecnici, contributi per partita
@@ -85,6 +109,7 @@ Bastoni: 1 gol + 3 assist = 0.121 contributi/partita → 20 crediti (DIF_3)
 ### **📊 FPEDIA - Analisi Qualitativa**
 
 #### **Calcolo Convenienza FPEDIA**
+
 ```python
 # Formula base
 Convenienza = (Fantamedia_Corrente * Peso_Partite + Appetibilità) / Quotazione_Mantra
@@ -97,6 +122,7 @@ Dove:
 ```
 
 **Esempio Pratico:**
+
 ```
 Lautaro Martinez:
 - Fantamedia: 7.2
@@ -107,6 +133,7 @@ Lautaro Martinez:
 ```
 
 #### **Calcolo Convenienza Potenziale FPEDIA**
+
 ```python
 # Considera il potenziale di crescita
 Convenienza_Potenziale = Convenienza_Base * (1 + Fattore_Crescita)
@@ -119,6 +146,7 @@ Fattore_Crescita basato su:
 ```
 
 #### **Prezzo Massimo Consigliato FPEDIA**
+
 ```python
 # Sistema a score combinato
 Score_FPEDIA = (
@@ -139,6 +167,7 @@ elif Ruolo == "CEN":
 ### **⚡ FSTATS - Analisi Quantitativa**
 
 #### **Calcolo Convenienza FSTATS**
+
 ```python
 # Formula performance-driven
 Convenienza = Performance_Score / Quotazione_Base
@@ -153,6 +182,7 @@ Performance_Score = (
 ```
 
 **Esempio Pratico - Difensore:**
+
 ```
 Dimarco:
 - Gol/partita: 0.12 (4 gol in 33 partite)
@@ -164,6 +194,7 @@ Dimarco:
 ```
 
 #### **Calcolo Convenienza Potenziale FSTATS**
+
 ```python
 # Basata su trend statistici
 Trend_Gol = (Gol_Ultima_10_Partite - Gol_Prime_10_Partite) / 10
@@ -176,6 +207,7 @@ Convenienza_Potenziale = Convenienza_Base * (1 + Trend_Combinato)
 #### **Prezzo Massimo Consigliato FSTATS - Dettaglio per Ruolo**
 
 ##### **🛡️ Difensori (Focus Ultra-Offensivo)**
+
 ```python
 Score_Base = Statistiche_Difensive * 0.2 + Passaggi * 0.1
 
@@ -198,6 +230,7 @@ Prezzo = interpolazione_quasi_lineare(Score_Finale, [1, DIF_1=30])
 ```
 
 ##### **⚡ Centrocampisti (Focus Contributi Totali)**
+
 ```python
 Score_Base = (
     Fantamedia_Predicted * 0.3 +
@@ -223,6 +256,7 @@ Prezzo = interpolazione_quasi_lineare(Score_Finale, [1, CEN_1=50])
 ```
 
 ##### **🔥 Attaccanti (Focus Produttività)**
+
 ```python
 Score_Base = (
     Expected_Goals_per_Partita * 0.4 +
@@ -249,31 +283,34 @@ Prezzo = interpolazione_convessa(Score_Finale, [1, ATT_1=180])
 
 ### **🔄 Differenze Chiave tra FPEDIA e FSTATS**
 
-| Aspetto | FPEDIA | FSTATS |
-|---------|---------|---------|
-| **Fonte Dati** | Valutazioni esperte qualitative | Statistiche quantitative pure |
-| **Convenienza Base** | Fantamedia + Appetibilità | Performance score da statistiche |
-| **Prezzo Consigliato** | Score qualitativo | Score statistico con bonus ruolo |
-| **Punti di Forza** | Cattura potenziale e contesto | Oggettività e precisione numerica |
-| **Ideale Per** | Scoprire talenti emergenti | Validare performance consolidate |
+| Aspetto                      | FPEDIA                          | FSTATS                             |
+| ---------------------------- | ------------------------------- | ---------------------------------- |
+| **Fonte Dati**         | Valutazioni esperte qualitative | Statistiche quantitative pure      |
+| **Convenienza Base**   | Fantamedia + Appetibilità      | Performance score da statistiche   |
+| **Prezzo Consigliato** | Score qualitativo               | Score statistico con bonus ruolo   |
+| **Punti di Forza**     | Cattura potenziale e contesto   | Oggettività e precisione numerica |
+| **Ideale Per**         | Scoprire talenti emergenti      | Validare performance consolidate   |
 
 ## 📊 Output Generati
 
 Al termine dell'esecuzione, vengono creati due file Excel dettagliati:
 
 ### **📈 fpedia_analysis.xlsx**
+
 - Analisi basata su valutazioni qualitative FPEDIA
 - Colonna **"Prezzo Massimo Consigliato"** per ogni giocatore
 - Indici di convenienza standard e potenziale
 - Ordinamento per convenienza
 
-### **📈 FSTATS_analysis.xlsx** 
+### **📈 FSTATS_analysis.xlsx**
+
 - Analisi basata su statistiche quantitative FSTATS
 - Colonna **"Prezzo Massimo Consigliato"** ottimizzata per ruolo
 - Dati dettagliati: gol, assist, presenze, indici tecnici
 - Focus su rendimento statistico reale
 
 ### **Colonne Chiave negli Output**
+
 - **Nome**: Nome del giocatore
 - **Ruolo**: Posizione (ATT, CEN, DIF, POR)
 - **Squadra**: Club di appartenenza
@@ -285,6 +322,7 @@ Al termine dell'esecuzione, vengono creati due file Excel dettagliati:
 ### **📋 Come Interpretare i Risultati**
 
 #### **📊 Valori di Convenienza**
+
 ```
 Convenienza > 1.0  : 🟢 OTTIMO AFFARE (compra subito!)
 Convenienza 0.7-1.0: 🟡 BUON ACQUISTO (valuta)
@@ -293,11 +331,13 @@ Convenienza < 0.5  : 🔴 SOPRAVVALUTATO (evita)
 ```
 
 #### **💰 Interpretazione Prezzo Massimo Consigliato**
+
 - **Valore Assoluto**: Non superare mai questo limite in asta
 - **Confronto Listini**: Se il prezzo di listino è molto più basso → value pick
 - **Strategia**: Usa come base per rilanci e contrattazioni
 
 #### **🎯 Esempi Pratici di Lettura**
+
 ```
 Giocatore X:
 - Prezzo Listino: 25 crediti
@@ -354,16 +394,17 @@ Lo script eseguirà tutti i passaggi (recupero, elaborazione, calcolo e salvatag
 ### **Come Usare i Risultati**
 
 1. **Preparazione Pre-Asta**:
+
    - Apri i file Excel generati
    - Filtra per ruolo di interesse
    - Identifica i "value picks" (alta convenienza)
-
 2. **Durante l'Asta**:
+
    - Usa il "Prezzo Massimo Consigliato" come limite di spesa
    - Punta sui difensori offensivi (massimo ROI)
    - Non superare mai il prezzo suggerito
-
 3. **Filosofia di Acquisto**:
+
    - **Difensori**: Priorità assoluta a chi fa gol/assist
    - **Centrocampisti**: Cerca i contributi offensivi
    - **Attaccanti**: Bilancia titolarità e produttività
@@ -372,12 +413,14 @@ Lo script eseguirà tutti i passaggi (recupero, elaborazione, calcolo e salvatag
 ### **📋 Esempi di Liste Consigliate**
 
 #### **🔥 Lista Difensori Offensivi** (Budget: 75 crediti)
+
 ```
 Dimarco (30) + Zortea (28) + Bellanova (22) = 80 crediti
 Dumfries (30) + Cambiaso (17) + Gosens (23) = 70 crediti  
 ```
 
 #### **⚡ Lista Centrocampisti Bilanciata** (Budget: 110 crediti)
+
 ```
 Barella (45) + Pellegrini (35) + Zielinski (30) = 110 crediti
 ```
@@ -398,12 +441,48 @@ Barella (45) + Pellegrini (35) + Zielinski (30) = 110 crediti
 
 *Refactor del codice di cttynul con algoritmi avanzati di pricing*
 
-## 🚧 WIP (Work in Progress)
+## � Perfect Excel Merger
 
-- [x] **Calcolo Prezzo Massimo Consigliato** - ✅ COMPLETATO
-- [x] **Differenziazione per Ruolo** - ✅ COMPLETATO  
-- [x] **Algoritmi Statistici Avanzati** - ✅ COMPLETATO
-- [x] **Sistema di Fasce Budget** - ✅ COMPLETATO
+Per utilizzare il **Perfect Excel Merger** che garantisce copertura 100% del file più piccolo:
+
+```bash
+poetry run python perfect_excel_merger.py
+```
+
+### **Output del Perfect Merger**
+
+Il comando genera `perfect_merged_analysis.xlsx` con 6 fogli:
+
+1. **Unified_Analysis** 🆕 - **Analisi completa unificata** con:
+   - Tutti i giocatori matchati (499 righe con copertura 100% FSTATS)
+   - Tutte le colonne da FPEDIA (prefissate con `FPEDIA_`)
+   - Campi chiave da FSTATS: `Convenienza Potenziale`, `Convenienza`, `Prezzo Massimo Consigliato`
+   - Statistiche FSTATS avanzate: gol, assist, presenze, xG, indici tecnici
+   - Score e qualità del matching per trasparenza
+   - **Nessuna colonna duplicata**
+
+2. **FPEDIA_All** - Tutti i 513 giocatori FPEDIA originali
+3. **FSTATS_All** - Tutti i 499 giocatori FSTATS originali  
+4. **Matched** - 499 giocatori matchati (100% FSTATS) con score di qualità
+5. **Unmatched** - Solo giocatori FPEDIA non trovati in FSTATS
+6. **Statistics** - Statistiche complete del processo di matching
+
+### **Caratteristiche del Perfect Merger**
+
+- ✅ **Copertura 100% garantita** del file più piccolo (FSTATS)
+- 🧠 **Matching intelligente** con gestione di varianti nomi
+- 📊 **Qualità verificata** - Score medio 0.991/1.0
+- 🔍 **Identificazione problemi** - Mostra esattamente cosa non matcha
+- 🔗 **Analisi unificata** - Combina automaticamente tutti i dati in un foglio
+- 📋 **Generazione automatica** - Integrato nel `main.py`
+
+## �🚧 WIP (Work in Progress)
+
+- [ ] **Calcolo Prezzo Massimo Consigliato (Upgrade)**
+- [X] **Differenziazione per Ruolo**
+- [X] **Algoritmi Statistici Avanzati**
+- [X] **Sistema di Fasce Budget**
+- [X] **Perfect Excel Merger con copertura 100%**
 - [ ] **Formazione Consigliata Automatica**
 - [ ] **Simulatore di Asta**
 - [ ] **Frontend Web Interattivo**
@@ -415,6 +494,7 @@ Barella (45) + Pellegrini (35) + Zielinski (30) = 110 crediti
 > *"Secondo posto nel 2023, primo nel 2024. I dati non mentono!"* - Sviluppatore
 
 ### **📈 Risultati Verificati**
+
 - **Difensori Target Identificati**: Dimarco, Dumfries, Zortea (tutti con contributi 0.2+ gol+assist/partita)
 - **Value Picks Scoperti**: Difensori a 15-20 crediti con statistiche offensive sorprendenti
 - **Budget Ottimizzato**: Sistema di fasce che massimizza il ROI per ruolo

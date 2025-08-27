@@ -197,6 +197,26 @@ def main():
         logger.warning("FSTATS DataFrame is empty. Pipeline skipped.")
 
     logger.info("Fantacalcio analysis pipeline finished.")
+    
+    # 3. Generate Perfect Merged Analysis
+    logger.info("--- Starting Perfect Excel Merger ---")
+    try:
+        from perfect_excel_merger import PerfectExcelMerger
+        
+        merger = PerfectExcelMerger(
+            "data/output/fpedia_analysis.xlsx",
+            "data/output/FSTATS_analysis.xlsx"
+        )
+        
+        success = merger.run_perfect("perfect_merged_analysis.xlsx")
+        
+        if success:
+            logger.info("✅ Perfect merged analysis created: data/output/perfect_merged_analysis.xlsx")
+        else:
+            logger.error("❌ Failed to create perfect merged analysis")
+            
+    except Exception as e:
+        logger.error(f"❌ Error creating perfect merged analysis: {e}")
 
 
 if __name__ == "__main__":

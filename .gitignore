@@ -3,5 +3,5 @@
 poetry.lock
 __pycache__/
 *.csv
-*.xlsx
+.xlsx
 *.txt
