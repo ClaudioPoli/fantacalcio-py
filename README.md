@@ -451,21 +451,24 @@ poetry run python perfect_excel_merger.py
 
 ### **Output del Perfect Merger**
 
-Il comando genera `perfect_merged_analysis.xlsx` con 6 fogli:
+Il comando genera `perfect_merged_analysis.xlsx` con 5 fogli:
 
-1. **Unified_Analysis** 🆕 - **Analisi completa unificata** con:
+1. **Unified_Analysis** � - **Analisi ottimizzata** con:
    - Tutti i giocatori matchati (499 righe con copertura 100% FSTATS)
-   - Tutte le colonne da FPEDIA (prefissate con `FPEDIA_`)
-   - Campi chiave da FSTATS: `Convenienza Potenziale`, `Convenienza`, `Prezzo Massimo Consigliato`
-   - Statistiche FSTATS avanzate: gol, assist, presenze, xG, indici tecnici
-   - Score e qualità del matching per trasparenza
-   - **Nessuna colonna duplicata**
+   - **Colonne FPEDIA essenziali**: Convenienza, Prezzo Massimo Consigliato, Skills, Trend, Gol/Assist previsti, ecc.
+   - **Solo 3 colonne FSTATS**: Convenienza, Convenienza Potenziale, Prezzo Massimo Consigliato
+   - **21 colonne totali** (ottimizzato per analisi)
 
-2. **FPEDIA_All** - Tutti i 513 giocatori FPEDIA originali
-3. **FSTATS_All** - Tutti i 499 giocatori FSTATS originali  
-4. **Matched** - 499 giocatori matchati (100% FSTATS) con score di qualità
-5. **Unmatched** - Solo giocatori FPEDIA non trovati in FSTATS
-6. **Statistics** - Statistiche complete del processo di matching
+2. **Complete_Merge** 🆕 - **Merge completo** con:
+   - **TUTTI i giocatori** di entrambe le fonti (513 righe totali)
+   - **TUTTE le colonne** FPEDIA (28 colonne) + **TUTTE le colonne** FSTATS (68 colonne)
+   - **102 colonne totali** con dati completi
+   - Status di matching: `MATCHED`, `FPEDIA_ONLY`, `FSTATS_ONLY`
+   - Score e qualità del matching
+
+3. **Matched** - 499 giocatori matchati con score di qualità
+4. **Unmatched** - Solo giocatori non matchati con fonte di provenienza
+5. **Statistics** - Statistiche complete del processo di matching
 
 ### **Caratteristiche del Perfect Merger**
 
@@ -473,7 +476,8 @@ Il comando genera `perfect_merged_analysis.xlsx` con 6 fogli:
 - 🧠 **Matching intelligente** con gestione di varianti nomi
 - 📊 **Qualità verificata** - Score medio 0.991/1.0
 - 🔍 **Identificazione problemi** - Mostra esattamente cosa non matcha
-- 🔗 **Analisi unificata** - Combina automaticamente tutti i dati in un foglio
+- 🎯 **Analisi unificata** - Foglio ottimizzato per uso quotidiano (21 colonne)
+- 🔗 **Merge completo** - Foglio con TUTTI i dati per analisi approfondite (102 colonne)
 - 📋 **Generazione automatica** - Integrato nel `main.py`
 
 ## �🚧 WIP (Work in Progress)

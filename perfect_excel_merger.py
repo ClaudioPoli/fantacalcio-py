@@ -620,40 +620,39 @@ class PerfectExcelMerger:
             unified_row['Ruolo'] = fpedia_analysis_row['Ruolo']
             unified_row['Squadra'] = fpedia_analysis_row['Squadra']
             
-            # Dati di match
-            unified_row['Match_Score'] = match['score']
-            unified_row['Match_Quality'] = 'Eccellente' if match['score'] >= 0.9 else \
-                                         'Buono' if match['score'] >= 0.7 else \
-                                         'Discreto' if match['score'] >= 0.5 else \
-                                         'Incerto' if match['score'] >= 0.1 else 'Forzato'
-            
-            # Tutti i campi da FPEDIA (escludendo duplicati di base)
-            fpedia_cols_to_skip = {'Nome', 'Ruolo', 'Squadra'}
-            for col in self.df_fpedia_analysis.columns:
-                if col not in fpedia_cols_to_skip:
-                    unified_row[f'FPEDIA_{col}'] = fpedia_analysis_row[col]
-            
-            # Campi specifici da FSTATS (quelli richiesti + altri non duplicati)
-            fstats_specific_cols = {
-                'Convenienza Potenziale': 'FSTATS_Convenienza_Potenziale',
-                'Convenienza': 'FSTATS_Convenienza', 
-                'Prezzo Massimo Consigliato': 'FSTATS_Prezzo_Massimo_Consigliato'
+            # Colonne FPEDIA da escludere (come richiesto dall'utente)
+            fpedia_cols_to_exclude = {
+                'Nome', 'Ruolo', 'Squadra',  # Base (già aggiunti)
+                'Fantamedia anno 2024-2025',
+                'Presenze campionato corrente', 
+                'Fantamedia anno 2023-2024',
+                'FM su tot gare 2024-2025',
+                'Ruolo.1',
+                'Skills.1', 
+                'Buon investimento.1',
+                'Resistenza infortuni.1',
+                'Consigliato prossima giornata.1',
+                'Infortunato.1',
+                'Squadra.1',
+                'Trend.1',
+                'Presenze campionato corrente.1'
             }
             
-            for fstats_col, unified_col in fstats_specific_cols.items():
+            # Aggiungi campi FPEDIA (escludendo quelli non voluti)
+            for col in self.df_fpedia_analysis.columns:
+                if col not in fpedia_cols_to_exclude:
+                    unified_row[f'FPEDIA_{col}'] = fpedia_analysis_row[col]
+            
+            # Solo campi specifici da FSTATS (solo quelli richiesti)
+            fstats_allowed_cols = {
+                'Prezzo Massimo Consigliato': 'FSTATS_Prezzo_Massimo_Consigliato',
+                'Convenienza': 'FSTATS_Convenienza', 
+                'Convenienza Potenziale': 'FSTATS_Convenienza_Potenziale'
+            }
+            
+            for fstats_col, unified_col in fstats_allowed_cols.items():
                 if fstats_col in self.df_fstats_analysis.columns:
                     unified_row[unified_col] = fstats_analysis_row[fstats_col]
-            
-            # Altri campi FSTATS interessanti (statistiche avanzate)
-            interesting_fstats_cols = [
-                'goals', 'assists', 'presences', 'xgFromOpenPlays', 'xA',
-                'matchesInStart', 'mins_played', 'perc_matchesStarted',
-                'fantacalcioFantaindex', 'fanta_avg', 'avg'
-            ]
-            
-            for col in interesting_fstats_cols:
-                if col in self.df_fstats_analysis.columns:
-                    unified_row[f'FSTATS_{col}'] = fstats_analysis_row[col]
             
             unified_data.append(unified_row)
         
@@ -662,6 +661,134 @@ class PerfectExcelMerger:
         
         return unified_df
     
+    def create_complete_merge(self) -> pd.DataFrame:
+        """Crea merge completo con tutti i giocatori di entrambe le fonti"""
+        
+        logger.info("Creando merge completo con tutti i giocatori...")
+        
+        complete_data = []
+        
+        # Aggiungi tutti i giocatori matchati con dati completi
+        for match in self.matches:
+            # Determina quale è smaller e larger
+            if len(self.df_fstats) <= len(self.df_fpedia):
+                # FSTATS è più piccolo
+                fstats_idx = match['smaller_idx']
+                fpedia_idx = match['larger_idx']
+                
+                # Trova le righe corrispondenti nei file di analisi
+                fstats_analysis_row = self.df_fstats_analysis.iloc[fstats_idx]
+                
+                # Cerca la riga FPEDIA corrispondente per nome
+                fpedia_name = match['larger_name']
+                fpedia_analysis_row = self.df_fpedia_analysis[
+                    self.df_fpedia_analysis['Nome'].str.contains(fpedia_name, case=False, na=False)
+                ]
+                
+                if len(fpedia_analysis_row) > 0:
+                    fpedia_analysis_row = fpedia_analysis_row.iloc[0]
+                else:
+                    fpedia_analysis_row = self.df_fpedia_analysis.iloc[fpedia_idx]
+            else:
+                # FPEDIA è più piccolo
+                fpedia_idx = match['smaller_idx']
+                fstats_idx = match['larger_idx']
+                
+                fpedia_analysis_row = self.df_fpedia_analysis.iloc[fpedia_idx]
+                
+                fstats_name = match['larger_name']
+                fstats_analysis_row = self.df_fstats_analysis[
+                    self.df_fstats_analysis['Nome'].str.contains(fstats_name, case=False, na=False)
+                ]
+                
+                if len(fstats_analysis_row) > 0:
+                    fstats_analysis_row = fstats_analysis_row.iloc[0]
+                else:
+                    fstats_analysis_row = self.df_fstats_analysis.iloc[fstats_idx]
+            
+            # Combina tutti i dati
+            complete_row = {}
+            
+            # Informazioni base
+            complete_row['Nome'] = fpedia_analysis_row['Nome']
+            complete_row['Ruolo'] = fpedia_analysis_row['Ruolo'] 
+            complete_row['Squadra'] = fpedia_analysis_row['Squadra']
+            complete_row['Match_Status'] = 'MATCHED'
+            complete_row['Match_Score'] = match['score']
+            complete_row['Match_Quality'] = 'Eccellente' if match['score'] >= 0.9 else \
+                                          'Buono' if match['score'] >= 0.7 else \
+                                          'Discreto' if match['score'] >= 0.5 else \
+                                          'Incerto' if match['score'] >= 0.1 else 'Forzato'
+            
+            # Tutte le colonne FPEDIA (con prefisso)
+            fpedia_base_cols = {'Nome', 'Ruolo', 'Squadra'}
+            for col in self.df_fpedia_analysis.columns:
+                if col not in fpedia_base_cols:
+                    complete_row[f'FPEDIA_{col}'] = fpedia_analysis_row[col]
+            
+            # Tutte le colonne FSTATS (con prefisso)
+            fstats_base_cols = {'Nome', 'Ruolo', 'Squadra'}
+            for col in self.df_fstats_analysis.columns:
+                if col not in fstats_base_cols:
+                    complete_row[f'FSTATS_{col}'] = fstats_analysis_row[col]
+            
+            complete_data.append(complete_row)
+        
+        # Aggiungi giocatori FPEDIA non matchati
+        for item in self.fpedia_unmatched:
+            fpedia_row = self.df_fpedia_analysis.iloc[item['index']]
+            
+            complete_row = {}
+            complete_row['Nome'] = fpedia_row['Nome']
+            complete_row['Ruolo'] = fpedia_row['Ruolo']
+            complete_row['Squadra'] = fpedia_row['Squadra'] 
+            complete_row['Match_Status'] = 'FPEDIA_ONLY'
+            complete_row['Match_Score'] = np.nan
+            complete_row['Match_Quality'] = 'Non matchato'
+            
+            # Colonne FPEDIA
+            fpedia_base_cols = {'Nome', 'Ruolo', 'Squadra'}
+            for col in self.df_fpedia_analysis.columns:
+                if col not in fpedia_base_cols:
+                    complete_row[f'FPEDIA_{col}'] = fpedia_row[col]
+            
+            # Colonne FSTATS vuote
+            for col in self.df_fstats_analysis.columns:
+                if col not in fstats_base_cols:
+                    complete_row[f'FSTATS_{col}'] = np.nan
+                    
+            complete_data.append(complete_row)
+        
+        # Aggiungi giocatori FSTATS non matchati  
+        for item in self.fstats_unmatched:
+            fstats_row = self.df_fstats_analysis.iloc[item['index']]
+            
+            complete_row = {}
+            complete_row['Nome'] = fstats_row['Nome']
+            complete_row['Ruolo'] = fstats_row['Ruolo'] 
+            complete_row['Squadra'] = fstats_row['Squadra']
+            complete_row['Match_Status'] = 'FSTATS_ONLY'
+            complete_row['Match_Score'] = np.nan
+            complete_row['Match_Quality'] = 'Non matchato'
+            
+            # Colonne FPEDIA vuote
+            for col in self.df_fpedia_analysis.columns:
+                if col not in {'Nome', 'Ruolo', 'Squadra'}:
+                    complete_row[f'FPEDIA_{col}'] = np.nan
+            
+            # Colonne FSTATS
+            fstats_base_cols = {'Nome', 'Ruolo', 'Squadra'}
+            for col in self.df_fstats_analysis.columns:
+                if col not in fstats_base_cols:
+                    complete_row[f'FSTATS_{col}'] = fstats_row[col]
+                    
+            complete_data.append(complete_row)
+        
+        complete_df = pd.DataFrame(complete_data)
+        logger.info(f"Merge completo creato: {len(complete_df)} righe, {len(complete_df.columns)} colonne")
+        
+        return complete_df
+    
     def create_perfect_excel(self, output_filename: str = "perfect_merged_analysis.xlsx"):
         """Crea Excel con la struttura richiesta"""
         
@@ -669,21 +796,15 @@ class PerfectExcelMerger:
         
         with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
             
-            # 1. ANALISI UNIFICATA (NUOVO!)
+            # 1. ANALISI UNIFICATA (ottimizzata)
             unified_df = self.create_unified_analysis()
             unified_df.to_excel(writer, sheet_name='Unified_Analysis', index=False)
             
-            # 2. TUTTI I NOMI FPEDIA
-            fpedia_all = self.df_fpedia[['Nome', 'Squadra', 'Ruolo']].copy()
-            fpedia_all['Status'] = 'ORIGINAL'
-            fpedia_all.to_excel(writer, sheet_name='FPEDIA_All', index=False)
+            # 2. MERGE COMPLETO (sostituisce FPEDIA_All e FSTATS_All)
+            complete_df = self.create_complete_merge()
+            complete_df.to_excel(writer, sheet_name='Complete_Merge', index=False)
             
-            # 3. TUTTI I NOMI FSTATS  
-            fstats_all = self.df_fstats[['Nome', 'Squadra', 'Ruolo']].copy()
-            fstats_all['Status'] = 'ORIGINAL'
-            fstats_all.to_excel(writer, sheet_name='FSTATS_All', index=False)
-            
-            # 4. NOMI MATCHATI (mantenuto per compatibilità)
+            # 3. NOMI MATCHATI (mantenuto per compatibilità)
             matched_data = []
             for match in self.matches:
                 matched_data.append({
@@ -706,7 +827,7 @@ class PerfectExcelMerger:
             matched_df = pd.DataFrame(matched_data)
             matched_df.to_excel(writer, sheet_name='Matched', index=False)
             
-            # 5. NOMI NON MATCHATI
+            # 4. NOMI NON MATCHATI
             unmatched_data = []
             
             # Aggiungi FPEDIA unmatched
@@ -732,7 +853,7 @@ class PerfectExcelMerger:
             unmatched_df = pd.DataFrame(unmatched_data)
             unmatched_df.to_excel(writer, sheet_name='Unmatched', index=False)
             
-            # 6. STATISTICHE RIASSUNTIVE
+            # 5. STATISTICHE RIASSUNTIVE
             stats_data = {
                 'Metric': [
                     'Total FPEDIA Players',
@@ -746,7 +867,8 @@ class PerfectExcelMerger:
                     'Uncertain Matches (0.1-0.7)',
                     'Forced Matches (<0.1)',
                     'Average Score',
-                    'Unified Analysis Rows'
+                    'Unified Analysis Rows',
+                    'Complete Merge Rows'
                 ],
                 'Value': [
                     len(self.df_fpedia),
@@ -760,7 +882,8 @@ class PerfectExcelMerger:
                     len([m for m in self.matches if 0.1 <= m['score'] < 0.7]),
                     len([m for m in self.matches if m['score'] < 0.1]),
                     f"{np.mean([m['score'] for m in self.matches]):.3f}",
-                    len(unified_df)
+                    len(unified_df),
+                    len(complete_df)
                 ]
             }
             
@@ -807,10 +930,9 @@ class PerfectExcelMerger:
         avg_score = np.mean([m['score'] for m in self.matches]) if self.matches else 0
         print(f"   • Score medio: {avg_score:.3f}")
         
-        print(f"\n📋 File Excel creato con 6 sheet:")
-        print("   • Unified_Analysis: 🆕 Analisi completa con tutti i dati combinati")
-        print("   • FPEDIA_All: Tutti i giocatori FPEDIA")
-        print("   • FSTATS_All: Tutti i giocatori FSTATS")
+        print(f"\n📋 File Excel creato con 5 sheet:")
+        print("   • Unified_Analysis: � Analisi ottimizzata (21 colonne essenziali)")
+        print("   • Complete_Merge: 🆕 Merge completo con TUTTI i giocatori e TUTTE le colonne")
         print("   • Matched: Giocatori matchati tra i due file")
         print("   • Unmatched: Giocatori non matchati")
         print("   • Statistics: Statistiche riassuntive")
@@ -847,9 +969,8 @@ def main():
     print("Garantisce:")
     print("• 100% copertura del file più piccolo")
     print("• Excel con struttura completa:")
-    print("  - Unified_Analysis: Dati combinati FPEDIA+FSTATS")
-    print("  - Tutti i nomi FPEDIA")
-    print("  - Tutti i nomi FSTATS") 
+    print("  - Unified_Analysis: Dati essenziali (21 colonne)")
+    print("  - Complete_Merge: TUTTI i giocatori + TUTTE le colonne")
     print("  - Nomi matchati")
     print("  - Nomi non matchati")
     print("  - Statistiche")
