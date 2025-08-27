@@ -281,12 +281,30 @@ def calcola_prezzo_massimo_consigliato(df: pd.DataFrame) -> pd.DataFrame:
                 valore_max = valori_slot[0]
                 valore_min = valori_slot[-1]
                 
-                # Calcola il prezzo usando interpolazione esponenziale
-                esponente = 2.0
-                prezzo_interpolato = valore_min + (valore_max - valore_min) * (posizione_norm ** esponente)
+                # SISTEMA RICALIBRATO per creare sfumature realistiche
+                if ruolo in ['ATT', 'A']:
+                    # Per attaccanti: interpolazione PIÙ LINEARE per preservare differenze
+                    esponente = 1.2  # Molto meno aggressivo - quasi lineare
+                    margine_sicurezza = 0.95
+                    
+                    # NESSUNA amplificazione aggiuntiva - usa solo gli score naturali
+                    # Il range 69-99 deve tradursi in prezzi diversi
+                    
+                elif ruolo in ['CEN', 'C']:
+                    # Per centrocampisti: interpolazione MOLTO PIÙ LINEARE per differenziazione
+                    esponente = 1.1  # Quasi completamente lineare
+                    margine_sicurezza = 0.90  # Margine per non superare CEN_1=50
                 
-                # Margine di sicurezza
-                margine_sicurezza = 0.85
+                elif ruolo in ['DIF', 'D']:
+                    # Per difensori: rispetta le fasce config (DIF_1=30, DIF_2=20, etc.)
+                    esponente = 1.2  # Leggermente convesso per premiare i top
+                    margine_sicurezza = 1.0  # Usa tutto il budget DIF_1=30
+                        
+                else:
+                    esponente = 3.0
+                    margine_sicurezza = 0.7
+                    
+                prezzo_interpolato = valore_min + (valore_max - valore_min) * (posizione_norm ** esponente)
                 prezzo_max = int(round(prezzo_interpolato * margine_sicurezza))
                 prezzo_max = max(1, prezzo_max)
                 
@@ -307,205 +325,489 @@ def calcola_prezzo_massimo_consigliato(df: pd.DataFrame) -> pd.DataFrame:
 def calcola_score_fpedia(df_ruolo: pd.DataFrame, ruolo: str) -> pd.Series:
     """
     Calcola uno score complessivo per FPEDIA utilizzando tutti i parametri disponibili.
-    MIGLIORATO: Maggior peso alle presenze e fattore di affidabilità.
+    RICALIBRATO: Prezzi più realistici, maggior peso alle statistiche concrete.
     """
     score = pd.Series(0.0, index=df_ruolo.index)
     
-    # 1. PUNTEGGIO BASE (peso 25% - ridotto)
-    if 'Punteggio' in df_ruolo.columns:
-        punteggio_norm = df_ruolo['Punteggio'].fillna(0) / 100
-        score += punteggio_norm * 25
+    # PESO RUOLO: Attaccanti hanno moltiplicatore bonus per i maggiori bonus fantacalcio
+    peso_ruolo = {'ATT': 1.2, 'A': 1.2, 'CEN': 1.0, 'C': 1.0, 'DIF': 0.9, 'D': 0.9, 'POR': 0.8, 'P': 0.8}.get(ruolo, 1.0)
     
-    # 2. FANTAMEDIA CON FATTORE DI AFFIDABILITÀ (peso 30% - aumentato)
-    if 'Fantamedia anno 2024-2025' in df_ruolo.columns and 'Presenze campionato corrente' in df_ruolo.columns:
+    # 1. FANTAMEDIA GREZZA (peso 50% - base principale)
+    if 'Fantamedia anno 2024-2025' in df_ruolo.columns:
         fm_attuale = df_ruolo['Fantamedia anno 2024-2025'].fillna(0)
-        presenze = df_ruolo['Presenze campionato corrente'].fillna(0)
-        
-        # FATTORE DI AFFIDABILITÀ basato sulle presenze
-        # Titolari fissi (>25 presenze): 100% affidabilità
-        # Titolari parziali (15-25): 70-100% affidabilità  
-        # Riserve utilizzate (5-15): 30-70% affidabilità
-        # Riserve poco utilizzate (<5): 10-30% affidabilità
-        def calcola_affidabilita(presenze):
-            if presenze >= 25:
-                return 1.0  # Titolare fisso
-            elif presenze >= 15:
-                return 0.7 + 0.3 * (presenze - 15) / 10  # 70%-100%
-            elif presenze >= 5:
-                return 0.3 + 0.4 * (presenze - 5) / 10   # 30%-70%
-            elif presenze > 0:
-                return 0.1 + 0.2 * presenze / 5          # 10%-30%
-            else:
-                return 0.05  # Praticamente mai giocato
-        
-        affidabilita = presenze.apply(calcola_affidabilita)
-        fm_affidabile = (fm_attuale / 10) * affidabilita
-        score += fm_affidabile.clip(0, 1) * 30
+        # Normalizza: 6.0 = ottimo, 5.5 = buono, 5.0 = sufficiente
+        fm_norm = ((fm_attuale - 4.5) / 2.5).clip(0, 1)  # 4.5-7.0 -> 0-1
+        score += fm_norm * 50
     
-    # 3. PRESENZE COME INDICATORE DI TITOLARITÀ (peso 20% - aumentato)
+    # 2. FATTORE DI AFFIDABILITÀ/PRESENZE (peso 35% - critico)
     if 'Presenze campionato corrente' in df_ruolo.columns:
         presenze = df_ruolo['Presenze campionato corrente'].fillna(0)
         
-        # Bonus progressivo per le presenze
-        def calcola_bonus_presenze(presenze):
+        # Affidabilità più severa per abbassare i prezzi
+        def calcola_affidabilita_severa(presenze):
             if presenze >= 30:
-                return 1.0  # Titolarissimo
+                return 1.0  # Solo i titolarissimi hanno 100%
             elif presenze >= 25:
-                return 0.9  # Titolare fisso
+                return 0.8  # Titolari fissi ridotti
             elif presenze >= 20:
-                return 0.7  # Titolare
+                return 0.6  # Titolari
             elif presenze >= 15:
-                return 0.5  # Semi-titolare
+                return 0.4  # Semi-titolari
             elif presenze >= 10:
-                return 0.3  # Riserva utilizzata
+                return 0.25 # Riserve utilizzate
             elif presenze >= 5:
-                return 0.15 # Riserva
+                return 0.1  # Riserve rare
             else:
-                return 0.05 # Panchinaro
+                return 0.02 # Praticamente mai
         
-        bonus_presenze = presenze.apply(calcola_bonus_presenze)
-        score += bonus_presenze * 20
+        affidabilita = presenze.apply(calcola_affidabilita_severa)
+        score += affidabilita * 35
     
-    # 4. RESISTENZA INFORTUNI (peso 8% - ridotto)
-    if 'Resistenza infortuni' in df_ruolo.columns:
-        resistenza = df_ruolo['Resistenza infortuni'].fillna(50) / 100
-        score += resistenza * 8
+    # 3. PUNTEGGIO FPEDIA (peso 10% - molto ridotto)
+    if 'Punteggio' in df_ruolo.columns:
+        punteggio_norm = (df_ruolo['Punteggio'].fillna(50) - 30) / 70  # 30-100 -> 0-1
+        score += punteggio_norm.clip(0, 1) * 10
     
-    # 5. BUON INVESTIMENTO (peso 7% - ridotto)
-    if 'Buon investimento' in df_ruolo.columns:
-        investimento = df_ruolo['Buon investimento'].fillna(0) / 100
-        score += investimento * 7
-    
-    # 6. SKILLS QUALITATIVE (peso 5% - ridotto)
+    # 4. SKILLS CONCRETE (peso 3% - solo quelle importanti)
     if 'Skills' in df_ruolo.columns:
         skills_score = pd.Series(0.0, index=df_ruolo.index)
-        skills_mapping = {
-            "Fuoriclasse": 2, "Titolare": 4, "Goleador": 5, "Rigorista": 6,
-            "Buona Media": 3, "Assistman": 3, "Piazzati": 3, "Giovane talento": 2,
-            "Outsider": 2, "Panchinaro": -5, "Falloso": -3
+        skills_mapping_realistico = {
+            "Rigorista": 8,    # Molto importante per bonus
+            "Goleador": 6,     # Importante per attaccanti
+            "Titolare": 4,     # Conferma titolarità
+            "Assistman": 3,    # Bonus assist
+            "Piazzati": 2,     # Piccolo bonus
+            "Panchinaro": -10, # Penalità severa
+            "Falloso": -5,     # Penalità media
+            "Fuoriclasse": 2,  # Poco valore concreto
+            "Buona Media": 1,  # Poco valore concreto
         }
         for idx, row in df_ruolo.iterrows():
             try:
                 skills_list = ast.literal_eval(row.get("Skills", "[]"))
-                skill_bonus = sum(skills_mapping.get(skill, 0) for skill in skills_list)
+                skill_bonus = sum(skills_mapping_realistico.get(skill, 0) for skill in skills_list)
                 skills_score[idx] = skill_bonus
             except:
                 skills_score[idx] = 0
-        skills_norm = (skills_score + 10) / 20  # Normalizza -10/+10 -> 0-1
-        score += skills_norm.clip(0, 1) * 5
+        skills_norm = (skills_score + 10) / 20
+        score += skills_norm.clip(0, 1) * 3
     
-    # 7. BONUS/MALUS SPECIFICI (peso 5%)
-    bonus_malus = pd.Series(0.0, index=df_ruolo.index)
+    # 5. RESISTENZA E INVESTIMENTO (peso 2% - molto ridotto)
+    bonus_minori = pd.Series(0.0, index=df_ruolo.index)
+    if 'Resistenza infortuni' in df_ruolo.columns:
+        resistenza = (df_ruolo['Resistenza infortuni'].fillna(50) - 50) / 50
+        bonus_minori += resistenza.clip(0, 1) * 1
+    if 'Buon investimento' in df_ruolo.columns:
+        investimento = (df_ruolo['Buon investimento'].fillna(0) - 50) / 50
+        bonus_minori += investimento.clip(0, 1) * 1
+    score += bonus_minori
     
-    # Trend
-    if 'Trend' in df_ruolo.columns:
-        trend_bonus = df_ruolo['Trend'].map({'UP': 2, 'STABLE': 0, 'DOWN': -2}).fillna(0)
-        bonus_malus += trend_bonus
+    # Applica il moltiplicatore ruolo
+    score = score * peso_ruolo
     
-    # Consigliato prossima giornata
-    if 'Consigliato prossima giornata' in df_ruolo.columns:
-        consigliato = df_ruolo['Consigliato prossima giornata'].fillna(False).astype(int) * 2
-        bonus_malus += consigliato
-    
-    # Infortunato (malus SEVERO)
-    if 'Infortunato' in df_ruolo.columns:
-        infortunato = df_ruolo['Infortunato'].fillna(False).astype(int) * -5  # Aumentato
-        bonus_malus += infortunato
-    
-    # Nuovo acquisto (malus per incertezza)
-    if 'Nuovo acquisto' in df_ruolo.columns:
-        nuovo = df_ruolo['Nuovo acquisto'].fillna(False).astype(int) * -2  # Aumentato
-        bonus_malus += nuovo
-    
-    bonus_norm = (bonus_malus + 7) / 14  # Normalizza -7/+7 -> 0-1
-    score += bonus_norm.clip(0, 1) * 5
-    
-    return score
+    return score.clip(0, 100)
 
 
 def calcola_score_fstats(df_ruolo: pd.DataFrame, ruolo: str) -> pd.Series:
     """
-    Calcola uno score complessivo per FSTATS utilizzando tutti i parametri statistici disponibili.
-    MIGLIORATO: Maggior peso alle presenze e fattore di affidabilità per fantamedia.
+    Calcola uno score complessivo per FSTATS utilizzando tutti i parametri disponibili.
+    RICALIBRATO: Prezzi più realistici, focus su statistiche concrete.
     """
     score = pd.Series(0.0, index=df_ruolo.index)
     
-    # 1. FANTACALCIO FANTA INDEX (peso 18% - ridotto)
-    if 'fantacalcioFantaindex' in df_ruolo.columns:
-        fanta_index = df_ruolo['fantacalcioFantaindex'].fillna(0) / 100
-        score += fanta_index * 18
+    # PESO RUOLO: Attaccanti hanno moltiplicatore molto più alto
+    peso_ruolo = {'ATT': 1.0, 'A': 1.0, 'CEN': 1.0, 'C': 1.0, 'DIF': 0.85, 'D': 0.85, 'POR': 0.8, 'P': 0.8}.get(ruolo, 1.0)
     
-    # 2. FANTAMEDIA CON FATTORE DI AFFIDABILITÀ (peso 25% - aumentato)
-    if 'fanta_avg' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+    # 1. FANTAMEDIA GREZZA (peso 30% per ATT, 45% per altri - ancora ridotto per ATT)
+    peso_fantamedia = 30 if ruolo in ['ATT', 'A'] else 45
+    if 'fanta_avg' in df_ruolo.columns:
         fanta_avg = df_ruolo['fanta_avg'].fillna(0)
-        presenze = df_ruolo['presences'].fillna(0)
-        
-        # FATTORE DI AFFIDABILITÀ identico a FPEDIA
-        def calcola_affidabilita(presenze):
-            if presenze >= 25:
-                return 1.0  # Titolare fisso
-            elif presenze >= 15:
-                return 0.7 + 0.3 * (presenze - 15) / 10
-            elif presenze >= 5:
-                return 0.3 + 0.4 * (presenze - 5) / 10
-            elif presenze > 0:
-                return 0.1 + 0.2 * presenze / 5
-            else:
-                return 0.05
-        
-        affidabilita = presenze.apply(calcola_affidabilita)
-        fanta_avg_affidabile = (fanta_avg / 10) * affidabilita
-        score += fanta_avg_affidabile.clip(0, 1) * 25
+        # Scaling più severo: 6.5 = eccellente, 6.0 = ottimo, 5.5 = buono
+        fanta_norm = ((fanta_avg - 4.5) / 3.0).clip(0, 1)  # 4.5-7.5 -> 0-1
+        score += fanta_norm * peso_fantamedia
     
-    # 3. PRESENZE E UTILIZZO (peso 22% - aumentato)
+    # 2. AFFIDABILITÀ E UTILIZZO (peso 25% per ATT, 30% per altri - ridotto per ATT)
+    peso_utilizzo = 25 if ruolo in ['ATT', 'A'] else 30
     utilizzo_score = pd.Series(0.0, index=df_ruolo.index)
     
-    # 3a. Presenze assolute (12%)
+    # 2a. Presenze (15% per ATT, 20% per altri)
+    peso_presenze = 15 if ruolo in ['ATT', 'A'] else 20
     if 'presences' in df_ruolo.columns:
         presenze = df_ruolo['presences'].fillna(0)
         
-        def calcola_bonus_presenze(presenze):
+        def calcola_affidabilita_severa(presenze):
             if presenze >= 30:
                 return 1.0
             elif presenze >= 25:
-                return 0.9
+                return 0.75
             elif presenze >= 20:
-                return 0.7
-            elif presenze >= 15:
                 return 0.5
-            elif presenze >= 10:
+            elif presenze >= 15:
                 return 0.3
-            elif presenze >= 5:
+            elif presenze >= 10:
                 return 0.15
-            else:
+            elif presenze >= 5:
                 return 0.05
+            else:
+                return 0.01
         
-        bonus_presenze = presenze.apply(calcola_bonus_presenze)
-        utilizzo_score += bonus_presenze * 12
+        affidabilita = presenze.apply(calcola_affidabilita_severa)
+        utilizzo_score += affidabilita * peso_presenze
     
-    # 3b. Percentuale titolarità (10%)
+    # 2b. Titolarità (10% per ATT, 10% per altri)
+    peso_titolarita = 10
     if 'perc_matchesStarted' in df_ruolo.columns:
         perc_started = df_ruolo['perc_matchesStarted'].fillna(0) / 100
-        # Bonus per chi è titolare fisso
+        # Bonus più severo per titolarità
         titolarita_bonus = pd.Series(0.0, index=df_ruolo.index)
         for idx, perc in perc_started.items():
-            if perc >= 0.8:  # >80% titolare
+            if perc >= 0.85:    # >85% titolare
                 titolarita_bonus[idx] = 1.0
-            elif perc >= 0.6:  # 60-80% titolare
-                titolarita_bonus[idx] = 0.8
-            elif perc >= 0.4:  # 40-60% semi-titolare
-                titolarita_bonus[idx] = 0.5
-            elif perc >= 0.2:  # 20-40% riserva utilizzata
-                titolarita_bonus[idx] = 0.3
-            else:  # <20% panchinaro
-                titolarita_bonus[idx] = 0.1
+            elif perc >= 0.7:   # 70-85% 
+                titolarita_bonus[idx] = 0.7
+            elif perc >= 0.5:   # 50-70%
+                titolarita_bonus[idx] = 0.4
+            elif perc >= 0.3:   # 30-50%
+                titolarita_bonus[idx] = 0.2
+            else:              # <30%
+                titolarita_bonus[idx] = 0.05
         
-        utilizzo_score += titolarita_bonus * 10
+        utilizzo_score += titolarita_bonus * peso_titolarita
     
     score += utilizzo_score
     
-    # 4. STATISTICHE OFFENSIVE (peso variabile per ruolo)
-    peso_offensivo = {'A': 20, 'ATT': 20, 'C': 12, 'CEN': 12, 'D': 5, 'DIF': 5, 'P': 0, 'POR': 0}.get(ruolo, 8)
+    # 3. STATISTICHE OFFENSIVE (peso MASSIMO per attaccanti)
+    peso_offensivo = {'A': 35, 'ATT': 35, 'C': 8, 'CEN': 8, 'D': 3, 'DIF': 3, 'P': 0, 'POR': 0}.get(ruolo, 5)
+    
+    if peso_offensivo > 0:
+        stat_offensive = pd.Series(0.0, index=df_ruolo.index)
+        
+        # Goals per partita - scaling ottimizzato per creare differenze
+        if 'goals' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            goals = df_ruolo['goals'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            goals_per_partita = goals / presenze.clip(lower=1)
+            # Sistema più graduato: 0.3 = buono, 0.5 = ottimo, 0.7+ = fenomenale
+            if ruolo in ['ATT', 'A']:
+                goals_score = (goals_per_partita / 0.5).clip(0, 2.0)  # Max 200% per fenomeni
+            else:
+                goals_score = (goals_per_partita / 0.8).clip(0, 1.0)
+            stat_offensive += goals_score * 0.35
+        
+        # xG per partita - più selettivo
+        if 'xgFromOpenPlays' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            xg = df_ruolo['xgFromOpenPlays'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            xg_per_partita = xg / presenze.clip(lower=1)
+            # Sistema graduato: 0.25 = buono, 0.4 = ottimo, 0.6+ = fenomenale
+            if ruolo in ['ATT', 'A']:
+                xg_score = (xg_per_partita / 0.4).clip(0, 1.8)  # Max 180% per fenomeni
+            else:
+                xg_score = (xg_per_partita / 0.6).clip(0, 1.0)
+            stat_offensive += xg_score * 0.25
+        
+        # Assists per partita - importante per attaccanti moderni
+        if 'assists' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            assists = df_ruolo['assists'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            assists_per_partita = assists / presenze.clip(lower=1)
+            # Sistema graduato per assist
+            if ruolo in ['ATT', 'A']:
+                assists_score = (assists_per_partita / 0.25).clip(0, 1.6)  # 0.25 = ottimo
+            else:
+                assists_score = (assists_per_partita / 0.5).clip(0, 1.0)
+            stat_offensive += assists_score * 0.2
+        
+        # xA per partita - capacità di creare occasioni
+        if 'xA' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            xa = df_ruolo['xA'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            xa_per_partita = xa / presenze.clip(lower=1)
+            # Sistema graduato per expected assists
+            if ruolo in ['ATT', 'A']:
+                xa_score = (xa_per_partita / 0.2).clip(0, 1.5)  # 0.2 = ottimo
+            else:
+                xa_score = (xa_per_partita / 0.4).clip(0, 1.0)
+            stat_offensive += xa_score * 0.15
+        
+        # EFFICIENZA AVANZATA: Differenziazione per veri fenomeni
+        if ruolo in ['ATT', 'A']:
+            # TEMPORANEAMENTE DISABILITATO PER DEBUG
+            pass  # Non fare nessuna modifica per ora
+            
+        # RAFFINAMENTO PER CENTROCAMPISTI  
+        elif ruolo in ['CEN', 'C']:
+            # Sistema di differenziazione LEGGERO per centrocampisti
+            for idx, row in df_ruolo.iterrows():
+                goals = row.get('goals', 0)
+                assists = row.get('assists', 0)
+                presenze = row.get('presences', 1)
+                fantamedia = row.get('fanta_avg', 0)
+                
+                # BONUS MOLTO PICCOLI per evitare compressione
+                bonus_qualita = 0
+                
+                # Fantamedia excellence - bonus ridottissimi
+                if fantamedia >= 8.0:          # Elite (Tramoni level)
+                    bonus_qualita += 3
+                elif fantamedia >= 7.5:        # Excellent (Orsolini, McTominay)
+                    bonus_qualita += 2
+                elif fantamedia >= 7.0:        # Very good 
+                    bonus_qualita += 1
+                elif fantamedia < 6.0:         # Below average
+                    bonus_qualita -= 1
+                
+                # Contributi totali - bonus piccoli
+                goals_per_game = goals / max(presenze, 1)
+                assists_per_game = assists / max(presenze, 1)
+                total_contributions = goals_per_game + assists_per_game
+                
+                if total_contributions >= 0.55:    # Top (Orsolini level)
+                    bonus_qualita += 4
+                elif total_contributions >= 0.45:  # Excellent
+                    bonus_qualita += 3
+                elif total_contributions >= 0.35:  # Good  
+                    bonus_qualita += 2
+                elif total_contributions >= 0.25:  # Decent
+                    bonus_qualita += 1
+                elif total_contributions < 0.1:    # Low
+                    bonus_qualita -= 1
+                
+                # APPLICA MODIFICHE MINIME
+                current_score = stat_offensive.loc[idx] 
+                modified_score = current_score + bonus_qualita
+                stat_offensive.loc[idx] = modified_score
+                
+        # RAFFINAMENTO PER DIFENSORI  
+        elif ruolo in ['DIF', 'D']:
+            # Sistema ULTRA-OFFENSIVO per difensori - gol e assist valgono ORO!
+            for idx, row in df_ruolo.iterrows():
+                goals = row.get('goals', 0)
+                assists = row.get('assists', 0)
+                presenze = row.get('appearances', 1)
+                mins_played = row.get('mins_played', 0)
+                fantamedia = row.get('expectedFantamediaMean', 0)
+                
+                # BONUS ENORMI per difensori offensivi - sono i più preziosi!
+                bonus_qualita = 0
+                
+                # 1. CONTRIBUTI OFFENSIVI - BONUS MASSIMI ASSOLUTI
+                goals_per_game = goals / max(presenze, 1)
+                assists_per_game = assists / max(presenze, 1)
+                total_contributions = goals_per_game + assists_per_game
+                
+                # Ogni gol/assist di un difensore vale ORO nel fantacalcio!
+                if total_contributions >= 0.30:    # Elite (Dimarco 0.333, Dumfries 0.310)
+                    bonus_qualita += 25  # BONUS GIGANTESCO
+                elif total_contributions >= 0.25:  # Excellent (Gosens 0.242, Martin 0.250)
+                    bonus_qualita += 20  
+                elif total_contributions >= 0.20:  # Very good (Zortea 0.229, Bellanova 0.229)
+                    bonus_qualita += 17
+                elif total_contributions >= 0.15:  # Good (Kamara 0.167, Valeri 0.171)
+                    bonus_qualita += 14
+                elif total_contributions >= 0.10:  # Decent (Di Lorenzo 0.135, Cambiaso 0.121)
+                    bonus_qualita += 10
+                elif total_contributions >= 0.05:  # Some contribution
+                    bonus_qualita += 6
+                elif total_contributions > 0:      # Almeno qualcosa
+                    bonus_qualita += 3
+                else:                               # Zero contributi = penalità
+                    bonus_qualita -= 5
+                
+                # 2. BONUS AGGIUNTIVI PER GOL (più rari e preziosi degli assist)
+                if goals >= 6:  # Zortea, Dumfries level
+                    bonus_qualita += 8
+                elif goals >= 4:  # Dimarco, Zappacosta level
+                    bonus_qualita += 6
+                elif goals >= 2:  # Cambiaso, Valeri level
+                    bonus_qualita += 4
+                elif goals >= 1:  # Almeno un gol
+                    bonus_qualita += 2
+                
+                # 3. BONUS AGGIUNTIVI PER ASSIST (specialisti cross/passaggi)
+                if assists >= 8:  # Bellanova level
+                    bonus_qualita += 6
+                elif assists >= 6:  # Dimarco, Tavares level
+                    bonus_qualita += 5
+                elif assists >= 4:  # Kamara, Valeri level
+                    bonus_qualita += 3
+                elif assists >= 2:  # Dumfries, Zortea level
+                    bonus_qualita += 2
+                
+                # 4. TITOLARITÀ - importante ma secondaria rispetto all'attacco
+                mins_per_game = mins_played / max(presenze, 1)
+                if mins_per_game >= 90:        # Titolare fisso (Di Lorenzo 98min)
+                    bonus_qualita += 6
+                elif mins_per_game >= 80:      # Spesso titolare  
+                    bonus_qualita += 4
+                elif mins_per_game >= 70:      # Buona titolarità
+                    bonus_qualita += 2
+                elif mins_per_game >= 60:      # Discreto utilizzo
+                    bonus_qualita += 1
+                else:                           # Poco utilizzato
+                    bonus_qualita -= 3
+                
+                # 5. STATISTICHE OFFENSIVE AVANZATE - peso maggiore
+                offensive_actions = row.get('Offensive_actions_Index', 0)
+                attacking_area = row.get('Attacking_area_Index', 0)
+                cross_accuracy = row.get('Cross_accuracy_Index', 0)
+                
+                # Azioni offensive (Bastoni 93.8, Cambiaso 89.5)
+                if offensive_actions >= 90:
+                    bonus_qualita += 6
+                elif offensive_actions >= 80:
+                    bonus_qualita += 4
+                elif offensive_actions >= 70:
+                    bonus_qualita += 2
+                
+                # Presenza in area avversaria (Dumfries 75.5, Dimarco 73.7)
+                if attacking_area >= 75:
+                    bonus_qualita += 5
+                elif attacking_area >= 65:
+                    bonus_qualita += 3
+                elif attacking_area >= 55:
+                    bonus_qualita += 1
+                
+                # Precisione cross (Tavares 92.9, Bellanova 89.3, Zortea 88.8)
+                if cross_accuracy >= 85:
+                    bonus_qualita += 5
+                elif cross_accuracy >= 75:
+                    bonus_qualita += 3
+                elif cross_accuracy >= 65:
+                    bonus_qualita += 1
+                
+                # 6. FANTAMEDIA - peso ridotto, le statistiche offensive contano di più
+                if fantamedia > 0:  # Solo se dato disponibile
+                    if fantamedia >= 6.5:          # Ottima
+                        bonus_qualita += 3
+                    elif fantamedia >= 6.0:        # Buona
+                        bonus_qualita += 2
+                    elif fantamedia >= 5.5:        # Discreta
+                        bonus_qualita += 1
+                    elif fantamedia < 5.0:         # Scarsa
+                        bonus_qualita -= 2
+                
+                # APPLICA MODIFICHE SOSTANZIALI PER CREARE SEPARAZIONE
+                current_score = stat_offensive.loc[idx] 
+                modified_score = current_score + bonus_qualita
+                stat_offensive.loc[idx] = modified_score
+                
+        
+        score += stat_offensive * peso_offensivo
+    
+    # 4. FANTACALCIO INDEX (peso ridotto per ATT, normale per altri)
+    peso_index = 5 if ruolo in ['ATT', 'A'] else 8
+    if 'fantacalcioFantaindex' in df_ruolo.columns:
+        index_norm = (df_ruolo['fantacalcioFantaindex'].fillna(0) - 60) / 40  # 60-100 -> 0-1
+        score += index_norm.clip(0, 1) * peso_index
+    
+    # 5. INDICI TECNICI E SPECIALIZZAZIONI (peso variabile per ruolo)
+    peso_tecnici = 8 if ruolo in ['ATT', 'A'] else 5  # Più importante per attaccanti
+    indici_tecnici = [
+        'Shot_on_goal_Index', 'Offensive_actions_Index', 'Pass_forward_accuracy_Index',
+        'Attacking_area_Index', 'Pass_leading_chances_Index', 'Dribbles_successful_Index'
+    ]
+    
+    indici_disponibili = [col for col in indici_tecnici if col in df_ruolo.columns]
+    if indici_disponibili:
+        indici_score = df_ruolo[indici_disponibili].fillna(0).mean(axis=1) / 100
+        score += indici_score * peso_tecnici
+    
+    # 6. ANALISI AVANZATE SPECIFICHE PER ATTACCANTI
+    if ruolo in ['ATT', 'A']:
+        bonus_attaccanti = pd.Series(0.0, index=df_ruolo.index)
+        
+        # Consistenza nelle prestazioni (meno variabilità = meglio)
+        if 'fanta_avg' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            fm = df_ruolo['fanta_avg'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            # Bonus per alta fantamedia + molte presenze (consistenza)
+            consistenza = (fm / 10) * (presenze / 38).clip(0, 1)
+            bonus_attaccanti += consistenza * 3
+        
+        # Rendimento in zona gol (Shot on goal index)
+        if 'Shot_on_goal_Index' in df_ruolo.columns:
+            shot_index = df_ruolo['Shot_on_goal_Index'].fillna(0) / 100
+            bonus_attaccanti += shot_index * 2
+        
+        # Capacità di concludere in area (Attacking area index)
+        if 'Attacking_area_Index' in df_ruolo.columns:
+            area_index = df_ruolo['Attacking_area_Index'].fillna(0) / 100
+            bonus_attaccanti += area_index * 2
+        
+        # Dribbling (importante per attaccanti moderni)
+        if 'Dribbles_successful_Index' in df_ruolo.columns:
+            dribble_index = df_ruolo['Dribbles_successful_Index'].fillna(0) / 100
+            bonus_attaccanti += dribble_index * 1.5
+        
+        # PENALIZZAZIONE per rendimento inconsistente
+        if 'yellowCards' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            yellow = df_ruolo['yellowCards'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            indisciplina = yellow / presenze.clip(lower=1)
+            # Penalizza chi prende più di 0.3 ammonizioni/partita
+            penalita_disciplina = (indisciplina / 0.3).clip(0, 2) * 1.5
+            bonus_attaccanti -= penalita_disciplina
+        
+        score += bonus_attaccanti
+    
+    # 6. STATISTICHE DIFENSIVE (peso ridotto)
+    peso_difensivo = {'P': 10, 'POR': 10, 'D': 7, 'DIF': 7, 'C': 2, 'CEN': 2, 'A': 0, 'ATT': 0}.get(ruolo, 0)
+    
+    if peso_difensivo > 0:
+        stat_difensive = pd.Series(0.0, index=df_ruolo.index)
+        
+        if 'Defense_solidity_Index' in df_ruolo.columns:
+            defense = df_ruolo['Defense_solidity_Index'].fillna(0) / 100
+            stat_difensive += defense * 0.5
+        
+        if 'gkCleanSheets' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+            clean_sheets = df_ruolo['gkCleanSheets'].fillna(0)
+            presenze = df_ruolo['presences'].fillna(1)
+            cs_per_partita = clean_sheets / presenze.clip(lower=1)
+            stat_difensive += (cs_per_partita / 0.5).clip(0, 1) * 0.3  # 0.5 CS/partita = ottimo
+        
+        if 'gkPenaltiesSaved' in df_ruolo.columns:
+            pen_saved = df_ruolo['gkPenaltiesSaved'].fillna(0)
+            stat_difensive += (pen_saved / 2).clip(0, 1) * 0.2  # 2 rigori = ottimo
+        
+        score += stat_difensive * peso_difensivo
+    
+    # 7. PENALITÀ (peso 2% - ridotto)
+    penalita = pd.Series(0.0, index=df_ruolo.index)
+    
+    if 'yellowCards' in df_ruolo.columns and 'presences' in df_ruolo.columns:
+        yellow = df_ruolo['yellowCards'].fillna(0)
+        presenze = df_ruolo['presences'].fillna(1)
+        yellow_per_partita = yellow / presenze.clip(lower=1)
+        penalita += (yellow_per_partita / 0.4) * 2  # >0.4 ammonizioni/partita
+    
+    if 'redCards' in df_ruolo.columns:
+        red = df_ruolo['redCards'].fillna(0)
+        penalita += red * 5  # Penalità ridotta
+    
+    if 'injured' in df_ruolo.columns:
+        injured = df_ruolo['injured'].fillna(False).astype(int) * 5
+        penalita += injured
+    
+    if 'banned' in df_ruolo.columns:
+        banned = df_ruolo['banned'].fillna(False).astype(int) * 3
+        penalita += banned
+    
+    score -= penalita.clip(0, 10) * 0.2
+    
+    # Applica il moltiplicatore ruolo
+    score = score * peso_ruolo
+    
+    # Per attaccanti: limiti più alti per permettere differenziazione
+    if ruolo in ['ATT', 'A']:
+        return score.clip(0, 200)  # Limite più contenuto per debug
+    elif ruolo in ['CEN', 'C']:
+        return score.clip(0, 150)  # Limite più alto per centrocampisti top
+    elif ruolo in ['DIF', 'D']:
+        return score.clip(0, 120)  # Limite più alto per difensori top
+    else:
+        return score.clip(0, 100)
     
     if peso_offensivo > 0:
         stat_offensive = pd.Series(0.0, index=df_ruolo.index)
