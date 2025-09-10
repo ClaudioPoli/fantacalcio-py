@@ -1,222 +1,215 @@
-# main.py
-import os
-from loguru import logger
+#!/usr/bin/env python3
+"""
+Fantacalcio Analysis System - Standalone Entry Point
+
+Sistema autonomo per l'analisi dei giocatori di fantacalcio.
+Calcola prezzi consigliati basandosi esclusivamente su 19 indici tecnici,
+senza dipendenze da dati di mercato esterni.
+"""
+
+import sys
+import argparse
 import pandas as pd
+from pathlib import Path
 
-import data_retriever
-import data_processor
-import convenienza_calculator
-import config
+# Aggiungi src al path per gli import
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
+# Import del nuovo sistema autonomo
+from src.fantacalcio.analyzers.standalone_pricing import StandalonePricingCalculator
 
 def main():
-    """
-    Main script to run the entire Fantacalcio analysis pipeline.
-    It now runs two separate pipelines for FPEDIA and FSTATS,
-    generating both performance-based and potential-based convenience indexes.
-    """
-    os.makedirs(config.DATA_DIR, exist_ok=True)
-    os.makedirs(config.OUTPUT_DIR, exist_ok=True)
-
-    logger.info("Starting Fantacalcio analysis pipeline...")
-
-    # 1. Retrieve all data
-    logger.info("Step 1: Retrieving data from all sources...")
-    data_retriever.scrape_fpedia()
-    data_retriever.fetch_FSTATS_data()
-    logger.info("Data retrieval complete.")
-
-    # 2. Load dataframes
-    df_fpedia, df_FSTATS = data_processor.load_dataframes()
-
-    # --- Pipeline for FPEDIA ---
-    if not df_fpedia.empty:
-        logger.info("--- Starting FPEDIA Pipeline ---")
-
-        df_processed = data_processor.process_fpedia_data(df_fpedia)
-        df_final = convenienza_calculator.calcola_convenienza_fpedia(df_processed)
-        
-        # Calcola il prezzo massimo consigliato
-        df_final = convenienza_calculator.calcola_prezzo_massimo_consigliato(df_final)
-
-        df_final = df_final.sort_values(by="Convenienza Potenziale", ascending=False)
-
-        # Define a comprehensive and ordered list of columns for the final output
-        output_columns = [
-            # Key Info
-            "Nome",
-            "Ruolo",
-            "Squadra",
-            # Calculated Indexes
-            "Convenienza Potenziale",
-            "Convenienza",
-            "Prezzo Massimo Consigliato",
-            "Punteggio",
-            # Current Season Stats
-            f"Fantamedia anno {config.ANNO_CORRENTE-1}-{config.ANNO_CORRENTE}",
-            f"Presenze campionato corrente",
-            # Previous Season Stats
-            f"Fantamedia anno {config.ANNO_CORRENTE-2}-{config.ANNO_CORRENTE-1}",
-            "Partite giocate",
-            # Qualitative Info
-            "Trend",
-            "Skills",
-            "Consigliato prossima giornata",
-            "Buon investimento",
-            "Resistenza infortuni",
-            "Infortunato",
-            # Legacy
-            f"FM su tot gare {config.ANNO_CORRENTE-1}-{config.ANNO_CORRENTE}",
-            "Presenze previste",
-            "Gol previsti",
-            "Assist previsti",
-            "Ruolo",
-            "Skills",
-            "Buon investimento",
-            "Resistenza infortuni",
-            "Consigliato prossima giornata",
-            "Nuovo acquisto",
-            "Infortunato",
-            "Squadra",
-            "Trend",
-            "Presenze campionato corrente",
-        ]
-        final_columns = [col for col in output_columns if col in df_final.columns]
-
-        output_path = os.path.join(config.OUTPUT_DIR, "fpedia_analysis.xlsx")
-        df_final[final_columns].to_excel(output_path, index=False)
-
-        logger.info(f"FPEDIA analysis complete. Results saved to {output_path}")
-    else:
-        logger.warning("FPEDIA DataFrame is empty. Pipeline skipped.")
-
-    # --- Pipeline for FSTATS ---
-    if not df_FSTATS.empty:
-        logger.info("--- Starting FSTATS Pipeline ---")
-
-        df_processed = data_processor.process_FSTATS_data(df_FSTATS)
-        df_final = convenienza_calculator.calcola_convenienza_FSTATS(df_processed)
-        
-        # Calcola il prezzo massimo consigliato
-        df_final = convenienza_calculator.calcola_prezzo_massimo_consigliato(df_final)
-
-        df_final = df_final.sort_values(by="Convenienza Potenziale", ascending=False)
-
-        # Define a comprehensive and ordered list of columns for the final output
-        output_columns = [
-            # Key Info
-            "Nome",
-            "Ruolo",
-            "Squadra",
-            # Calculated Indexes
-            "Convenienza Potenziale",
-            "Convenienza",
-            "Prezzo Massimo Consigliato",
-            "fantacalcioFantaindex",
-            # Key Performance Indicators
-            "fanta_avg",
-            "avg",
-            "presences",
-            # Core Stats
-            "goals",
-            "assists",
-            # Potential Stats
-            "xgFromOpenPlays",
-            "xA",
-            # Disciplinary
-            "yellowCards",
-            "redCards",
-            # Legacy
-            "injured",
-            "banned",
-            "mantra_position",
-            "fantacalcio_position",
-            "birth_date",
-            "foot_name",
-            "fantacalcioPlayerId",
-            "fantacalcioTeamName",
-            "appearances",
-            "matchesInStart",
-            "mins_played",
-            "pagella",
-            "fantacalcioRanking",
-            "fantacalcioFantaindex",
-            "fantacalcioPosition",
-            "assists",
-            "goals",
-            "goals90min",
-            "goalsFromOpenPlays",
-            "xgFromOpenPlays",
-            "xgFromOpenPlays/90min",
-            "xA",
-            "xA90min",
-            "redCards",
-            "yellowCards",
-            "successfulPenalties",
-            "penalties",
-            "gkPenaltiesSaved",
-            "gkCleanSheets",
-            "gkConcededGoals",
-            "openPlaysGoalsConceded",
-            "openPlaysXgConceded",
-            "fantamediaPred",
-            "fantamediaPredRoundId",
-            "matchConvocation",
-            "matchesWithGrade",
-            "perc_matchesStarted",
-            "perc_matchesWithGrade",
-            "percMinsPlayed",
-            "expectedFantamediaMean",
-            "External_breakout_Index",
-            "Shot_on_goal_Index",
-            "Offensive_actions_Index",
-            "Pass_forward_accuracy_Index",
-            "Air_challenge_offensive_Index",
-            "Cross_accuracy_Index",
-            "Converge_in_the_center_Index",
-            "Accompany_the_offensive_action_Index",
-            "Offensive_verticalization_Index",
-            "Received_pass_Index",
-            "Attacking_area_Index",
-            "Offensive_field_presence_Index",
-            "Pass_accuracy_Index",
-            "Pass_leading_chances_Index",
-            "Deep_runs_Index",
-            "Defense_solidity_Index",
-            "Set_piece_attack_Index",
-            "Shot_on_target_Index",
-            "Dribbles_successful_Index",
-        ]
-        final_columns = [col for col in output_columns if col in df_final.columns]
-
-        output_path = os.path.join(config.OUTPUT_DIR, "FSTATS_analysis.xlsx")
-        df_final[final_columns].to_excel(output_path, index=False)
-
-        logger.info(f"FSTATS analysis complete. Results saved to {output_path}")
-    else:
-        logger.warning("FSTATS DataFrame is empty. Pipeline skipped.")
-
-    logger.info("Fantacalcio analysis pipeline finished.")
+    parser = argparse.ArgumentParser(
+        description='Sistema di Analisi Fantacalcio',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Esempi di utilizzo:
+    python main.py --mode analysis           # Analisi completa autonoma
+    python main.py --interactive             # Modalità interattiva
+        """
+    )
     
-    # 3. Generate Perfect Merged Analysis
-    logger.info("--- Starting Perfect Excel Merger ---")
-    try:
-        from perfect_excel_merger import PerfectExcelMerger
+    parser.add_argument(
+        '--mode',
+        choices=['analysis'],
+        default='analysis',
+        help='Modalità di esecuzione'
+    )
+    
+    parser.add_argument(
+        '--interactive',
+        action='store_true',
+        help='Modalità interattiva'
+    )
+    
+    parser.add_argument(
+        '--data-dir',
+        default='data',
+        help='Directory contenente i dati (default: data)'
+    )
+    
+    args = parser.parse_args()
+    
+    if args.interactive:
+        run_interactive_mode()
+    else:
+        run_standalone_analysis(args.data_dir)
+
+
+def run_interactive_mode():
+    """Esegue il sistema in modalità interattiva."""
+    print("🚀 SISTEMA ANALISI FANTACALCIO AUTONOMO")
+    print("=" * 50)
+    
+    while True:
+        print("\n📊 Scegli un'operazione:")
+        print("1. 🧮 Calcolo prezzi autonomo (senza SOS)")
+        print("2. 🏆 Analisi top player per ruolo") 
+        print("3. 💰 Trova migliori occasioni")
+        print("4. ❌ Esci")
         
-        merger = PerfectExcelMerger(
-            "data/output/fpedia_analysis.xlsx",
-            "data/output/FSTATS_analysis.xlsx"
-        )
+        choice = input("\nSelezione (1-4): ").strip()
         
-        success = merger.run_perfect("perfect_merged_analysis.xlsx")
-        
-        if success:
-            logger.info("✅ Perfect merged analysis created: data/output/perfect_merged_analysis.xlsx")
+        if choice == '1':
+            run_standalone_analysis()
+        elif choice == '2':
+            show_top_players_by_role()
+        elif choice == '3':
+            show_best_value_players()
+        elif choice == '4':
+            print("👋 Arrivederci!")
+            break
         else:
-            logger.error("❌ Failed to create perfect merged analysis")
-            
+            print("❌ Scelta non valida. Riprova.")
+
+
+def run_standalone_analysis(data_dir: str = 'data'):
+    """Esegue l'analisi autonoma dei prezzi."""
+    print("\n🧮 AVVIO CALCOLO PREZZI AUTONOMO...")
+    
+    try:
+        calculator = StandalonePricingCalculator()
+        
+        # File paths
+        merged_file = f"{data_dir}/output/perfect_merged_analysis.xlsx"
+        output_file = f"{data_dir}/output/standalone_pricing_analysis.xlsx"
+        
+        # Verifica che il file merged esista
+        if not Path(merged_file).exists():
+            print(f"❌ File non trovato: {merged_file}")
+            print("   Assicurati di aver prima generato il file merged con i dati FPEDIA/FSTATS")
+            return
+        
+        # Processa i dati
+        df_result = calculator.process_data(merged_file, output_file)
+        
+        # Mostra statistiche rapide
+        total = len(df_result)
+        avg_perf = df_result['Performance_Score'].mean()
+        avg_price = df_result['Prezzo_Consigliato'].mean()
+        
+        print(f"\n✅ ANALISI AUTONOMA COMPLETATA!")
+        print(f"   📁 File salvato: {output_file}")
+        print(f"   👥 Giocatori analizzati: {total}")
+        print(f"   📊 Performance media: {avg_perf:.2f}/20")
+        print(f"   💰 Prezzo medio calcolato: {avg_price:.1f}€")
+        
+        # Mostra distribuzione categorie
+        print(f"\n📈 DISTRIBUZIONE CATEGORIE:")
+        for category, count in df_result['Categoria'].value_counts().items():
+            percentage = (count / total) * 100
+            print(f"   • {category}: {count} ({percentage:.1f}%)")
+        
+        # Mostra top 5 per ruolo
+        print(f"\n🏆 TOP 5 PER RUOLO:")
+        for role in ['ATT', 'CEN', 'DIF', 'POR']:
+            top_players = calculator.get_top_players_by_role(df_result, role, 5)
+            if len(top_players) > 0:
+                print(f"\n   {role}:")
+                for _, p in top_players.iterrows():
+                    print(f"     • {p['Nome']} - "
+                          f"Perf: {p['Performance_Score']:.1f}, "
+                          f"Prezzo: {p['Prezzo_Consigliato']:.1f}€")
+        
+        # Mostra migliori occasioni
+        print(f"\n💎 MIGLIORI OCCASIONI (Performance >8, Prezzo <15€):")
+        best_values = calculator.get_best_value_players(df_result, 15.0)
+        for _, p in best_values.head(10).iterrows():
+            print(f"   • {p['Nome']} ({p['Ruolo']}) - "
+                  f"Perf: {p['Performance_Score']:.1f}, "
+                  f"Prezzo: {p['Prezzo_Consigliato']:.1f}€")
+        
     except Exception as e:
-        logger.error(f"❌ Error creating perfect merged analysis: {e}")
+        print(f"❌ Errore durante l'analisi autonoma: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+def show_top_players_by_role(data_dir: str = 'data'):
+    """Mostra i migliori giocatori per ruolo."""
+    try:
+        output_file = f"{data_dir}/output/standalone_pricing_analysis.xlsx"
+        if not Path(output_file).exists():
+            print("❌ Devi prima eseguire l'analisi autonoma!")
+            return
+            
+        df = pd.read_excel(output_file)
+        calculator = StandalonePricingCalculator()
+        
+        print("\n🏆 TOP 10 GIOCATORI PER RUOLO:")
+        for role in ['ATT', 'CEN', 'DIF', 'POR']:
+            top_players = calculator.get_top_players_by_role(df, role, 10)
+            if len(top_players) > 0:
+                print(f"\n{role} (Top 10):")
+                for i, (_, p) in enumerate(top_players.iterrows(), 1):
+                    print(f"  {i:2d}. {p['Nome']} - "
+                          f"Perf: {p['Performance_Score']:.1f}, "
+                          f"Prezzo: {p['Prezzo_Consigliato']:.1f}€, "
+                          f"Cat: {p['Categoria']}")
+                          
+    except Exception as e:
+        print(f"❌ Errore: {e}")
+
+
+def show_best_value_players(data_dir: str = 'data'):
+    """Mostra i giocatori con miglior rapporto qualità/prezzo."""
+    try:
+        output_file = f"{data_dir}/output/standalone_pricing_analysis.xlsx"
+        if not Path(output_file).exists():
+            print("❌ Devi prima eseguire l'analisi autonoma!")
+            return
+            
+        df = pd.read_excel(output_file)
+        calculator = StandalonePricingCalculator()
+        
+        print("\n💰 MIGLIORI RAPPORTI QUALITÀ/PREZZO:")
+        
+        # Diverse fasce di prezzo
+        price_ranges = [
+            (0, 5, "FASCIA LOW COST (0-5€)"),
+            (5, 15, "FASCIA MEDIA (5-15€)"),
+            (15, 30, "FASCIA ALTA (15-30€)"),
+            (30, 100, "FASCIA TOP (30€+)")
+        ]
+        
+        for min_price, max_price, label in price_ranges:
+            range_players = df[
+                (df['Prezzo_Consigliato'] >= min_price) & 
+                (df['Prezzo_Consigliato'] <= max_price) &
+                (df['Performance_Score'] >= 6.0)  # Almeno performance decente
+            ].sort_values('Performance_Score', ascending=False)
+            
+            if len(range_players) > 0:
+                print(f"\n{label}:")
+                for _, p in range_players.head(5).iterrows():
+                    ratio = p['Performance_Score'] / max(p['Prezzo_Consigliato'], 1)
+                    print(f"  • {p['Nome']} ({p['Ruolo']}) - "
+                          f"Perf: {p['Performance_Score']:.1f}, "
+                          f"Prezzo: {p['Prezzo_Consigliato']:.1f}€, "
+                          f"Ratio: {ratio:.2f}")
+                          
+    except Exception as e:
+        print(f"❌ Errore: {e}")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 # data_processor.py
 import pandas as pd
 from loguru import logger
-import config
+from ..utils import config
 import os
 
 
