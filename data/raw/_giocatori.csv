@@ -1,0 +1,514 @@
+Nome,Punteggio,Fantamedia anno 2024-2025,Fantamedia anno 2023-2024,Fantamedia anno 2022-2023,Presenze 2024-2025,Fanta Media 2024-2025,FM su tot gare 2024-2025,Presenze previste,Gol previsti,Assist previsti,Ruolo,Skills,Buon investimento,Resistenza infortuni,Consigliato prossima giornata,Nuovo acquisto,Infortunato,Squadra,Trend,Presenze campionato corrente
+CARNESECCHI MARCO,94,5.38,5.36,4.63,33,5.38,4.67,21/30,30/40,0,POR,['Titolare'],60,60,False,False,False,Atalanta,UP,33
+MERET ALEX,96,5.78,4.90,5.56,32,5.78,4.87,11/20,20/30,0,POR,"['Titolare', 'Buona Media']",80,60,False,False,False,Napoli,UP,32
+DI GREGORIO MICHELE,93,5.11,5.45,5.13,31,5.11,4.17,21/30,20/30,0,POR,"['Fuoriclasse', 'Titolare']",60,60,False,False,False,Juventus,DOWN,31
+MILINKOVIC SAVIC VANJA,98,5.51,5.21,4.89,35,5.51,5.08,11/20,8/11,0,POR,"['Titolare', 'Rigorista']",60,60,False,True,False,Napoli,UP,35
+MAIGNAN MIKE,95,5.13,4.86,5.34,35,5.13,4.73,30+,20+,0,POR,"['Fuoriclasse', 'Titolare', 'Buona Media']",60,60,False,False,False,Milan,UP,35
+SUZUKI ZION,78,4.79,nd,nd,35,4.79,4.41,21/30,0,0,POR,['Titolare'],60,60,False,False,False,Parma,STABLE,35
+SVILAR MILE,84,5.32,5.38,4.83,36,5.32,5.04,30+,20/30,0,POR,"['Titolare', 'Buona Media']",60,60,True,False,False,Roma,DOWN,36
+FALCONE WLADIMIRO,82,4.85,4.79,5.09,36,4.85,4.59,30+,8/11,0,POR,"['Titolare', 'Buona Media']",80,80,False,False,False,Lecce,UP,36
+DE GEA DAVID,84,5.38,nd,nd,33,5.38,4.67,30+,0,0,POR,"['Fuoriclasse', 'Titolare']",60,60,False,False,False,Fiorentina,STABLE,33
+MONTIPÒ LORENZO,75,4.43,5.03,4.79,34,4.43,3.96,21/30,40/50,0,POR,"['Titolare', 'Buona Media']",40,60,False,False,False,Verona,DOWN,34
+SOMMER YANN,74,5.35,5.65,nd,30,5.35,4.22,30+,20/30,0,POR,"['Titolare', 'Buona Media']",60,40,False,False,False,Inter,DOWN,30
+BUTEZ JEAN,74,5.18,nd,nd,19,5.18,2.59,11/20,20+,0,POR,['Titolare'],60,60,False,False,False,Como,STABLE,19
+PROVEDEL IVAN,74,4.67,5.14,5.46,26,4.67,3.20,21/30,20/30,0,POR,"['Titolare', 'Buona Media']",60,60,False,False,False,Lazio,DOWN,26
+VASQUEZ DEVIS,73,4.57,nd,nd,30,4.57,3.61,0/10,4/7,0,POR,['Panchinaro'],20,60,False,True,False,Roma,STABLE,30
+CAPRILE ELIA,66,5.12,5.21,nd,21,5.12,2.83,30+,30/40,0,POR,"['Titolare', 'Buona Media']",40,60,False,True,False,Cagliari,DOWN,21
+SKORUPSKI LUKASZ,70,4.90,5.31,4.97,26,4.90,3.35,30+,30/40,0,POR,"['Titolare', 'Buona Media', 'Rigorista']",40,60,False,False,False,Bologna,DOWN,26
+MARTINEZ JOSEP,71,5.70,4.94,nd,5,5.70,0.75,0/10,0,0,POR,['Panchinaro'],40,60,False,False,False,Inter,UP,5
+LEALI NICOLA,62,5.10,5.50,nd,29,5.10,3.89,21/30,40/50,0,POR,['Titolare'],40,60,False,False,False,Genoa,DOWN,29
+TURATI STEFANO,65,4.78,4.43,nd,29,4.78,3.65,30+,0,0,POR,"['Titolare', 'Buona Media']",60,80,False,True,False,Sassuolo,UP,29
+OKOYE MADUKA,64,4.46,4.82,nd,24,4.46,2.82,0/10,8/11,0,POR,"['Outsider', 'Titolare']",40,40,False,False,False,Udinese,DOWN,24
+MURIC ARIJANET,56,nd,nd,nd,18,0.00,0.00,21/30,40/50,0,POR,['Titolare'],60,60,False,True,False,Sassuolo,STABLE,0
+ISRAEL WIBMER FRANCO,65,nd,nd,nd,11,0.00,0.00,30+,30/40,0,POR,"['Outsider', 'Titolare']",40,80,False,True,False,Torino,STABLE,0
+AUDERO EMIL,58,3.64,5.67,4.88,7,3.64,0.67,21/30,40/50,0,POR,['Titolare'],40,60,False,True,False,Cremonese,DOWN,7
+MANDAS CHRISTOS,63,5.50,5.75,nd,9,5.50,1.30,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Lazio,DOWN,9
+SATALINO GIACOMO,52,nd,nd,nd,10,0.00,0.00,0/10,0,0,POR,"['Outsider', 'Panchinaro', 'Buona Media']",40,80,False,False,False,Sassuolo,STABLE,0
+PERIN MATTIA,57,5.50,5.50,6.05,5,5.50,0.72,21/30,20/30,0,POR,"['Panchinaro', 'Buona Media']",40,60,False,False,False,Juventus,UP,5
+SPORTIELLO MARCO,54,5.00,4.57,4.73,2,5.00,0.26,0/10,3/5,0,POR,"['Panchinaro', 'Buona Media']",40,80,False,False,False,Atalanta,UP,2
+POPA MIHAI,50,nd,nd,nd,9,0.00,0.00,0/10,0,0,POR,"['Panchinaro', 'Buona Media']",20,60,False,False,False,Torino,STABLE,0
+SCUFFET SIMONE,53,4.23,4.28,nd,13,4.23,1.45,21/30,40/50,0,POR,['Titolare'],20,60,False,True,False,Pisa,DOWN,13
+DI GENNARO RAFFAELE,49,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Inter,STABLE,0
+TERRACCIANO PIETRO,47,5.17,5.28,4.78,3,5.17,0.41,0/10,3/5,0,POR,['Panchinaro'],20,60,False,True,False,Milan,DOWN,3
+FURLANETTO ALESSIO,47,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Lazio,STABLE,0
+GOLLINI PIERLUIGI,49,3.58,4.86,5.21,6,3.58,0.57,0/10,0,0,POR,['Panchinaro'],60,80,False,False,False,Roma,DOWN,6
+LEZZERINI LUCA,47,nd,nd,nd,0,0.00,0.00,21/30,50/60,0,POR,['Panchinaro'],40,60,False,True,False,Fiorentina,STABLE,0
+PINSOGLIO CARLO,47,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,"['Outsider', 'Panchinaro']",20,60,False,False,False,Juventus,STABLE,0
+MARTINELLI TOMMASO,46,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Fiorentina,STABLE,0
+SOMMARIVA DANIELE,45,6.00,nd,nd,1,6.00,0.16,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Genoa,STABLE,1
+TORRIANI LORENZO,45,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Milan,STABLE,0
+SAMOOJA JASPER LAURI PETTERI,43,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,"['Outsider', 'Panchinaro']",20,80,False,False,False,Lecce,STABLE,0
+RADUNOVIC BORIS,44,nd,4.00,nd,0,0.00,0.00,0/10,3/5,0,POR,['Panchinaro'],20,60,False,True,False,Cagliari,STABLE,0
+SAVA RAZVAN,43,4.67,nd,nd,12,4.67,1.47,0/10,8/11,0,POR,['Panchinaro'],40,60,False,False,False,Udinese,STABLE,12
+RINALDI FILIPPO,41,nd,nd,nd,31,0.00,0.00,0/10,0/2,0,POR,['Panchinaro'],20,60,False,True,False,Parma,STABLE,0
+CONTINI NIKITA,42,nd,6.00,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Napoli,STABLE,0
+FRUCHTL CHRISTIAN,42,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],40,60,False,False,False,Lecce,STABLE,0
+SEMPER ADRIAN,41,nd,nd,nd,36,0.00,0.00,11/20,8/11,0,POR,['Panchinaro'],20,60,False,False,False,Pisa,STABLE,0
+CORVI EDOARDO,41,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Parma,STABLE,0
+SARO GIANLUCA,39,nd,nd,nd,0,0.00,0.00,0/10,3/5,0,POR,['Panchinaro'],20,20,False,False,False,Cremonese,STABLE,0
+VIGORITO MAURO,41,nd,nd,nd,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],40,80,False,False,False,Como,STABLE,0
+CIOCCI GIUSEPPE,40,6.00,nd,nd,1,6.00,0.16,0/10,0,0,POR,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Cagliari,STABLE,1
+PERILLI SIMONE,38,nd,nd,nd,0,0.00,0.00,0/10,0/3,0,POR,['Panchinaro'],20,80,False,False,False,Verona,STABLE,0
+RAVAGLIA FEDERICO,39,nd,nd,3.56,12,0.00,0.00,0/10,8/11,0,POR,['Panchinaro'],20,20,False,False,False,Bologna,STABLE,0
+ROSSI FRANCESCO,34,nd,nd,6.00,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,80,False,False,False,Atalanta,STABLE,0
+PALEARI ALBERTO,38,3.50,nd,nd,1,3.50,0.09,0/10,0,0,POR,"['Panchinaro', 'Buona Media']",40,80,False,False,False,Torino,STABLE,1
+PADELLI DANIELE,24,6.50,nd,nd,1,6.50,0.17,0/10,0,0,POR,['Panchinaro'],20,80,False,False,False,Udinese,STABLE,1
+RUSSO ALESSANDRO,31,nd,nd,2.00,0,0.00,0.00,0/10,0,0,POR,['Panchinaro'],20,60,False,False,False,Sassuolo,STABLE,0
+DIMARCO FEDERICO,95,6.83,7.25,6.70,30,6.83,5.39,30+,3/5,3/5,DIF,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Piazzati']",60,60,True,False,False,Inter,DOWN,30
+ANGELINO JOSE ANGEL,89,6.33,5.82,nd,36,6.33,6.00,21/30,0/3,4/7,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",40,60,True,False,False,Roma,UP,36
+DI LORENZO GIOVANNI,90,6.41,6.24,6.58,35,6.41,5.90,21/30,3/5,3/5,DIF,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador']",60,80,False,False,False,Napoli,UP,35
+AUGUSTO CARLOS,89,6.67,6.21,6.76,26,6.67,4.56,11/20,0/3,0/3,DIF,"['Panchinaro', 'Buona Media', 'Piazzati']",60,60,False,False,False,Inter,UP,26
+CAMBIASO ANDREA,88,6.20,6.12,6.03,30,6.20,4.89,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media']",80,40,True,False,False,Juventus,UP,30
+RRAHMANI AMIR,87,6.19,6.14,6.36,36,6.19,5.86,21/30,0/3,0/1,DIF,['Titolare'],40,60,True,False,False,Napoli,UP,36
+MANCINI GIANLUCA,82,6.26,6.21,6.16,35,6.26,5.77,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media', 'Falloso']",60,80,True,False,False,Roma,UP,35
+OLIVERA MATHIAS,83,6.05,5.90,6.27,29,6.05,4.62,11/20,0,0,DIF,"['Titolare', 'Assistman']",60,60,True,False,False,Napoli,UP,29
+DODO' DOMILSON,84,6.17,5.80,5.98,32,6.17,5.20,21/30,0/3,3/5,DIF,"['Titolare', 'Buona Media']",80,40,True,False,False,Fiorentina,UP,32
+MARTIN AARON,81,6.34,5.84,nd,34,6.34,5.67,21/30,3/5,3/5,DIF,"['Outsider', 'Titolare', 'Goleador', 'Assistman']",60,60,False,False,False,Genoa,UP,34
+ZORTEA NADIR,86,6.63,6.62,6.10,34,6.63,5.93,21/30,3/5,3/5,DIF,"['Titolare', 'Buona Media', 'Assistman']",40,60,False,True,False,Bologna,UP,34
+MARUSIC ADAM,80,6.17,5.74,5.92,29,6.17,4.71,21/30,3/5,3/5,DIF,"['Titolare', 'Assistman']",40,60,False,False,False,Lazio,UP,29
+BASTONI ALESSANDRO,81,6.59,6.41,6.14,29,6.59,5.03,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media']",80,60,False,False,False,Inter,UP,29
+DUMFRIES DENZEL,81,7.02,6.57,6.00,26,7.02,4.80,21/30,3/5,4/7,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",60,60,True,False,False,Inter,UP,26
+NDICKA EVAN,79,6.03,5.92,nd,36,6.03,5.71,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media', 'Falloso']",60,60,False,False,False,Roma,UP,36
+CELIK ZEKI,78,5.75,5.80,5.71,28,5.75,4.24,21/30,0/2,0/3,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,60,False,False,False,Roma,DOWN,28
+DEL PRATO ENRICO,79,6.21,nd,nd,33,6.21,5.39,30+,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Assistman']",60,60,True,False,False,Parma,STABLE,33
+BIRAGHI CRISTIANO,80,5.90,6.02,6.19,20,5.90,3.11,11/20,0/3,3/5,DIF,"['Titolare', 'Assistman', 'Rigorista', 'Piazzati']",40,60,False,False,False,Torino,DOWN,20
+GABBIA MATTEO,77,6.04,6.30,5.39,24,6.04,3.81,11/20,0/3,0/1,DIF,['Panchinaro'],60,60,True,False,False,Milan,DOWN,24
+ZALEWSKI NICOLA,77,6.22,5.76,6.16,18,6.22,2.95,21/30,3/5,4/7,DIF,"['Panchinaro', 'Assistman', 'Falloso', 'Giovane talento']",40,60,True,True,False,Atalanta,UP,18
+VALERI EMANUELE,78,6.26,5.62,6.31,33,6.26,5.44,21/30,0/3,3/5,DIF,"['Titolare', 'Assistman']",40,60,True,False,False,Parma,UP,33
+ROMAGNOLI ALESSIO,77,5.90,5.83,6.29,31,5.90,4.81,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media']",80,60,False,False,False,Lazio,UP,31
+VASQUEZ JOHAN,77,6.22,6.17,5.76,34,6.22,5.57,30+,0/3,0/2,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,80,False,False,False,Genoa,UP,34
+TOMORI FIKAYO,76,5.79,6.37,6.09,17,5.79,2.59,21/30,0/2,0/2,DIF,"['Titolare', 'Buona Media']",40,60,True,False,False,Milan,DOWN,17
+BELLANOVA RAOUL,78,6.27,6.38,6.00,33,6.27,5.45,21/30,3/5,4/7,DIF,"['Outsider', 'Titolare']",60,80,False,False,False,Atalanta,DOWN,33
+GOSENS ROBIN,76,6.65,nd,6.30,30,6.65,5.25,21/30,3/5,3/5,DIF,"['Outsider', 'Titolare', 'Goleador', 'Assistman']",60,60,False,False,False,Fiorentina,STABLE,30
+BISSECK YANN AUREL,77,6.46,7.06,nd,25,6.46,4.25,11/20,0/3,0/2,DIF,"['Outsider', 'Panchinaro']",60,60,False,False,False,Inter,DOWN,25
+DE VRIJ STEFAN,77,6.60,6.41,5.98,21,6.60,3.65,11/20,0/3,0/3,DIF,"['Panchinaro', 'Buona Media']",60,60,True,False,False,Inter,UP,21
+BEUKEMA SAM,76,5.94,6.04,nd,32,5.94,5.00,21/30,0/3,0/2,DIF,"['Titolare', 'Goleador']",40,60,False,True,False,Napoli,DOWN,32
+LIMA WESLEY,75,nd,nd,nd,42,0.00,0.00,21/30,3/5,4/7,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Assistman', 'Giovane talento']",60,80,False,True,False,Roma,STABLE,0
+ZAPPA GABRIELE,75,5.88,5.90,nd,34,5.88,5.26,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,60,False,False,False,Cagliari,DOWN,34
+SPINAZZOLA LEONARDO,74,6.25,6.30,6.25,22,6.25,3.62,21/30,0/3,4/7,DIF,"['Outsider', 'Panchinaro', 'Buona Media', 'Assistman']",60,20,False,False,False,Napoli,DOWN,22
+MARI' VILLAR PABLO,75,5.77,5.85,5.97,31,5.77,4.71,11/20,0/2,0/1,DIF,['Titolare'],40,60,False,False,False,Fiorentina,DOWN,31
+RANIERI LUCA,74,5.82,5.93,6.19,34,5.82,5.21,21/30,0/2,0/1,DIF,"['Titolare', 'Buona Media']",40,80,False,False,False,Fiorentina,DOWN,34
+MASINA ADAM,74,6.14,5.81,6.36,22,6.14,3.55,0/10,0/3,0/3,DIF,"['Titolare', 'Falloso']",40,60,False,False,False,Torino,UP,22
+VITI MATTIA,74,6.05,5.63,nd,28,6.05,4.46,21/30,0/2,0/2,DIF,"['Outsider', 'Panchinaro', 'Buona Media', 'Giovane talento']",40,60,False,False,False,Fiorentina,UP,28
+DJIMSITI BERAT,74,5.89,5.88,5.89,31,5.89,4.81,21/30,0/3,0/3,DIF,"['Panchinaro', 'Buona Media']",40,60,True,False,False,Atalanta,UP,31
+ISMAJLI ARDIAN,73,6.11,5.67,5.86,27,6.11,4.34,21/30,0/2,0/1,DIF,"['Titolare', 'Buona Media']",40,60,False,True,True,Torino,UP,27
+PELLEGRINI LUCA,74,6.11,5.77,5.83,19,6.11,3.06,11/20,0/3,0/3,DIF,"['Panchinaro', 'Buona Media']",60,60,False,False,False,Lazio,UP,19
+BASCHIROTTO FEDERICO,73,6.00,5.69,6.23,36,6.00,5.68,21/30,0/3,0/1,DIF,"['Titolare', 'Goleador']",40,60,True,True,False,Cremonese,UP,36
+KALULU PIERRE,73,6.04,5.83,5.78,27,6.04,4.29,21/30,0/1,0/1,DIF,"['Outsider', 'Titolare']",60,60,False,False,False,Juventus,UP,27
+ZAPPACOSTA DAVIDE,73,6.27,6.07,6.64,28,6.27,4.62,21/30,3/5,3/5,DIF,"['Panchinaro', 'Buona Media', 'Assistman']",60,60,False,False,False,Atalanta,UP,28
+ESTUPINAN PERVIS,73,nd,nd,nd,0,0.00,0.00,21/30,0/3,4/7,DIF,"['Outsider', 'Titolare', 'Assistman']",60,60,False,True,False,Milan,STABLE,0
+ZANOLI ALESSANDRO,72,5.98,5.75,6.33,26,5.98,4.09,21/30,0/2,0/3,DIF,"['Panchinaro', 'Assistman']",40,80,False,False,False,Napoli,UP,26
+LAZZARI MANUEL,72,5.86,5.91,5.77,21,5.86,3.24,21/30,0/3,3/5,DIF,"['Titolare', 'Buona Media', 'Assistman']",60,80,False,False,False,Lazio,DOWN,21
+GALLO ANTONINO,72,5.62,6.00,5.65,30,5.62,4.44,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media']",60,40,False,False,False,Lecce,DOWN,30
+HIEN ISAK,72,5.78,5.85,5.80,29,5.78,4.41,21/30,0/2,0/2,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Falloso']",40,60,False,False,False,Atalanta,DOWN,29
+PARISI FABIANO,73,6.22,5.64,6.14,18,6.22,2.95,21/30,0/3,3/5,DIF,"['Panchinaro', 'Buona Media', 'Assistman']",40,60,False,False,False,Fiorentina,UP,18
+BRADARIC DOMAGOJI,73,5.72,5.74,5.77,27,5.72,4.06,11/20,0/2,0/3,DIF,['Panchinaro'],40,60,False,False,False,Verona,DOWN,27
+VOJVODA MERGIM,72,6.04,5.92,5.98,27,6.04,4.29,11/20,0/2,0/2,DIF,"['Panchinaro', 'Buona Media']",40,60,False,False,False,Como,UP,27
+BUONGIORNO ALESSANDRO,71,6.45,6.57,6.15,21,6.45,3.56,30+,0/2,0/2,DIF,"['Outsider', 'Titolare']",40,60,False,False,False,Napoli,DOWN,21
+SABELLI STEFANO,71,5.93,5.87,nd,28,5.93,4.37,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,60,False,False,False,Genoa,UP,28
+LUCUMI' JHON,71,5.71,6.09,5.68,31,5.71,4.66,30+,0/2,0/2,DIF,['Titolare'],40,60,False,False,False,Bologna,DOWN,31
+LUPERTO SEBASTIANO,71,6.10,6.07,6.01,34,6.10,5.46,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media']",60,60,False,False,False,Cagliari,UP,34
+DARMIAN MATTEO,71,6.42,6.21,6.19,24,6.42,4.05,11/20,0/3,3/5,DIF,"['Titolare', 'Buona Media', 'Assistman']",60,60,False,False,False,Inter,UP,24
+MIRANDA JUAN,71,6.16,nd,nd,29,6.16,4.70,21/30,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Falloso']",40,60,False,False,False,Bologna,STABLE,29
+KAMARA HASSANE,70,6.05,6.12,nd,29,6.05,4.62,21/30,0/3,3/5,DIF,"['Titolare', 'Assistman']",40,60,False,False,False,Udinese,DOWN,29
+GILA MARIO,70,5.82,5.93,5.50,31,5.82,4.75,0/10,0/1,0/1,DIF,['Panchinaro'],20,60,False,False,False,Lazio,DOWN,31
+DE WINTER KONI,70,6.23,5.73,5.62,22,6.23,3.61,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Giovane talento']",40,60,False,True,False,Milan,UP,22
+PAVLOVIC STRAHINJA,71,6.11,nd,nd,22,6.11,3.54,21/30,0/3,0/3,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Falloso']",60,40,False,False,False,Milan,STABLE,22
+MARIO JOAO,69,nd,nd,nd,27,0.00,0.00,11/20,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Giovane talento']",60,80,False,True,False,Juventus,STABLE,0
+PONGRACIC MARIN,69,5.73,5.79,5.89,15,5.73,2.26,21/30,0/2,0/1,DIF,['Titolare'],60,40,False,False,False,Fiorentina,DOWN,15
+PAVARD BENJAMIN,68,6.05,6.28,nd,21,6.05,3.34,21/30,0/3,3/5,DIF,"['Titolare', 'Buona Media']",60,60,False,False,False,Inter,DOWN,21
+DOSSENA ALBERTO,69,5.84,5.94,nd,22,5.84,3.38,21/30,0/3,0/3,DIF,"['Outsider', 'Titolare', 'Goleador', 'Falloso']",40,60,False,False,True,Como,DOWN,22
+SAVONA NICOLO,69,6.00,nd,nd,25,6.00,3.95,21/30,3/5,3/5,DIF,"['Outsider', 'Panchinaro', 'Buona Media', 'Goleador', 'Giovane talento']",60,60,False,False,True,Juventus,STABLE,25
+BREMER GLAISON,68,6.30,6.37,6.35,5,6.30,0.83,30+,0/3,0/3,DIF,"['Titolare', 'Buona Media']",80,40,False,False,False,Juventus,DOWN,5
+EHIZIBUE KINGLSLEY,68,5.82,5.86,5.93,30,5.82,4.59,11/20,0/2,3/5,DIF,"['Outsider', 'Titolare', 'Assistman']",60,60,False,False,False,Udinese,DOWN,30
+GATTI FEDERICO,67,6.22,6.11,5.81,27,6.22,4.42,0/10,0,0,DIF,['Titolare'],80,40,False,False,False,Juventus,UP,27
+KEMPF MARC OLIVER,68,5.73,nd,nd,30,5.73,4.52,21/30,3/5,0/1,DIF,"['Outsider', 'Titolare', 'Goleador']",40,60,False,False,False,Como,STABLE,30
+ROUHI JONAS JAKOB,67,nd,nd,nd,5,0.00,0.00,0/10,0/1,0/2,DIF,"['Outsider', 'Panchinaro', 'Giovane talento']",40,80,False,False,False,Juventus,STABLE,0
+TAVARES NUNO,67,6.52,nd,nd,22,6.52,3.77,21/30,0/3,0/3,DIF,"['Titolare', 'Assistman']",60,40,False,False,False,Lazio,STABLE,22
+IDZES JAY,67,5.97,nd,nd,34,5.97,5.34,30+,0/3,0/3,DIF,"['Titolare', 'Goleador']",60,40,False,True,False,Sassuolo,STABLE,34
+NDIAYE ABDOULAYE,67,nd,nd,nd,22,0.00,0.00,21/30,0/3,0/1,DIF,"['Outsider', 'Titolare', 'Goleador', 'Giovane talento']",40,60,False,True,False,Parma,STABLE,0
+MORENO ALBERTO,67,5.90,nd,nd,21,5.90,3.26,21/30,0/2,3/5,DIF,"['Titolare', 'Assistman', 'Falloso', 'Giovane talento']",40,60,True,False,False,Como,STABLE,21
+COCO SAUL,66,5.81,nd,nd,31,5.81,4.74,21/30,0/3,0/2,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Falloso']",60,60,False,False,False,Torino,STABLE,31
+GHILARDI DANIELE,67,5.54,nd,nd,24,5.54,3.50,11/20,0/3,0/2,DIF,"['Titolare', 'Falloso', 'Giovane talento']",40,60,False,True,False,Roma,STABLE,24
+WALUKIEWICZ SEBASTIAN,66,5.58,5.62,5.89,26,5.58,3.82,11/20,0/1,0/1,DIF,"['Titolare', 'Falloso']",40,40,True,False,False,Sassuolo,DOWN,26
+GOLDANIGA EDOARDO,66,5.72,5.54,nd,29,5.72,4.37,11/20,0/2,0/1,DIF,"['Panchinaro', 'Falloso']",40,60,False,False,False,Como,UP,29
+JIMENEZ ALEX,66,5.83,nd,nd,21,5.83,3.22,11/20,0/3,0/3,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Milan,STABLE,21
+COMUZZO PIETRO,66,5.96,nd,nd,25,5.96,3.92,11/20,0/3,0/3,DIF,"['Titolare', 'Giovane talento']",40,60,True,False,False,Fiorentina,STABLE,25
+MUHAREMOVIć TARIK,65,nd,nd,nd,28,0.00,0.00,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media', 'Giovane talento']",40,60,False,True,False,Sassuolo,STABLE,0
+PEZZELLA GIUSEPPE,66,6.02,5.50,5.71,33,6.02,5.23,11/20,0/1,0/3,DIF,['Panchinaro'],40,60,False,False,False,Cremonese,UP,33
+KOLASINAC SEAD,66,6.09,6.07,nd,22,6.09,3.53,21/30,3/5,3/5,DIF,['Titolare'],40,40,False,False,True,Atalanta,UP,22
+DOIG JOSH,65,nd,5.76,6.52,29,0.00,0.00,21/30,3/5,3/5,DIF,"['Titolare', 'Buona Media', 'Falloso', 'Giovane talento']",80,60,False,False,False,Sassuolo,STABLE,0
+MARIPAN GUILLERMO,65,5.91,nd,nd,27,5.91,4.20,11/20,0/3,0/1,DIF,"['Titolare', 'Buona Media']",60,20,False,False,False,Torino,STABLE,27
+ATHEKAME ZACHARY,65,nd,nd,nd,34,0.00,0.00,21/30,0/3,3/5,DIF,"['Titolare', 'Assistman', 'Giovane talento']",40,60,False,True,False,Milan,STABLE,0
+ACERBI FRANCESCO,64,6.18,6.56,5.97,20,6.18,3.25,21/30,0/2,0/2,DIF,"['Titolare', 'Buona Media']",60,60,False,False,False,Inter,DOWN,20
+GASPAR KIOLANDA,65,6.13,nd,nd,23,6.13,3.71,21/30,0/3,0/3,DIF,"['Titolare', 'Falloso', 'Giovane talento']",40,60,True,False,False,Lecce,STABLE,23
+GUILBERT FREDERIC,64,5.80,nd,nd,30,5.80,4.58,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Falloso']",80,60,False,False,False,Lecce,STABLE,30
+MAZZOCCHI PASQUALE,64,5.65,5.64,6.46,10,5.65,1.49,11/20,0/2,0/3,DIF,"['Panchinaro', 'Assistman', 'Falloso']",40,60,False,False,False,Napoli,UP,10
+AHANOR HONEST,64,nd,nd,nd,6,6.00,0.95,11/20,0/2,0/2,DIF,"['Outsider', 'Panchinaro', 'Goleador', 'Giovane talento']",40,80,False,True,False,Atalanta,STABLE,0
+LAZARO VALENTINO,64,5.97,6.07,6.05,29,5.97,4.56,11/20,0/3,0/2,DIF,"['Outsider', 'Panchinaro']",40,60,False,False,False,Torino,DOWN,29
+HYSAJ ELSEID,63,6.13,5.66,6.05,8,6.13,1.29,11/20,0/1,0/2,DIF,['Panchinaro'],40,60,False,False,False,Lazio,UP,8
+MINA YERRY,64,6.05,6.39,nd,30,6.05,4.78,30+,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,40,False,False,False,Cagliari,DOWN,30
+MODESTO RUI,64,6.04,nd,nd,13,6.04,2.07,21/30,3/5,3/5,DIF,"['Outsider', 'Titolare', 'Assistman']",60,60,False,False,False,Udinese,STABLE,13
+KELLY LLOYD,63,5.63,nd,nd,12,5.63,1.78,21/30,0/3,0/2,DIF,"['Titolare', 'Buona Media']",60,40,False,False,False,Juventus,STABLE,12
+SCHUURS PERR,63,nd,6.33,6.19,0,0.00,0.00,11/20,0/2,0/2,DIF,"['Titolare', 'Buona Media']",60,40,False,False,True,Torino,STABLE,0
+CASALE NICOLO',63,5.50,5.56,6.03,14,5.50,2.03,11/20,0/3,0/3,DIF,['Titolare'],40,80,False,False,True,Bologna,DOWN,14
+PIERAGNOLO EDOARDO,62,nd,nd,nd,20,0.00,0.00,11/20,0/3,0/3,DIF,"['Outsider', 'Panchinaro', 'Buona Media']",40,80,False,False,False,Sassuolo,STABLE,0
+TROILO MARIANO,63,nd,nd,nd,17,0.00,0.00,30+,0/3,0/2,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Piazzati', 'Falloso', 'Giovane talento']",60,80,False,True,False,Parma,STABLE,0
+LYKOGIANNIS CHARALAMPOS,62,6.04,6.38,6.21,14,6.04,2.23,11/20,0/3,0/3,DIF,"['Panchinaro', 'Buona Media', 'Assistman', 'Piazzati']",20,60,False,False,False,Bologna,DOWN,14
+GUTIERREZ ORTEGA MIGUEL,62,nd,nd,nd,29,0.00,0.00,21/30,0/3,3/5,DIF,"['Titolare', 'Assistman', 'Falloso']",40,80,False,True,False,Napoli,STABLE,0
+ANGORI SAMUELE,62,nd,nd,nd,37,6.28,6.11,21/30,0/3,3/5,DIF,"['Titolare', 'Assistman', 'Giovane talento']",60,60,False,False,False,Pisa,STABLE,0
+DJALO TIAGO,62,nd,nd,nd,8,0.00,0.00,0/10,0/3,0/3,DIF,"['Panchinaro', 'Goleador', 'Falloso']",40,60,False,False,False,Juventus,STABLE,0
+OSTIGARD LEO,62,nd,5.97,5.92,0,0.00,0.00,11/20,0/3,0/2,DIF,"['Outsider', 'Titolare', 'Falloso']",40,80,False,True,False,Genoa,STABLE,0
+VITIK MARTIN,61,nd,nd,nd,26,0.00,0.00,21/30,3/5,0/2,DIF,"['Titolare', 'Buona Media', 'Falloso', 'Giovane talento']",60,60,False,True,False,Bologna,STABLE,0
+SOLET OUMAR,61,6.29,nd,nd,19,6.29,3.15,30+,0/3,0/2,DIF,"['Outsider', 'Titolare', 'Buona Media']",60,80,False,False,False,Udinese,STABLE,19
+SCALVINI GIORGIO,61,5.25,6.08,6.03,4,5.25,0.55,0/10,0/2,0/1,DIF,"['Titolare', 'Giovane talento']",20,80,False,False,False,Atalanta,DOWN,4
+BARBIERI TOMMASO,60,nd,nd,nd,35,0.00,0.00,21/30,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Assistman', 'Giovane talento']",40,60,False,False,False,Cremonese,STABLE,0
+POSCH STEFAN,61,5.77,6.15,6.68,13,5.77,1.97,21/30,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Assistman']",60,60,False,True,False,Bologna,DOWN,13
+PEDERSEN MARCUS,60,5.54,5.73,nd,23,5.54,3.35,21/30,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Assistman']",40,60,False,False,False,Torino,DOWN,23
+CANDÈ FALI,60,5.84,nd,nd,16,5.84,2.46,11/20,0/3,0/3,DIF,"['Panchinaro', 'Falloso']",40,60,False,True,False,Sassuolo,STABLE,16
+IDRISSI RIYAD,60,nd,nd,nd,28,0.00,0.00,11/20,0/3,0/3,DIF,"['Titolare', 'Giovane talento']",40,60,False,True,False,Cagliari,STABLE,0
+GOGLICHIDZE SABA,59,5.69,nd,nd,32,5.69,4.79,11/20,0/2,0/3,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Udinese,STABLE,32
+BALOGH BOTOND,59,5.69,nd,nd,26,5.69,3.89,11/20,0/1,0/1,DIF,"['Titolare', 'Falloso', 'Giovane talento']",40,60,False,False,False,Parma,STABLE,26
+PAZ YEFERSON,59,nd,nd,nd,13,0.00,0.00,11/20,0/1,0/1,DIF,"['Outsider', 'Panchinaro', 'Falloso', 'Giovane talento']",40,80,False,False,False,Sassuolo,STABLE,0
+OBERT ADAM,59,6.05,5.29,nd,19,6.05,3.03,21/30,0/2,0/2,DIF,['Titolare'],40,80,False,False,False,Cagliari,UP,19
+BARTESAGHI DAVIDE,59,nd,nd,nd,4,0.00,0.00,11/20,0/2,0/2,DIF,"['Panchinaro', 'Giovane talento']",40,80,False,False,False,Milan,STABLE,0
+VAN DER BREMPT IGNACE,59,5.94,nd,nd,17,5.94,2.66,11/20,0/2,0/3,DIF,"['Panchinaro', 'Assistman', 'Giovane talento']",40,40,False,False,False,Como,STABLE,17
+NORTON-CUFFY BROOKE,59,5.70,nd,nd,10,5.70,1.50,11/20,0/3,0/3,DIF,"['Titolare', 'Giovane talento']",40,60,False,False,False,Genoa,STABLE,10
+VALLE ALEX,58,5.73,nd,nd,13,5.73,1.96,11/20,0/3,3/5,DIF,"['Titolare', 'Giovane talento']",40,60,True,False,False,Como,STABLE,13
+BELGHALI RAFIK,59,nd,nd,nd,26,0.00,0.00,21/30,0/3,3/5,DIF,"['Titolare', 'Giovane talento']",40,80,False,True,False,Verona,STABLE,0
+HOLM EMIL,59,6.13,6.16,6.17,16,6.13,2.58,21/30,0/3,3/5,DIF,"['Outsider', 'Titolare', 'Buona Media', 'Falloso']",40,60,False,False,True,Bologna,DOWN,16
+DEMBELÉ ALI,58,5.89,nd,nd,9,5.89,1.40,21/30,0/2,0/3,DIF,"['Panchinaro', 'Giovane talento']",60,60,False,False,False,Torino,STABLE,9
+MARIANUCCI LUCA,57,nd,nd,nd,18,5.74,2.72,11/20,0/3,0/2,DIF,"['Panchinaro', 'Buona Media']",60,60,False,True,False,Napoli,STABLE,0
+ZEMURA JORDAN,58,6.00,6.00,nd,20,6.00,3.16,21/30,0/2,0/3,DIF,['Panchinaro'],40,60,False,False,False,Udinese,UP,20
+PATRIC PATRICIO GABARRON,58,5.93,6.29,6.09,7,5.93,1.09,11/20,0/1,0/1,DIF,['Titolare'],40,60,False,False,True,Lazio,DOWN,7
+FORTINI NICCOLO',57,nd,nd,nd,27,0.00,0.00,11/20,0/3,0/3,DIF,"['Outsider', 'Panchinaro', 'Giovane talento']",60,60,False,True,False,Fiorentina,STABLE,0
+KRISTENSEN THOMAS,57,5.65,5.73,nd,20,5.65,2.97,11/20,0/2,0/1,DIF,"['Panchinaro', 'Giovane talento']",40,40,False,False,False,Udinese,DOWN,20
+RUGANI DANIELE,57,nd,6.46,6.00,15,0.00,0.00,0/10,0/2,0/2,DIF,"['Panchinaro', 'Buona Media']",40,80,False,False,False,Juventus,STABLE,0
+GIGOT SAMUEL,57,6.70,nd,nd,10,6.70,1.76,21/30,0/3,0/3,DIF,"['Panchinaro', 'Goleador']",60,40,False,False,False,Lazio,STABLE,10
+ODENTHAL CAS,56,nd,nd,nd,22,0.00,0.00,21/30,0/2,0/1,DIF,"['Titolare', 'Buona Media', 'Falloso']",40,80,False,True,False,Sassuolo,STABLE,0
+GONZALEZ FACUNDO,56,nd,nd,nd,6,0.00,0.00,0/10,0/2,0/2,DIF,"['Panchinaro', 'Falloso', 'Giovane talento']",40,40,False,False,False,Juventus,STABLE,0
+SERNICOLA LEONARDO,56,nd,nd,5.95,0,0.00,0.00,21/30,0/2,0/3,DIF,['Titolare'],20,20,False,False,False,Cremonese,STABLE,0
+MULLEN SENAN,56,nd,nd,nd,32,0.00,0.00,0/10,0,0,DIF,"['Panchinaro', 'Giovane talento']",60,60,False,True,False,Torino,STABLE,0
+MOREIRA PACHECO FELLIPE JACK,56,nd,nd,nd,7,4.75,0.88,11/20,0/2,0/3,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Como,STABLE,0
+VALENTI LAUTARO,55,5.85,nd,nd,20,5.85,3.08,0/10,0/2,0/1,DIF,"['Panchinaro', 'Falloso']",40,20,False,False,False,Parma,STABLE,20
+KEBASELE CRISTIAN,56,6.37,5.80,nd,15,6.37,2.51,21/30,0/2,0/1,DIF,['Titolare'],40,60,False,False,False,Udinese,UP,15
+BAKKER MITCHEL,56,6.00,6.00,nd,1,6.00,0.16,21/30,0/3,3/5,DIF,"['Panchinaro', 'Falloso']",60,60,False,False,True,Atalanta,UP,1
+ADDO VERNON,55,nd,nd,nd,31,0.00,0.00,0/10,0,0,DIF,"['Outsider', 'Panchinaro', 'Giovane talento']",20,80,False,True,False,Lecce,STABLE,0
+BONFANTI GIOVANNI,55,nd,nd,nd,30,0.00,0.00,0/10,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Atalanta,STABLE,0
+CABAL JUAN,55,6.25,5.71,5.72,6,6.25,0.99,0/10,0/2,0/2,DIF,"['Outsider', 'Panchinaro', 'Falloso', 'Giovane talento']",40,60,False,False,False,Juventus,UP,6
+BIANCHETTI MATTEO,55,nd,nd,5.60,0,0.00,0.00,21/30,0/2,0/2,DIF,['Titolare'],20,60,False,False,False,Cremonese,STABLE,0
+ILIC MIHAJLO,55,nd,nd,nd,0,0.00,0.00,11/20,0/3,0/3,DIF,"['Panchinaro', 'Giovane talento']",40,60,False,True,False,Bologna,STABLE,0
+VOGLIACCO ALESSANDRO,55,5.55,5.93,nd,19,5.55,2.78,11/20,0/2,0/2,DIF,"['Panchinaro', 'Falloso']",40,60,False,True,False,Genoa,DOWN,19
+JESUS JUAN,55,5.92,5.48,6.25,12,5.92,1.87,11/20,0/1,0/1,DIF,['Panchinaro'],40,60,False,False,False,Napoli,UP,12
+FOLINO FRANCESCO,54,nd,nd,nd,16,0.00,0.00,21/30,0/3,0/3,DIF,"['Panchinaro', 'Goleador', 'Giovane talento']",40,60,False,False,False,Cremonese,STABLE,0
+SALAH-EDDINE ANASS,54,6.00,nd,nd,2,6.00,0.32,11/20,0/3,0/3,DIF,['Panchinaro'],40,60,False,False,False,Roma,STABLE,2
+ROBERTO SERGI,55,5.77,nd,nd,11,5.77,1.67,11/20,0/3,3/5,DIF,"['Titolare', 'Buona Media', 'Assistman']",60,20,False,False,False,Como,STABLE,11
+PALACIOS TOMAS,54,5.08,nd,nd,6,5.08,0.80,11/20,0/2,0/1,DIF,"['Outsider', 'Panchinaro', 'Falloso']",40,60,False,True,False,Inter,STABLE,6
+NUNEZ UNAI,54,nd,nd,nd,10,0.00,0.00,21/30,0/2,0/2,DIF,['Titolare'],40,60,False,True,False,Verona,STABLE,0
+PALESTRA MARCO,55,nd,nd,nd,0,0.00,0.00,0/10,0,0,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Atalanta,STABLE,0
+NAVEROS JACOBO RAMON,54,nd,nd,nd,0,0.00,0.00,11/20,0/3,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Como,STABLE,0
+DE SILVESTRI LORENZO,53,6.10,6.77,5.96,15,6.10,2.41,11/20,0/3,0/3,DIF,['Panchinaro'],80,80,False,False,False,Bologna,DOWN,15
+COUBIS ANDREI,53,nd,nd,nd,34,0.00,0.00,0/10,0/1,0/1,DIF,"['Panchinaro', 'Falloso', 'Giovane talento']",40,80,False,True,False,Milan,STABLE,0
+HERMOSO MARIO,53,4.88,nd,nd,4,4.88,0.51,11/20,0/3,0/3,DIF,"['Panchinaro', 'Buona Media', 'Falloso']",60,60,False,True,False,Roma,STABLE,4
+RENSCH DEVYNE,53,6.19,nd,nd,8,6.19,1.30,11/20,0/3,0/3,DIF,"['Panchinaro', 'Assistman', 'Falloso', 'Giovane talento']",40,40,False,False,False,Roma,STABLE,8
+BERTOLA NICOLO,54,nd,nd,nd,28,0.00,0.00,21/30,0/3,0/2,DIF,"['Titolare', 'Giovane talento']",40,60,False,True,False,Udinese,STABLE,0
+CALABRESI ARTURO,52,nd,nd,nd,28,0.00,0.00,21/30,0/1,0/2,DIF,['Panchinaro'],40,60,False,False,False,Pisa,STABLE,0
+NELSSON VICTOR,52,6.00,nd,nd,4,6.00,0.63,21/30,0/3,0/2,DIF,['Titolare'],40,60,False,True,False,Verona,STABLE,4
+HEGGEM TORBJOR,53,nd,nd,nd,45,0.00,0.00,11/20,0/2,0/2,DIF,['Panchinaro'],40,80,False,True,False,Bologna,STABLE,0
+FLORIANI MUSSOLINI ROMANO,52,nd,nd,nd,36,0.00,0.00,11/20,0/2,0/3,DIF,"['Outsider', 'Panchinaro', 'Falloso', 'Giovane talento']",40,60,False,True,False,Cremonese,STABLE,0
+VEIGA DANILO,51,5.73,nd,nd,11,5.73,1.66,0/10,0/1,0/1,DIF,"['Titolare', 'Giovane talento']",20,60,False,False,False,Lecce,STABLE,11
+FRESE MARTIN,52,5.92,nd,nd,6,5.92,0.93,21/30,0/3,3/5,DIF,"['Titolare', 'Buona Media', 'Assistman']",40,60,False,False,False,Verona,STABLE,6
+VALENTINI NICOLAS,52,5.43,nd,nd,14,5.43,2.00,21/30,0/3,0/3,DIF,['Titolare'],40,60,False,False,False,Verona,STABLE,14
+KOUASSI CHRIST-OWEN,51,nd,nd,nd,33,0.00,0.00,0/10,0/1,0,DIF,"['Outsider', 'Panchinaro', 'Buona Media', 'Falloso', 'Giovane talento']",40,80,False,True,False,Lecce,STABLE,0
+PROVSTGAARD OLIVER,51,6.50,nd,nd,1,6.50,0.17,11/20,0/2,0/1,DIF,['Panchinaro'],40,60,False,False,False,Lazio,STABLE,1
+CECCHERINI FEDERICO,51,nd,nd,5.90,0,0.00,0.00,21/30,0/2,0/1,DIF,"['Titolare', 'Falloso']",40,60,False,False,False,Cremonese,STABLE,0
+DO LAGO PONTES ESTEVES TOMAS,50,nd,nd,nd,0,0.00,0.00,11/20,0/3,0/3,DIF,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Pisa,STABLE,0
+BONIFAZI KEVIN,51,5.25,5.75,5.65,2,5.25,0.28,11/20,0/3,0/3,DIF,['Panchinaro'],40,40,False,True,False,Bologna,DOWN,2
+SMOLCIC IVAN,50,5.75,nd,nd,8,5.75,1.21,0/10,0/2,0/3,DIF,['Panchinaro'],40,60,False,False,False,Como,STABLE,8
+CUADRADO JUAN,51,6.13,6.22,5.92,19,6.13,3.07,11/20,4/7,4/7,DIF,"['Outsider', 'Titolare', 'Buona Media']",40,20,False,True,False,Pisa,DOWN,19
+BIANAY BALCOT CÔME,50,nd,nd,nd,8,0.00,0.00,0/10,0,0,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Torino,STABLE,0
+MISSORI FILIPPO,50,nd,5.60,nd,4,0.00,0.00,0/10,0/3,0/3,DIF,"['Titolare', 'Buona Media', 'Giovane talento']",40,60,False,False,False,Sassuolo,STABLE,0
+LOVIK MATHIAS,49,5.75,nd,nd,4,5.75,0.61,11/20,0/3,3/5,DIF,"['Outsider', 'Panchinaro', 'Goleador', 'Giovane talento']",40,60,False,False,False,Parma,STABLE,4
+TOURE ISSAK,49,5.35,nd,nd,10,5.35,1.41,11/20,0/3,0/1,DIF,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Udinese,STABLE,10
+CANESTRELLI SIMONE,50,nd,nd,nd,36,0.00,0.00,21/30,0/2,0/2,DIF,['Titolare'],20,60,False,False,False,Pisa,STABLE,0
+MARCANDALLI ALESSANDRO,50,5.75,nd,nd,8,5.75,1.21,11/20,0/2,0/3,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Genoa,STABLE,8
+ROMAGNA FILIPPO,48,nd,nd,5.50,23,0.00,0.00,11/20,0/2,0/1,DIF,['Panchinaro'],60,60,False,False,False,Sassuolo,STABLE,0
+SIEBERT JAMIL,47,nd,nd,nd,21,0.00,0.00,21/30,0/3,0/3,DIF,"['Titolare', 'Falloso']",60,60,False,True,False,Lecce,STABLE,0
+DI PARDO ALESSANDRO,47,nd,5.81,nd,26,0.00,0.00,0/10,0/2,0/2,DIF,['Panchinaro'],20,60,False,True,False,Cagliari,STABLE,0
+EBOSSE ENZO,48,5.25,nd,5.54,2,5.25,0.28,21/30,0/1,0/2,DIF,['Titolare'],40,60,False,True,False,Verona,STABLE,2
+JEAN GABY,47,5.75,nd,nd,18,5.75,2.72,11/20,0/3,0/3,DIF,['Titolare'],40,60,False,False,True,Lecce,STABLE,18
+CIRCATI ALESSANDRO,47,5.75,nd,nd,6,5.75,0.91,21/30,0/3,0/3,DIF,"['Outsider', 'Titolare', 'Falloso', 'Giovane talento']",40,60,False,False,False,Parma,STABLE,6
+SAZONOV SABA,45,5.00,5.69,nd,1,5.00,0.13,11/20,0/1,0/1,DIF,"['Panchinaro', 'Falloso', 'Giovane talento']",40,60,False,False,False,Torino,DOWN,1
+RUS ADRIAN,46,nd,nd,nd,25,0.00,0.00,21/30,0/2,0/1,DIF,['Panchinaro'],40,60,False,False,False,Pisa,STABLE,0
+LUSUARDI MATEUS,46,nd,nd,nd,12,0.00,0.00,21/30,0/2,0/2,DIF,"['Titolare', 'Falloso', 'Giovane talento']",40,80,False,True,True,Pisa,STABLE,0
+CARACCIOLO ANTONIO,45,nd,nd,nd,35,0.00,0.00,11/20,0/1,0/2,DIF,['Titolare'],20,60,False,False,False,Pisa,STABLE,0
+PINTUS NICOLA,45,nd,nd,nd,0,0.00,0.00,0/10,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Cagliari,STABLE,0
+UBANI MARLON,45,nd,nd,nd,38,0.00,0.00,0/10,0,0,DIF,"['Panchinaro', 'Giovane talento']",20,80,False,True,False,Lecce,STABLE,0
+SLOTSAGER TOBIAS,44,nd,nd,nd,14,0.00,0.00,0/10,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Verona,STABLE,0
+OYEGOKE DANIEL,43,5.67,nd,nd,3,5.67,0.45,11/20,0/2,0/2,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Verona,STABLE,3
+PEREZ MATIAS,43,nd,nd,nd,0,0.00,0.00,0/10,0,0,DIF,['Panchinaro'],40,60,False,True,False,Lecce,STABLE,0
+DENOON DANIEL,44,nd,nd,nd,13,0.00,0.00,11/20,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",40,80,False,True,False,Pisa,STABLE,0
+CORAZZA TOMMASO,43,nd,6.00,nd,0,0.00,0.00,0/10,0/3,0/3,DIF,"['Panchinaro', 'Giovane talento']",40,60,False,True,False,Bologna,STABLE,0
+GABRIEL TIAGO,42,6.25,nd,nd,2,6.25,0.33,0/10,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Lecce,STABLE,2
+MBAMBI JEREMY,43,nd,nd,nd,4,0.00,0.00,0/10,0/1,0/1,DIF,"['Panchinaro', 'Giovane talento']",20,80,False,True,False,Pisa,STABLE,0
+MCTOMINAY SCOTT,94,7.70,nd,nd,33,7.70,6.69,21/30,8/11,4/7,CEN,"['Fuoriclasse', 'Titolare', 'Goleador', 'Piazzati']",60,60,True,False,False,Napoli,STABLE,33
+PALMA MATTEO,41,nd,nd,nd,9,0.00,0.00,11/20,0/1,0/2,DIF,['Panchinaro'],20,60,False,True,False,Udinese,STABLE,0
+OTOA SEBASTIAN,42,4.67,nd,nd,3,4.67,0.37,11/20,0/3,0/2,DIF,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Genoa,STABLE,3
+PASALIC MARIO,88,6.14,6.82,6.41,32,6.14,5.17,11/20,4/7,3/5,CEN,"['Titolare', 'Buona Media', 'Goleador', 'Rigorista']",60,60,False,False,False,Atalanta,DOWN,32
+BARELLA NICOLO',92,6.65,6.59,6.86,30,6.65,5.25,30+,4/7,3/5,CEN,"['Fuoriclasse', 'Titolare', 'Buona Media']",100,80,False,False,False,Inter,UP,30
+CALHANOGLU HAKAN,87,7.02,7.83,6.74,26,7.02,4.80,21/30,4/7,4/7,CEN,"['Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati']",80,80,False,False,False,Inter,DOWN,26
+FREULER REMO,87,6.17,6.08,nd,35,6.17,5.68,30+,0/3,0/3,CEN,['Titolare'],40,40,False,False,False,Bologna,UP,35
+ANGUISSA ANDRÈ ZAMBO,88,7.05,5.85,6.60,33,7.05,6.12,30+,0/3,0/3,CEN,"['Titolare', 'Buona Media']",60,60,False,False,False,Napoli,UP,33
+DA CUNHA LUCAS,84,6.38,nd,nd,34,6.38,5.71,21/30,3/5,3/5,CEN,"['Titolare', 'Buona Media', 'Piazzati']",40,60,False,False,False,Como,STABLE,34
+LOCATELLI MANUEL,87,6.27,5.96,6.08,33,6.27,5.45,21/30,3/5,3/5,CEN,"['Titolare', 'Buona Media', 'Goleador']",60,60,True,False,False,Juventus,UP,33
+MANDRAGORA ROLANDO,81,6.73,6.31,6.25,24,6.73,4.25,11/20,3/5,0/3,CEN,"['Titolare', 'Buona Media', 'Goleador', 'Piazzati']",60,40,True,False,False,Fiorentina,UP,24
+EDERSON DOS SANTOS,83,6.53,6.59,6.00,34,6.53,5.84,30+,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Assistman']",60,80,True,False,False,Atalanta,DOWN,34
+DE BRUYNE KEVIN,81,nd,nd,nd,28,0.00,0.00,11/20,4/7,4/7,CEN,"['Fuoriclasse', 'Titolare', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati']",60,40,False,True,False,Napoli,STABLE,0
+DE ROON MARTEN,84,6.60,5.97,6.26,34,6.60,5.91,30+,0/3,3/5,CEN,"['Titolare', 'Buona Media']",60,80,True,False,False,Atalanta,UP,34
+GUENDOUZI MATTEO,80,6.10,6.21,nd,35,6.10,5.62,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Goleador', 'Assistman', 'Falloso']",60,60,False,False,False,Lazio,DOWN,35
+SAELEMAEKERS ALEXIS,82,7.36,6.54,6.17,22,7.36,4.26,21/30,4/7,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Assistman']",60,80,True,True,False,Milan,UP,22
+KOOPMEINERS TEUN,81,6.41,7.63,7.14,27,6.41,4.55,21/30,4/7,4/7,CEN,"['Titolare', 'Buona Media', 'Piazzati', 'Falloso']",60,60,False,False,False,Juventus,DOWN,27
+THURAM KHEPHREN,79,6.75,nd,nd,32,6.75,5.68,21/30,0/3,0/3,CEN,"['Titolare', 'Buona Media', 'Falloso']",60,80,False,False,False,Juventus,STABLE,32
+MKHITARYAN HENRIKH,79,6.34,6.70,6.39,29,6.34,4.84,21/30,4/7,8/11,CEN,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Assistman']",60,40,False,False,False,Inter,DOWN,29
+CRISTANTE BRYAN,79,6.63,6.37,5.89,27,6.63,4.71,21/30,3/5,3/5,CEN,"['Titolare', 'Buona Media']",40,60,False,False,False,Roma,UP,27
+HENRIQUE LUIS,79,nd,nd,nd,33,0.00,0.00,21/30,4/7,4/7,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",80,80,False,True,False,Inter,STABLE,0
+LOBOTKA STANISLAV,78,6.09,5.92,6.34,29,6.09,4.65,21/30,0/3,0/3,CEN,"['Fuoriclasse', 'Titolare', 'Buona Media']",40,60,False,False,False,Napoli,UP,29
+SOHM SIMON,77,6.27,nd,nd,35,6.27,5.78,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",60,60,False,True,False,Fiorentina,STABLE,35
+FOFANA YOUSSOUF,79,6.24,nd,nd,33,6.24,5.42,21/30,0/3,3/5,CEN,"['Titolare', 'Buona Media', 'Assistman']",60,60,False,False,False,Milan,STABLE,33
+MCKENNIE WESTON,77,6.22,6.33,5.97,30,6.22,4.91,21/30,3/5,3/5,CEN,"['Panchinaro', 'Buona Media', 'Falloso']",60,60,False,False,False,Juventus,DOWN,30
+ADLI YACINE,78,7.00,6.35,nd,21,7.00,3.87,11/20,0/3,3/5,CEN,"['Outsider', 'Panchinaro', 'Buona Media']",60,60,True,True,False,Milan,UP,21
+KONE MANU,78,6.38,nd,nd,33,6.38,5.54,21/30,3/5,3/5,CEN,"['Titolare', 'Buona Media']",60,40,True,False,False,Roma,STABLE,33
+MODRIC LUKA,77,nd,nd,nd,35,6.60,6.08,21/30,3/5,4/7,CEN,"['Fuoriclasse', 'Titolare', 'Assistman', 'Rigorista', 'Piazzati']",60,60,False,True,False,Milan,STABLE,0
+KOSTIC FILIP,77,nd,6.00,6.60,27,0.00,0.00,0/10,0/3,0/3,CEN,"['Panchinaro', 'Assistman', 'Falloso']",20,40,False,False,False,Juventus,STABLE,0
+EL  AYNAOUI NEIL,76,nd,nd,nd,24,6.80,4.29,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador']",60,80,False,True,False,Roma,STABLE,0
+LOVRIC SANDI,75,6.15,6.13,6.71,33,6.15,5.34,21/30,3/5,0/3,CEN,"['Titolare', 'Buona Media', 'Goleador']",60,60,False,False,False,Udinese,UP,33
+PELLEGRINI LORENZO,76,5.89,6.91,6.33,23,5.89,3.57,21/30,4/7,3/5,CEN,"['Titolare', 'Buona Media', 'Assistman', 'Piazzati']",60,60,False,False,False,Roma,DOWN,23
+BELAHYANE REDA,75,5.58,6.00,nd,24,5.58,3.52,11/20,0/3,0/3,CEN,"['Titolare', 'Buona Media', 'Giovane talento']",40,60,False,False,False,Lazio,DOWN,24
+ROVELLA NICOLO,75,6.02,6.08,6.16,31,6.02,4.91,11/20,0/2,0/3,CEN,"['Panchinaro', 'Buona Media', 'Piazzati', 'Giovane talento']",40,60,False,False,False,Lazio,DOWN,31
+COULIBALY LASSANA,75,6.03,5.66,6.23,35,6.03,5.55,30+,0/3,0/3,CEN,"['Panchinaro', 'Buona Media']",40,60,True,False,False,Lecce,UP,35
+CAQUERET MAXENCE,75,6.82,nd,nd,17,6.82,3.05,11/20,0/2,0/3,CEN,"['Titolare', 'Assistman']",40,60,True,False,False,Como,STABLE,17
+THORSTVEDT KRISTIAN,74,nd,6.41,6.20,22,7.13,4.13,0/10,3/5,3/5,CEN,"['Titolare', 'Buona Media', 'Goleador']",40,40,False,False,False,Sassuolo,STABLE,0
+ZIELINSKI PIOTR,75,6.34,6.33,6.72,19,6.34,3.17,21/30,4/7,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador']",80,60,False,False,False,Inter,UP,19
+BRESCIANINI MARCO,73,6.43,6.47,nd,21,6.43,3.55,11/20,3/5,3/5,CEN,"['Outsider', 'Panchinaro', 'Goleador', 'Piazzati']",40,60,False,False,False,Atalanta,DOWN,21
+FAGIOLI NICOLÒ,73,6.04,6.00,6.59,24,6.04,3.81,21/30,0/3,3/5,CEN,"['Titolare', 'Buona Media', 'Assistman', 'Piazzati']",40,60,True,False,False,Fiorentina,UP,24
+FRATTESI DAVIDE,74,6.83,7.00,6.79,20,6.83,3.59,21/30,3/5,0/3,CEN,"['Panchinaro', 'Buona Media', 'Goleador']",40,60,False,False,False,Inter,DOWN,20
+FRENDRUP MORTEN,74,6.03,6.41,nd,33,6.03,5.24,30+,0/3,0/2,CEN,"['Titolare', 'Buona Media', 'Falloso']",60,60,False,False,False,Genoa,DOWN,33
+JASHARI ARDON,73,nd,nd,nd,25,6.12,4.03,30+,4/7,4/7,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",60,100,False,True,False,Milan,STABLE,0
+RICCI SAMUELE,73,6.03,5.89,6.30,32,6.03,5.08,21/30,3/5,0/3,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Giovane talento']",40,60,False,True,False,Milan,UP,32
+MATIC NEMANJA,72,nd,nd,6.32,29,0.00,0.00,11/20,0/3,3/5,CEN,"['Titolare', 'Buona Media', 'Assistman', 'Falloso']",60,60,True,True,False,Sassuolo,STABLE,0
+VECINO MATIAS,72,6.44,6.85,6.05,18,6.44,3.05,21/30,3/5,0/3,CEN,"['Panchinaro', 'Buona Media']",40,60,False,False,False,Lazio,DOWN,18
+ASLLANI KRISTJAN,71,6.63,6.53,5.85,15,6.63,2.62,11/20,0/3,0/3,CEN,"['Panchinaro', 'Assistman']",40,60,True,True,False,Torino,UP,15
+PERRONE MAXIMO,71,5.94,nd,nd,24,5.94,3.75,11/20,0/2,0/2,CEN,"['Titolare', 'Falloso']",20,60,True,False,False,Como,STABLE,24
+BARAK ANTONIN,71,5.50,6.71,5.96,1,5.50,0.14,0/10,0/3,0/3,CEN,"['Panchinaro', 'Goleador', 'Assistman']",40,40,False,False,False,Fiorentina,DOWN,1
+HERNANI JUNIOR,70,6.46,nd,nd,24,6.46,4.08,21/30,3/5,3/5,CEN,"['Panchinaro', 'Buona Media']",40,60,False,False,False,Parma,STABLE,24
+BERNABE ADRIAN,69,6.47,nd,nd,18,6.47,3.06,30+,4/7,4/7,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati', 'Giovane talento']",60,60,True,False,False,Parma,STABLE,18
+RICHARDSON AMIR,71,5.83,nd,nd,24,5.83,3.68,21/30,3/5,0/3,CEN,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Fiorentina,STABLE,24
+LOFTUS-CHEEK RUBEN,69,5.76,6.73,nd,17,5.76,2.58,11/20,0/3,3/5,CEN,"['Panchinaro', 'Buona Media']",60,60,False,False,False,Milan,DOWN,17
+GILMOUR BILLY,69,6.06,nd,nd,17,6.06,2.71,11/20,0/2,0/2,CEN,"['Panchinaro', 'Buona Media', 'Falloso']",60,60,False,False,False,Napoli,STABLE,17
+DEIOLA ALESSANDRO,69,6.17,5.40,nd,23,6.17,3.73,21/30,0/3,0/3,CEN,['Panchinaro'],40,40,True,False,False,Cagliari,UP,23
+SULEMANA IBRAHIM,69,7.08,6.13,5.77,6,7.08,1.12,11/20,0/2,0/2,CEN,"['Panchinaro', 'Giovane talento']",40,80,False,False,False,Atalanta,UP,6
+BIANCO ALESSANDRO,69,5.85,nd,nd,33,5.85,5.08,11/20,0/3,0/3,CEN,"['Panchinaro', 'Goleador', 'Falloso', 'Giovane talento']",20,60,False,False,False,Fiorentina,STABLE,33
+ANJORIN TINO,69,6.57,nd,nd,21,6.57,3.63,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Assistman']",60,60,False,True,False,Torino,STABLE,21
+ADOPO MICHEL,68,5.91,6.00,5.75,33,5.91,5.13,21/30,0/3,0/2,CEN,['Titolare'],40,60,False,False,False,Cagliari,DOWN,33
+MIRETTI FABIO,67,6.42,5.92,6.02,25,6.42,4.22,21/30,0/3,3/5,CEN,"['Panchinaro', 'Giovane talento']",40,60,False,True,True,Juventus,UP,25
+SAMARDZIC LAZAR,68,6.28,6.77,6.59,27,6.28,4.46,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Piazzati', 'Giovane talento']",40,60,False,False,False,Atalanta,DOWN,27
+ZERBIN ALESSIO,67,6.11,5.93,5.63,18,6.11,2.89,11/20,3/5,0/3,CEN,"['Panchinaro', 'Goleador', 'Giovane talento']",40,60,False,True,False,Cremonese,UP,18
+POBEGA TOMMASO,66,6.25,5.93,6.25,20,6.25,3.29,11/20,0/3,0/3,CEN,"['Panchinaro', 'Buona Media', 'Falloso']",40,60,True,False,False,Bologna,UP,20
+RAMADANI YLBER,66,5.92,5.73,nd,25,5.92,3.89,21/30,0/3,0/2,CEN,"['Titolare', 'Falloso']",40,60,False,False,False,Lecce,UP,25
+KARLSTROM JESPER,67,5.79,nd,nd,35,5.79,5.33,21/30,0/3,0/3,CEN,"['Titolare', 'Buona Media']",40,60,False,False,False,Udinese,STABLE,35
+ARTHUR MELO,67,nd,6.23,nd,15,0.00,0.00,0/10,0/3,0/2,CEN,['Panchinaro'],40,40,False,False,False,Juventus,STABLE,0
+COLLOCOLO MICHELE,65,nd,nd,nd,34,6.74,6.03,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Goleador', 'Falloso']",60,60,False,False,False,Cremonese,STABLE,0
+FERGUSON LEWIS,66,6.39,6.97,6.85,14,6.39,2.35,21/30,0/3,0/3,CEN,"['Titolare', 'Falloso']",20,20,False,False,False,Bologna,DOWN,14
+EKKELENKAMP JURGEN PETER,66,6.31,nd,nd,31,6.31,5.15,21/30,3/5,0/3,CEN,['Panchinaro'],40,60,False,False,False,Udinese,STABLE,31
+FABBIAN GIOVANNI,65,6.50,6.73,nd,21,6.50,3.59,11/20,3/5,0/3,CEN,"['Panchinaro', 'Goleador', 'Falloso', 'Giovane talento']",40,60,False,False,False,Bologna,DOWN,21
+CASADEI CESARE,63,6.27,nd,nd,15,6.27,2.48,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare', 'Buona Media', 'Assistman']",60,80,False,False,False,Torino,STABLE,15
+SUCIC PETAR,65,nd,nd,nd,26,0.00,0.00,21/30,0/3,3/5,CEN,"['Panchinaro', 'Buona Media', 'Giovane talento']",40,80,False,True,False,Inter,STABLE,0
+GRASSI ALBERTO,64,5.80,5.77,5.85,27,5.80,4.12,11/20,0/3,0/3,CEN,['Panchinaro'],40,40,False,True,False,Cremonese,UP,27
+THORSBY MORTEN,64,5.62,6.30,nd,26,5.62,3.85,21/30,0/2,0/2,CEN,['Titolare'],40,60,False,False,False,Genoa,DOWN,26
+BENNACER ISMAEL,63,5.50,6.56,6.46,5,5.50,0.72,11/20,0/3,0/3,CEN,['Panchinaro'],20,40,False,False,False,Milan,DOWN,5
+DIOUF ANDY ALUNE,64,nd,nd,nd,34,0.00,0.00,11/20,3/5,3/5,CEN,"['Panchinaro', 'Assistman', 'Giovane talento']",40,80,False,True,False,Inter,STABLE,0
+HELGASON THORIR J.,63,6.25,nd,5.79,20,6.25,3.29,11/20,0/1,0/1,CEN,"['Titolare', 'Piazzati']",60,40,True,False,False,Lecce,STABLE,20
+VOLPATO CRISTIAN,63,nd,6.03,6.67,18,0.00,0.00,21/30,3/5,4/7,CEN,"['Panchinaro', 'Buona Media', 'Assistman', 'Piazzati', 'Giovane talento']",80,80,False,False,False,Sassuolo,STABLE,0
+KEITA MANDELA,63,5.66,nd,nd,28,5.66,4.17,21/30,0/3,0/3,CEN,"['Titolare', 'Falloso', 'Giovane talento']",60,60,False,False,False,Parma,STABLE,28
+BOLOCA DANIEL,63,nd,5.81,nd,34,0.00,0.00,30+,0/3,0/3,CEN,"['Outsider', 'Titolare', 'Falloso']",40,60,False,False,False,Sassuolo,STABLE,0
+ELLERTSSON MIKAEL EGILL,63,6.20,nd,5.70,33,6.20,5.38,21/30,0/3,0/3,CEN,"['Titolare', 'Piazzati', 'Giovane talento']",40,60,False,True,False,Genoa,STABLE,33
+SERDAR SUAT,62,6.05,5.95,nd,20,6.05,3.18,21/30,3/5,3/5,CEN,"['Titolare', 'Piazzati', 'Falloso']",60,60,False,False,False,Verona,UP,20
+BAYEYE BRIAN JEPHTE,63,nd,nd,nd,7,0.00,0.00,11/20,0/1,0/2,CEN,['Panchinaro'],40,60,False,False,False,Torino,STABLE,0
+PAYERO MARTIN,62,6.00,6.06,nd,24,6.00,3.79,21/30,3/5,3/5,CEN,"['Titolare', 'Goleador', 'Piazzati']",60,40,False,True,False,Cremonese,DOWN,24
+ATTA ARTHUR,61,5.89,nd,nd,23,5.89,3.57,21/30,3/5,3/5,CEN,"['Panchinaro', 'Goleador', 'Giovane talento']",40,60,True,False,False,Udinese,STABLE,23
+SANTIAGO PEREZ JESUS,61,nd,nd,nd,19,0.00,0.00,21/30,0/3,0/3,CEN,['Titolare'],40,80,False,True,False,Verona,STABLE,0
+PIERRET BALTHAZAR,61,5.73,nd,nd,28,5.73,4.22,11/20,0/3,0/3,CEN,"['Titolare', 'Falloso']",40,60,False,False,False,Lecce,STABLE,28
+SUSLOV TOMAS,59,5.75,6.30,nd,30,5.75,4.54,11/20,0/3,0/3,CEN,"['Outsider', 'Titolare', 'Assistman', 'Falloso', 'Giovane talento']",40,60,False,False,True,Verona,DOWN,30
+SORENSEN OLIVIER,60,nd,nd,nd,28,0.00,0.00,21/30,3/5,3/5,CEN,"['Outsider', 'Titolare']",40,60,False,True,False,Parma,STABLE,0
+GINEITIS GVIDAS,61,6.22,6.20,nd,27,6.22,4.42,11/20,0/3,0/3,CEN,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Torino,UP,27
+STANCIU NICOLAE,60,nd,nd,nd,0,0.00,0.00,21/30,3/5,3/5,CEN,"['Titolare', 'Buona Media']",60,60,False,True,False,Genoa,STABLE,0
+ILKHAN EMIRHAN,60,nd,nd,5.75,0,0.00,0.00,11/20,0/3,0/3,CEN,"['Panchinaro', 'Goleador', 'Assistman', 'Piazzati', 'Giovane talento']",40,60,False,False,False,Torino,STABLE,0
+MUSAH YUNUS,59,5.60,5.85,nd,25,5.60,3.68,11/20,0/3,0/2,CEN,"['Panchinaro', 'Buona Media', 'Falloso', 'Giovane talento']",60,60,False,False,False,Milan,DOWN,25
+PIOTROWSKI JAKUB,59,nd,nd,nd,20,0.00,0.00,21/30,3/5,0/3,CEN,"['Outsider', 'Titolare']",60,60,False,True,False,Udinese,STABLE,0
+ILIC IVAN,58,5.93,6.41,6.34,15,5.93,2.34,21/30,0/3,0/3,CEN,['Titolare'],40,60,False,False,False,Torino,DOWN,15
+ENGELHARDT YANNIK,59,6.07,nd,nd,15,6.07,2.40,21/30,0/3,0/3,CEN,"['Titolare', 'Buona Media', 'Giovane talento']",40,60,False,False,False,Como,STABLE,15
+PISILLI NICCOLO,59,6.13,nd,nd,23,6.13,3.71,11/20,0/3,0/3,CEN,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Roma,STABLE,23
+FOLORUNSHO MICHAEL,58,5.79,6.44,nd,12,5.79,1.83,21/30,3/5,0/2,CEN,"['Titolare', 'Goleador', 'Falloso']",40,40,False,True,False,Cagliari,DOWN,12
+PICKEL CHARLES,58,nd,nd,5.64,31,0.00,0.00,21/30,0/2,0/2,CEN,"['Titolare', 'Falloso']",40,60,False,False,False,Cremonese,STABLE,0
+MAZZITELLI LUCA,58,6.50,6.54,nd,7,6.50,1.20,21/30,0/3,3/5,CEN,"['Panchinaro', 'Assistman', 'Falloso']",60,40,False,True,False,Cagliari,DOWN,7
+MILLER LENNON LEE,58,nd,nd,nd,32,6.27,5.28,11/20,0/3,3/5,CEN,"['Titolare', 'Buona Media', 'Assistman', 'Piazzati', 'Falloso', 'Giovane talento']",40,80,False,True,False,Udinese,STABLE,0
+BUCHANAN TAJON,58,5.83,nd,nd,3,5.83,0.46,0/10,0/3,0/3,CEN,['Panchinaro'],40,40,False,False,False,Inter,STABLE,3
+MORO NIKOLA,58,6.03,6.22,6.30,15,6.03,2.38,11/20,0/2,0/2,CEN,['Titolare'],40,40,False,False,False,Bologna,DOWN,15
+TERRACCIANO FILIPPO,57,5.57,5.89,6.12,7,5.57,1.03,21/30,0/3,0/3,CEN,"['Panchinaro', 'Buona Media', 'Giovane talento']",40,60,False,True,False,Cremonese,DOWN,7
+ZARRAGA OIER,58,5.94,6.93,nd,18,5.94,2.81,21/30,0/2,0/3,CEN,"['Panchinaro', 'Buona Media']",60,60,False,False,False,Udinese,DOWN,18
+TAMEZE ADRIEN,58,5.81,5.76,5.77,13,5.81,1.99,21/30,0/3,0/2,CEN,"['Titolare', 'Falloso']",40,80,False,False,False,Torino,UP,13
+LERIS MEHDI,57,nd,nd,5.80,3,0.00,0.00,11/20,0/3,0/3,CEN,['Panchinaro'],40,60,False,False,False,Pisa,STABLE,0
+BERNEDE ANTOINE,56,5.96,nd,nd,12,5.96,1.88,21/30,0/3,3/5,CEN,"['Titolare', 'Buona Media']",40,40,False,False,False,Verona,STABLE,12
+HASA LUIS,57,nd,nd,nd,0,0.00,0.00,0/10,0/3,0/3,CEN,"['Panchinaro', 'Assistman', 'Falloso', 'Giovane talento']",40,60,False,False,False,Napoli,STABLE,0
+AEBISCHER MICHEL,57,5.67,5.90,5.90,12,5.67,1.79,21/30,0/3,0/3,CEN,"['Titolare', 'Buona Media', 'Falloso']",40,40,False,True,False,Pisa,DOWN,12
+ALLI DELE,57,3.50,nd,nd,1,3.50,0.09,11/20,3/5,3/5,CEN,"['Panchinaro', 'Goleador']",40,40,False,False,False,Como,STABLE,1
+MASINI PATRIZIO,56,nd,nd,nd,26,6.06,4.15,21/30,0/3,0/3,CEN,"['Titolare', 'Buona Media']",40,60,False,False,False,Genoa,STABLE,0
+KONÈ ISMAEL,56,nd,nd,nd,13,0.00,0.00,21/30,0/3,0/3,CEN,['Titolare'],40,60,False,True,False,Sassuolo,STABLE,0
+CALIGARA FABRIZIO,55,nd,nd,nd,7,0.00,0.00,11/20,0/3,0/3,CEN,['Panchinaro'],40,60,False,True,False,Sassuolo,STABLE,0
+KABA MOHAMED,55,5.83,5.73,nd,12,5.83,1.84,30+,0/3,0/3,CEN,"['Panchinaro', 'Falloso', 'Giovane talento']",40,60,False,False,False,Lecce,UP,12
+IANNONI EDOARDO,55,nd,nd,nd,22,0.00,0.00,11/20,0/3,0/3,CEN,"['Panchinaro', 'Buona Media']",40,80,False,False,False,Sassuolo,STABLE,0
+MALEH YOUSSEF,56,5.74,5.64,5.76,21,5.74,3.17,11/20,0/3,0/3,CEN,"['Panchinaro', 'Buona Media', 'Falloso']",40,60,False,False,False,Lecce,UP,21
+SALA HERRERO ÁLEX,55,nd,nd,nd,37,0.00,0.00,21/30,0/3,0/3,CEN,"['Panchinaro', 'Goleador', 'Falloso']",60,60,False,True,False,Lecce,STABLE,0
+BASIC TOMA,55,nd,5.35,6.18,0,0.00,0.00,11/20,3/5,0/3,CEN,"['Panchinaro', 'Falloso']",40,80,False,False,False,Lazio,STABLE,0
+ORDONEZ CHRISTIAN NAHUEL,54,nd,nd,nd,42,0.00,0.00,11/20,0/3,3/5,CEN,"['Panchinaro', 'Buona Media', 'Assistman', 'Giovane talento']",40,60,False,True,False,Parma,STABLE,0
+BOHINEN EMIL,54,5.00,5.82,5.82,2,5.00,0.26,11/20,0/2,0/2,CEN,['Panchinaro'],40,80,False,True,False,Genoa,DOWN,2
+VRANKX ASTER,54,nd,nd,5.80,14,0.00,0.00,11/20,0/3,0/3,CEN,"['Panchinaro', 'Goleador', 'Piazzati']",40,60,False,True,False,Sassuolo,STABLE,0
+LIPANI LUCA,53,nd,5.92,nd,22,0.00,0.00,11/20,0,0,CEN,"['Outsider', 'Titolare', 'Giovane talento']",40,60,False,False,False,Sassuolo,STABLE,0
+HARROUI ABDOU,54,6.40,6.84,6.24,10,6.40,1.68,21/30,0/3,0/3,CEN,['Titolare'],40,60,False,False,False,Verona,DOWN,10
+CASSA FEDERICO,53,nd,nd,nd,0,0.00,0.00,0/10,0,0,CEN,"['Panchinaro', 'Giovane talento']",20,20,False,False,False,Atalanta,STABLE,0
+CIAMMAGLICHELLA AARON,53,nd,nd,nd,7,0.00,0.00,0/10,0/1,0/1,CEN,"['Panchinaro', 'Giovane talento']",40,40,False,True,False,Torino,STABLE,0
+BERISHA MEDON,52,nd,nd,nd,17,0.00,0.00,11/20,0/2,0/2,CEN,"['Outsider', 'Panchinaro']",20,60,False,False,False,Lecce,STABLE,0
+VALOTI MATTIA,53,5.50,nd,5.71,1,5.50,0.14,11/20,3/5,0/3,CEN,['Panchinaro'],40,60,False,False,False,Cremonese,STABLE,1
+MARIN MARIUS MIHAI,51,nd,nd,nd,34,0.00,0.00,21/30,0/2,0/2,CEN,"['Titolare', 'Falloso']",40,80,False,False,False,Pisa,STABLE,0
+PRATI MATTEO,52,5.80,5.94,nd,10,5.80,1.53,21/30,0/3,0/3,CEN,"['Titolare', 'Piazzati', 'Giovane talento']",40,60,False,False,False,Cagliari,DOWN,10
+TRAORE IDRISSA,51,nd,nd,nd,33,0.00,0.00,21/30,0/3,0/3,CEN,"['Titolare', 'Falloso']",40,80,False,False,False,Pisa,STABLE,0
+ESTEVEZ NAHUEL,50,5.71,nd,nd,12,5.71,1.80,0/10,0/2,0/2,CEN,"['Panchinaro', 'Falloso']",40,60,False,False,False,Parma,STABLE,12
+BONDO WARREN,51,5.77,5.78,5.50,22,5.77,3.34,21/30,0/1,0/1,CEN,['Titolare'],40,60,False,True,False,Cremonese,DOWN,22
+GHION ANDREA,51,nd,nd,nd,23,0.00,0.00,11/20,0/3,0/3,CEN,['Panchinaro'],40,60,False,False,False,Sassuolo,STABLE,0
+CYPRIEN WYLAN,50,5.75,nd,nd,2,5.75,0.30,11/20,0/3,0/3,CEN,['Panchinaro'],40,60,False,False,False,Parma,STABLE,2
+KOVAC NIKO,50,nd,nd,nd,37,0.00,0.00,0/10,0/2,0/2,CEN,"['Panchinaro', 'Buona Media', 'Giovane talento']",40,60,False,True,False,Lecce,STABLE,0
+NDOUR CHER,49,5.64,nd,nd,7,5.64,1.04,11/20,0/3,0/3,CEN,"['Outsider', 'Panchinaro', 'Goleador', 'Giovane talento']",40,60,False,False,False,Fiorentina,STABLE,7
+NIASSE CHEIKH,49,5.32,nd,nd,11,5.32,1.54,21/30,0/3,0/3,CEN,"['Titolare', 'Falloso']",60,60,False,False,False,Verona,STABLE,11
+FELICI MATTIA,51,5.97,nd,nd,18,5.97,2.83,21/30,3/5,0/3,CEN,"['Outsider', 'Titolare', 'Goleador']",40,60,False,False,False,Cagliari,STABLE,18
+AKINSANMIRO EBENEZER,49,nd,nd,nd,35,0.00,0.00,11/20,0/2,0/2,CEN,['Titolare'],40,80,False,True,False,Pisa,STABLE,0
+HOJHOLT MALTHE,47,nd,nd,nd,30,0.00,0.00,21/30,0/3,0/3,CEN,['Panchinaro'],40,80,False,False,False,Pisa,STABLE,0
+PICCININI GABRIELE,47,nd,nd,nd,38,0.00,0.00,21/30,0/2,0/2,CEN,['Panchinaro'],40,60,False,False,False,Pisa,STABLE,0
+CAMARA DRISSA,47,5.92,nd,nd,12,5.92,1.87,11/20,0/3,0/3,CEN,"['Panchinaro', 'Falloso', 'Giovane talento']",40,40,False,False,False,Parma,STABLE,12
+GORTER OLAF,48,nd,nd,nd,38,0.00,0.00,0/10,0/1,0/1,CEN,"['Panchinaro', 'Giovane talento']",40,80,False,True,False,Lecce,STABLE,0
+ROG MARKO,45,nd,nd,nd,22,0.00,0.00,0/10,0/2,0/2,CEN,"['Panchinaro', 'Falloso']",40,20,False,False,False,Cagliari,STABLE,0
+CHARLYS MATHEUS L.P.,45,nd,nd,nd,27,0.00,0.00,0/10,0/3,0/3,CEN,"['Panchinaro', 'Falloso', 'Giovane talento']",20,60,False,True,False,Verona,STABLE,0
+INFANTINO GINO,47,nd,5.50,nd,3,0.00,0.00,0/10,0/3,0/3,CEN,['Panchinaro'],20,60,False,False,False,Fiorentina,STABLE,0
+ADZIC VASILIJE,47,6.00,nd,nd,1,6.00,0.16,0/10,0/3,0/3,CEN,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Juventus,STABLE,1
+KRSTOVIC NIKOLA,92,6.90,6.32,nd,35,6.90,6.36,21/30,8/11,3/5,ATT,"['Titolare', 'Buona Media', 'Goleador', 'Rigorista']",40,60,True,True,False,Atalanta,UP,35
+LUKAKU ROMELU,96,7.64,7.26,7.66,35,7.64,7.04,21/30,12/15,3/5,ATT,"['Fuoriclasse', 'Titolare', 'Goleador', 'Rigorista']",60,40,False,False,True,Napoli,UP,35
+CASTAGNETTI MICHELE,45,nd,nd,5.88,0,0.00,0.00,11/20,0,0/2,CEN,['Panchinaro'],20,60,False,False,False,Cremonese,STABLE,0
+LOOKMAN ADEMOLA,98,7.90,7.41,7.92,30,7.90,6.24,21/30,8/11,4/7,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Rigorista']",40,40,True,False,False,Atalanta,UP,30
+KEAN MOISE,91,8.07,5.92,6.52,29,8.07,6.16,30+,16/19,3/5,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Rigorista', 'Falloso']",80,80,False,False,False,Fiorentina,UP,29
+LEAO RAFAEL,89,7.16,7.39,7.90,32,7.16,6.03,21/30,12/15,4/7,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Assistman']",40,60,False,False,True,Milan,DOWN,32
+MARTINEZ LAUTARO,86,7.61,8.81,8.16,28,7.61,5.61,21/30,12/15,3/5,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Rigorista']",60,80,False,False,False,Inter,DOWN,28
+CASTELLANOS TATY,85,7.07,6.12,nd,28,7.07,5.21,21/30,4/7,0/3,ATT,"['Titolare', 'Goleador', 'Rigorista', 'Falloso']",40,60,False,False,False,Lazio,UP,28
+DIA BOULAYE,90,6.91,6.53,7.82,34,6.91,6.18,21/30,8/11,4/7,ATT,"['Outsider', 'Panchinaro', 'Buona Media', 'Goleador', 'Rigorista']",60,40,False,False,False,Lazio,UP,34
+LUCCA LORENZO,89,7.18,6.75,nd,31,7.18,5.86,11/20,8/11,3/5,ATT,"['Panchinaro', 'Goleador', 'Rigorista', 'Giovane talento']",40,60,True,True,False,Napoli,UP,31
+DOVBYK ARTEM,83,7.10,nd,nd,30,7.10,5.61,21/30,8/11,4/7,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Rigorista']",80,60,False,False,False,Roma,STABLE,30
+VLAHOVIC DUSAN,84,7.48,7.60,7.16,24,7.48,4.72,11/20,8/11,4/7,ATT,"['Panchinaro', 'Buona Media', 'Goleador', 'Rigorista', 'Piazzati']",40,60,False,False,False,Juventus,DOWN,24
+GONZALEZ NICOLAS,84,6.41,7.20,6.86,22,6.41,3.71,11/20,3/5,3/5,ATT,"['Panchinaro', 'Piazzati', 'Falloso']",40,40,False,False,False,Juventus,DOWN,22
+DAVID JONATHAN CHRISTIAN,81,nd,nd,nd,32,0.00,0.00,30+,12/15,3/5,ATT,"['Titolare', 'Buona Media', 'Goleador', 'Rigorista']",80,80,False,True,False,Juventus,STABLE,0
+SCAMACCA GIANLUCA,83,nd,7.85,nd,0,0.00,0.00,0/10,0/3,0/3,ATT,"['Outsider', 'Titolare', 'Goleador', 'Falloso']",60,40,False,False,False,Atalanta,STABLE,0
+PICCOLI ROBERTO,80,6.81,6.45,6.22,35,6.81,6.27,21/30,4/7,0/3,ATT,"['Titolare', 'Falloso']",40,60,False,True,False,Fiorentina,UP,35
+DZEKO EDIN,78,nd,nd,7.25,35,0.00,0.00,11/20,4/7,3/5,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati']",60,60,False,True,False,Fiorentina,STABLE,0
+YILDIZ KENAN,78,7.02,6.09,nd,32,7.02,5.91,21/30,8/11,3/5,ATT,"['Outsider', 'Titolare', 'Giovane talento']",40,60,False,False,False,Juventus,UP,32
+MORATA ALVARO,81,6.79,nd,nd,14,6.79,2.50,21/30,16/19,3/5,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Rigorista']",60,60,False,True,False,Como,STABLE,14
+IMMOBILE CIRO,79,nd,6.63,7.48,30,0.00,0.00,21/30,12/15,3/5,ATT,"['Titolare', 'Goleador', 'Rigorista']",60,40,False,True,True,Bologna,STABLE,0
+BERARDI DOMENICO,80,nd,8.06,8.10,29,0.00,0.00,30+,12/15,8/11,ATT,"['Fuoriclasse', 'Titolare', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati']",80,40,False,False,False,Sassuolo,STABLE,0
+BONNY ANGE-YOAN,78,6.56,nd,nd,36,6.56,6.21,21/30,4/7,4/7,ATT,"['Titolare', 'Buona Media', 'Assistman', 'Giovane talento']",60,80,True,True,False,Inter,STABLE,36
+LANG NOA NOELL,78,nd,nd,nd,29,0.00,0.00,21/30,4/7,4/7,ATT,"['Titolare', 'Goleador', 'Assistman']",40,60,False,True,False,Napoli,STABLE,0
+ADAMS CHÈ,78,6.70,nd,nd,33,6.70,5.82,21/30,8/11,3/5,ATT,"['Outsider', 'Titolare', 'Goleador', 'Rigorista', 'Piazzati']",60,60,True,False,False,Torino,STABLE,33
+DYBALA PAULO,78,7.34,8.29,8.24,19,7.34,3.67,21/30,8/11,4/7,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Rigorista', 'Piazzati']",60,40,False,False,False,Roma,DOWN,19
+PEDRO ELEIZIER R. LEDESMA,78,7.33,6.00,6.53,27,7.33,5.21,11/20,4/7,4/7,ATT,"['Panchinaro', 'Goleador', 'Rigorista']",60,40,False,False,False,Lazio,UP,27
+SULEMANA KAMALDEEN,77,nd,nd,nd,26,0.00,0.00,21/30,3/5,4/7,ATT,"['Titolare', 'Assistman', 'Piazzati']",60,40,False,True,False,Atalanta,STABLE,0
+GIMENEZ SANTIAGO,77,6.77,nd,nd,13,6.77,2.32,21/30,8/11,4/7,ATT,"['Outsider', 'Titolare', 'Goleador', 'Rigorista']",60,60,False,False,False,Milan,STABLE,13
+ROWE JONATHAN DAVID HENRY,77,nd,nd,nd,28,0.00,0.00,21/30,4/7,4/7,ATT,"['Outsider', 'Titolare', 'Goleador', 'Giovane talento']",40,60,False,True,False,Bologna,STABLE,0
+NZOLA M'BALA,77,nd,6.13,7.39,21,0.00,0.00,21/30,8/11,0/3,ATT,"['Titolare', 'Buona Media', 'Goleador', 'Rigorista']",40,60,False,True,False,Pisa,STABLE,0
+ABOUKHLAL ZAKARIA,77,nd,nd,nd,26,0.00,0.00,21/30,4/7,3/5,ATT,"['Outsider', 'Titolare', 'Goleador', 'Piazzati']",40,60,False,True,False,Torino,STABLE,0
+ZAPATA DUVAN,77,7.33,7.31,6.27,6,7.33,1.16,11/20,4/7,3/5,ATT,"['Titolare', 'Goleador', 'Rigorista']",40,40,False,False,False,Torino,UP,6
+BELTRAN LUCAS,75,6.43,6.70,nd,29,6.43,4.91,11/20,3/5,3/5,ATT,"['Panchinaro', 'Rigorista']",40,60,False,False,False,Fiorentina,DOWN,29
+PINAMONTI ANDREA,77,6.73,6.75,6.06,35,6.73,6.20,30+,8/11,3/5,ATT,"['Titolare', 'Buona Media', 'Goleador', 'Rigorista']",60,60,True,True,False,Sassuolo,DOWN,35
+SOULE' MATIAS,75,7.04,7.12,6.57,23,7.04,4.26,21/30,8/11,4/7,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Assistman', 'Giovane talento']",40,40,True,False,False,Roma,DOWN,23
+KUHN NICOLAS-GERRIT,75,nd,nd,nd,28,0.00,0.00,21/30,4/7,3/5,ATT,"['Titolare', 'Goleador']",40,60,False,True,False,Como,STABLE,0
+MILIK ARKADIUSZ,75,nd,6.48,6.74,1,0.00,0.00,11/20,3/5,0/2,ATT,"['Panchinaro', 'Buona Media', 'Piazzati']",20,40,False,False,True,Juventus,STABLE,0
+FERGUSON EVAN,74,nd,nd,nd,21,0.00,0.00,11/20,3/5,0/3,ATT,"['Outsider', 'Panchinaro', 'Giovane talento']",40,80,False,True,False,Roma,STABLE,0
+KOUAME' CHRISTIAN,74,5.93,6.32,6.63,21,5.93,3.28,11/20,3/5,3/5,ATT,"['Panchinaro', 'Buona Media']",40,40,False,True,False,Fiorentina,DOWN,21
+CONCEICAO FRANCISCO,74,6.50,nd,nd,25,6.50,4.28,11/20,3/5,3/5,ATT,"['Outsider', 'Titolare', 'Piazzati', 'Falloso', 'Giovane talento']",40,60,True,False,False,Juventus,STABLE,25
+THURAM MARCUS,75,7.72,7.95,nd,29,7.72,5.89,21/30,12/15,4/7,ATT,"['Fuoriclasse', 'Titolare', 'Buona Media', 'Goleador', 'Assistman']",60,60,False,False,False,Inter,DOWN,29
+ISAKSEN GUSTAV,74,6.37,6.46,nd,35,6.37,5.87,21/30,4/7,3/5,ATT,"['Panchinaro', 'Goleador']",60,60,False,False,False,Lazio,DOWN,35
+CAMBIAGHI NICOLO,72,6.50,6.20,6.90,17,6.50,2.91,21/30,4/7,3/5,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Giovane talento']",40,60,True,False,False,Bologna,UP,17
+LUVUMBO ZITO,70,6.30,6.76,nd,25,6.30,4.14,11/20,3/5,3/5,ATT,"['Titolare', 'Giovane talento']",40,60,True,False,False,Cagliari,DOWN,25
+CUTRONE PATRICK,72,6.73,nd,nd,31,6.73,5.49,30+,12/15,3/5,ATT,"['Titolare', 'Buona Media', 'Goleador']",60,80,False,False,False,Como,STABLE,31
+BONAZZOLI FEDERICO,72,nd,6.30,6.36,0,0.00,0.00,21/30,8/11,0/3,ATT,"['Titolare', 'Goleador', 'Rigorista', 'Giovane talento']",60,60,False,False,False,Cremonese,STABLE,0
+FRIGAN MATIJA,70,nd,nd,nd,39,7.21,7.40,11/20,4/7,0/3,ATT,"['Outsider', 'Panchinaro', 'Goleador', 'Falloso', 'Giovane talento']",40,60,False,True,False,Parma,STABLE,0
+COLOMBO LORENZO,69,6.32,6.39,6.37,34,6.32,5.65,11/20,3/5,3/5,ATT,"['Titolare', 'Goleador', 'Rigorista', 'Falloso', 'Giovane talento']",40,60,False,True,False,Genoa,DOWN,34
+SANTANA DO NASCIMENTO GIOVANE,69,nd,nd,nd,11,0.00,0.00,11/20,4/7,0/3,ATT,"['Outsider', 'Titolare', 'Rigorista', 'Giovane talento']",40,80,False,True,False,Verona,STABLE,0
+ESPOSITO FRANCESCO PIO,72,nd,nd,nd,35,0.00,0.00,11/20,4/7,0/3,ATT,"['Outsider', 'Panchinaro', 'Buona Media', 'Giovane talento']",60,80,False,True,False,Inter,STABLE,0
+OKEREKE DAVID,68,nd,5.75,6.52,29,7.31,5.58,21/30,8/11,4/7,ATT,"['Titolare', 'Goleador', 'Rigorista']",60,60,False,True,False,Cremonese,STABLE,0
+DALLINGA THIJS,72,6.41,nd,nd,23,6.41,3.88,11/20,4/7,0/3,ATT,['Panchinaro'],60,60,True,False,False,Bologna,STABLE,23
+LAURIENTE' ARMAND,67,nd,6.51,7.18,33,0.00,0.00,11/20,3/5,0/3,ATT,"['Outsider', 'Titolare']",40,40,False,False,False,Sassuolo,STABLE,0
+CAMARDA FRANCESCO,68,nd,nd,nd,6,0.00,0.00,11/20,3/5,0/2,ATT,"['Outsider', 'Panchinaro', 'Rigorista', 'Giovane talento']",40,80,False,True,False,Lecce,STABLE,0
+DIAO ASSANE,67,8.07,nd,nd,15,8.07,3.19,11/20,3/5,0/3,ATT,"['Titolare', 'Goleador', 'Rigorista', 'Giovane talento']",20,80,False,False,True,Como,STABLE,15
+VITINHA VITOR MANUEL,68,6.29,7.00,nd,21,6.29,3.48,21/30,3/5,3/5,ATT,"['Titolare', 'Buona Media', 'Assistman', 'Piazzati']",40,40,True,False,False,Genoa,DOWN,21
+PIERINI NICHOLAS,66,5.75,nd,nd,2,5.75,0.30,21/30,4/7,3/5,ATT,"['Outsider', 'Panchinaro', 'Buona Media', 'Goleador', 'Rigorista', 'Piazzati']",60,60,False,False,False,Sassuolo,STABLE,2
+TAREMI MEHDI,65,6.21,nd,nd,17,6.21,2.78,11/20,4/7,3/5,ATT,"['Panchinaro', 'Buona Media', 'Assistman']",40,40,True,False,False,Inter,STABLE,17
+RODRIGUEZ CARABALLO JESUS,67,nd,nd,nd,21,0.00,0.00,11/20,3/5,4/7,ATT,"['Panchinaro', 'Goleador', 'Giovane talento']",40,60,False,True,False,Como,STABLE,0
+AZON IVAN,64,nd,nd,nd,0,0.00,0.00,0/10,0/3,0/3,ATT,['Panchinaro'],40,60,False,False,False,Como,STABLE,0
+DAVIS KEINAN,65,6.40,5.88,nd,15,6.40,2.53,11/20,3/5,0/2,ATT,"['Panchinaro', 'Rigorista']",40,60,False,False,False,Udinese,UP,15
+KARLSSON JESPER,63,6.09,5.90,nd,17,6.09,2.72,11/20,0/3,0/3,ATT,['Panchinaro'],60,40,False,True,False,Bologna,UP,17
+RAUTI NICOLA,63,nd,nd,nd,37,0.00,0.00,11/20,0/3,0/1,ATT,['Panchinaro'],40,60,False,True,False,Torino,STABLE,0
+ESPOSITO SEBASTIANO,63,6.69,nd,nd,31,6.69,5.46,21/30,8/11,0/3,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador']",60,80,False,True,False,Cagliari,STABLE,31
+SIMEONE GIOVANNI,64,6.11,5.83,7.33,18,6.11,2.89,11/20,4/7,3/5,ATT,"['Outsider', 'Titolare', 'Goleador']",60,60,False,True,False,Torino,UP,18
+EL SHAARAWY STEPHAN,63,6.65,6.41,7.15,20,6.65,3.50,21/30,3/5,3/5,ATT,"['Panchinaro', 'Buona Media', 'Assistman']",60,60,False,False,False,Roma,UP,20
+DOUVIKAS ANASTASIOS,66,6.75,nd,nd,12,6.75,2.13,21/30,8/11,0/3,ATT,"['Outsider', 'Titolare', 'Goleador']",40,60,False,False,False,Como,STABLE,12
+PELLEGRINO MATEO,62,6.86,nd,nd,11,6.86,1.99,21/30,8/11,0/3,ATT,"['Outsider', 'Titolare', 'Goleador', 'Rigorista']",40,60,False,False,False,Parma,STABLE,11
+MOSQUERA DANIEL,63,5.97,nd,nd,31,5.97,4.87,21/30,4/7,0/3,ATT,"['Titolare', 'Rigorista']",40,60,False,False,False,Verona,STABLE,31
+LIVRAMENTO ROCHA DAILON,63,5.90,nd,nd,21,5.90,3.26,21/30,4/7,4/7,ATT,"['Titolare', 'Giovane talento']",40,60,True,False,False,Verona,STABLE,21
+CASTRO SANTIAGO,62,6.68,7.33,nd,31,6.68,5.45,21/30,8/11,0/3,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador', 'Giovane talento']",60,60,False,False,False,Bologna,DOWN,31
+MORO LUCA,61,nd,nd,nd,25,0.00,0.00,11/20,3/5,0/1,ATT,"['Outsider', 'Panchinaro', 'Giovane talento']",40,80,False,False,False,Sassuolo,STABLE,0
+ALMQVIST PONTUS,62,5.67,6.16,nd,24,5.67,3.58,11/20,3/5,3/5,ATT,['Titolare'],40,60,False,False,False,Parma,DOWN,24
+MORENTE TETE,62,6.16,nd,nd,28,6.16,4.54,11/20,3/5,0/3,ATT,['Panchinaro'],40,60,True,False,False,Lecce,STABLE,28
+TOURE EL BILAL,61,nd,6.71,nd,0,0.00,0.00,21/30,4/7,0/3,ATT,"['Panchinaro', 'Giovane talento']",60,40,False,False,False,Atalanta,STABLE,0
+BRENNER SOUZA DA SILVA,61,7.00,5.83,nd,5,7.00,0.92,21/30,4/7,3/5,ATT,['Panchinaro'],40,40,False,False,False,Udinese,UP,5
+ALVAREZ AGUSTIN,61,nd,nd,6.35,37,0.00,0.00,11/20,3/5,3/5,ATT,"['Panchinaro', 'Giovane talento']",40,80,False,True,False,Sassuolo,STABLE,0
+PIEROTTI SANTIAGO DANIEL,60,6.12,6.25,nd,33,6.12,5.31,21/30,4/7,3/5,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Giovane talento']",60,60,False,False,False,Lecce,DOWN,33
+FINI SEYDOU,59,nd,nd,nd,0,0.00,0.00,0/10,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",20,60,False,True,False,Genoa,STABLE,0
+SANABRIA ANTONIO,60,5.83,6.27,7.52,21,5.83,3.22,21/30,4/7,0/3,ATT,"['Titolare', 'Rigorista']",40,60,False,True,False,Cremonese,DOWN,21
+DJURIC MILAN,59,6.48,6.71,6.06,22,6.48,3.75,11/20,3/5,0/3,ATT,"['Outsider', 'Panchinaro']",40,60,False,False,False,Parma,DOWN,22
+CANCELLIERI MATTEO,60,6.15,6.15,5.83,23,6.15,3.72,0/10,0/3,0/3,ATT,"['Panchinaro', 'Falloso', 'Giovane talento']",40,80,False,False,False,Lazio,UP,23
+IBRAHIMOVIC ARIJON,58,nd,6.00,nd,0,0.00,0.00,11/20,3/5,3/5,ATT,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Lazio,STABLE,0
+ALESSANDRO VINCIGUERRA,59,nd,nd,nd,0,0.00,0.00,0/10,0/2,0/1,ATT,"['Panchinaro', 'Giovane talento']",20,80,False,False,False,Cagliari,STABLE,0
+NOSLIN TIJJANI,58,6.42,6.97,nd,18,6.42,3.04,21/30,3/5,3/5,ATT,['Titolare'],40,60,False,False,False,Lazio,DOWN,18
+SAVVA ZANOS,58,nd,nd,nd,0,0.00,0.00,11/20,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",40,40,False,False,False,Torino,STABLE,0
+DOMINGUEZ BENJA,59,6.83,nd,nd,20,6.83,3.59,11/20,3/5,0/3,ATT,"['Outsider', 'Panchinaro', 'Giovane talento']",20,60,False,False,False,Bologna,STABLE,20
+NJIE ALIEU,58,6.27,nd,nd,11,6.27,1.82,11/20,0/3,0/3,ATT,"['Outsider', 'Panchinaro', 'Giovane talento']",20,60,False,False,False,Torino,STABLE,11
+TCHAOUNA LOUM,56,5.79,6.52,nd,19,5.79,2.90,11/20,3/5,3/5,ATT,"['Panchinaro', 'Assistman', 'Giovane talento']",40,60,False,False,False,Lazio,DOWN,19
+KILICSOY SEMIH,58,nd,nd,nd,32,0.00,0.00,11/20,3/5,0/3,ATT,"['Titolare', 'Giovane talento']",40,80,False,True,False,Cagliari,STABLE,0
+SARR AMIN,58,6.29,nd,nd,28,6.29,4.63,21/30,4/7,0/3,ATT,['Titolare'],20,60,False,False,False,Verona,STABLE,28
+MOREO STEFANO,55,nd,nd,nd,37,0.00,0.00,11/20,3/5,0/3,ATT,['Panchinaro'],40,80,False,False,False,Pisa,STABLE,0
+SKJELLERUP LAURS,54,nd,nd,nd,19,0.00,0.00,11/20,0/2,0/3,ATT,"['Panchinaro', 'Giovane talento']",60,60,False,True,False,Sassuolo,STABLE,0
+NGONGE CYRIL,55,5.67,6.87,6.73,6,5.67,0.90,21/30,8/11,3/5,ATT,"['Outsider', 'Titolare', 'Buona Media', 'Goleador']",60,80,False,True,False,Torino,DOWN,6
+CHARPENTIER GABRIEL,55,6.67,nd,nd,9,6.67,1.58,11/20,3/5,0/3,ATT,['Panchinaro'],40,60,False,False,True,Parma,STABLE,9
+EKHATOR OSAYUKI JEFF,56,nd,nd,nd,24,6.10,3.85,11/20,3/5,0/3,ATT,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Genoa,STABLE,0
+EKUBAN CALEB,55,6.35,6.68,nd,17,6.35,2.84,21/30,3/5,3/5,ATT,"['Titolare', 'Buona Media']",40,40,False,False,False,Genoa,DOWN,17
+TSADJOUT FRANK,53,nd,nd,6.44,0,0.00,0.00,11/20,0/3,0/3,ATT,['Panchinaro'],40,60,False,False,False,Cremonese,STABLE,0
+MULATTIERI SAMUELE,53,nd,5.91,nd,32,0.00,0.00,11/20,3/5,0/3,ATT,['Panchinaro'],40,40,False,False,False,Sassuolo,STABLE,0
+LIND RASMUSSEN ALEXANDER LUCAS,53,nd,nd,nd,32,0.00,0.00,11/20,3/5,0/2,ATT,['Panchinaro'],40,80,False,False,False,Pisa,STABLE,0
+MEISTER HENRIK,53,nd,nd,nd,19,0.00,0.00,11/20,0/3,0/1,ATT,['Panchinaro'],40,80,False,False,False,Pisa,STABLE,0
+DE LUCA MANUEL,52,nd,nd,5.50,0,0.00,0.00,0/10,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Cremonese,STABLE,0
+LAMBOURDE MATHIS,53,nd,nd,nd,7,7.17,1.32,0/10,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",20,80,False,False,False,Verona,STABLE,0
+SANCHEZ ALEXIS,53,5.83,6.81,nd,9,5.83,1.38,11/20,8/11,4/7,ATT,"['Titolare', 'Buona Media', 'Assistman', 'Rigorista']",40,40,False,False,False,Udinese,DOWN,9
+N'DRI KONAN,49,5.86,nd,nd,7,5.86,1.08,11/20,3/5,3/5,ATT,"['Panchinaro', 'Assistman', 'Piazzati']",40,40,False,False,False,Lecce,STABLE,7
+TRAORE CHAKA,52,nd,10.00,nd,0,0.00,0.00,0/10,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",40,60,False,False,False,Milan,STABLE,0
+MOHAMED ANAS HAJ,49,6.05,nd,nd,11,6.05,1.75,0/10,3/5,0/2,ATT,"['Panchinaro', 'Piazzati', 'Giovane talento']",20,60,False,False,False,Parma,STABLE,11
+BORRELLI GENNARO,50,nd,6.00,nd,34,0.00,0.00,11/20,4/7,0/3,ATT,"['Panchinaro', 'Falloso']",40,60,False,True,False,Cagliari,STABLE,0
+BANDA LAMECK,47,5.79,6.33,6.17,12,5.79,1.83,11/20,0/3,3/5,ATT,"['Titolare', 'Buona Media']",40,40,False,False,False,Lecce,DOWN,12
+BURNETE RARES,50,5.50,nd,nd,1,5.50,0.14,0/10,0/3,0/3,ATT,"['Panchinaro', 'Giovane talento']",20,60,False,False,False,Lecce,STABLE,1
+PAVOLETTI LEONARDO,45,6.61,7.04,nd,9,6.61,1.57,11/20,4/7,0/3,ATT,['Panchinaro'],40,60,False,False,False,Cagliari,DOWN,9
+BENEDYCZAK ADRIAN,44,5.67,nd,nd,6,5.67,0.90,30+,4/7,3/5,ATT,"['Panchinaro', 'Giovane talento']",60,60,False,False,False,Parma,STABLE,6
+ANKEYE DAVID,47,6.00,5.75,nd,1,6.00,0.16,0/10,0/3,0/3,ATT,['Panchinaro'],20,60,False,True,False,Genoa,UP,1

@@ -5,8 +5,75 @@ tutti gli indici tecnici per una valutazione più precisa dei giocatori.
 
 import pandas as pd
 import numpy as np
-from typing import Dict, List
+from typing import Dict, List, Optional
 import logging
+
+logger = logging.getLogger(__name__)
+
+
+class ReportGenerator:
+    """Gestisce la generazione di report e statistiche."""
+    
+    def __init__(self):
+        pass
+    
+    def generate_summary_report(self, df: pd.DataFrame, output_file: Optional[str] = None) -> str:
+        """
+        Genera un report riassuntivo dei dati.
+        
+        Args:
+            df: DataFrame da analizzare
+            output_file: File di output opzionale
+            
+        Returns:
+            Stringa con il report
+        """
+        if df.empty:
+            return "Dataset vuoto - nessun report da generare"
+        
+        report_lines = []
+        report_lines.append("📊 REPORT RIASSUNTIVO FANTACALCIO")
+        report_lines.append("=" * 50)
+        
+        # Statistiche base
+        total_players = len(df)
+        report_lines.append(f"👥 Giocatori totali: {total_players}")
+        
+        # Distribuzione per ruolo
+        if 'Ruolo' in df.columns:
+            report_lines.append("\n📈 Distribuzione per ruolo:")
+            role_counts = df['Ruolo'].value_counts()
+            for role, count in role_counts.items():
+                percentage = (count / total_players) * 100
+                report_lines.append(f"   • {role}: {count} ({percentage:.1f}%)")
+        
+        # Prezzi (se disponibili)
+        price_cols = [col for col in df.columns if 'Prezzo' in col and 'Consigliato' in col]
+        if price_cols:
+            price_col = price_cols[0]
+            avg_price = df[price_col].mean()
+            min_price = df[price_col].min()
+            max_price = df[price_col].max()
+            
+            report_lines.append(f"\n💰 Analisi prezzi:")
+            report_lines.append(f"   • Prezzo medio: {avg_price:.1f}€")
+            report_lines.append(f"   • Prezzo minimo: {min_price:.1f}€")
+            report_lines.append(f"   • Prezzo massimo: {max_price:.1f}€")
+        
+        # Performance (se disponibile)
+        if 'Performance_Score' in df.columns:
+            avg_perf = df['Performance_Score'].mean()
+            report_lines.append(f"\n🏆 Performance media: {avg_perf:.2f}/20")
+        
+        report_text = "\n".join(report_lines)
+        
+        if output_file:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write(report_text)
+            logger.info(f"Report salvato in: {output_file}")
+        
+        return report_text
+
 
 def generate_technical_report():
     """Genera un report dettagliato sui miglioramenti apportati al sistema di pricing."""

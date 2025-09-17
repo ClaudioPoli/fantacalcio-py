@@ -1,24 +1,243 @@
 """
-Modulo per la ricerca e l'analisi avanzata dei giocatori 
-basata sui prezzi di mercato e le performance.
+Modulo per l'analisi avanzata dei giocatori di fantacalcio.
+Gestisce l'elaborazione dei dati FPEDIA e FSTATS e il loro merge.
 """
 
 import pandas as pd
 import numpy as np
 from typing import Dict, List, Optional, Tuple
 import logging
+import sys
+from pathlib import Path
+
+# Aggiungi la root del progetto al path per importare i moduli legacy
+sys.path.append(str(Path(__file__).parent.parent.parent.parent))
+
+from convenienza_calculator import (
+    calcola_convenienza_fpedia, 
+    calcola_convenienza_FSTATS,
+    calcola_prezzo_massimo_consigliato,
+    calcola_score_fpedia,
+    calcola_score_fstats
+)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class AdvancedPlayerAnalyzer:
+class AdvancedAnalyzer:
     """
-    Fornisce funzionalità avanzate per l'analisi e la ricerca dei giocatori
-    basata sui dati di mercato, performance e convenienza.
+    Gestisce l'analisi avanzata dei dati FPEDIA e FSTATS,
+    incluso il calcolo delle convenienza e il merge delle fonti.
+    """
+    
+    def __init__(self):
+        self.logger = logger
+    
+    def analyze_fpedia_data(self, df_fpedia: pd.DataFrame) -> pd.DataFrame:
+        """
+        Analizza i dati FPEDIA calcolando convenienza e prezzi consigliati.
+        
+        Args:
+            df_fpedia: DataFrame con i dati FPEDIA
+            
+        Returns:
+            DataFrame analizzato con colonne aggiuntive per convenienza e prezzi
+        """
+        logger.info("Iniziando analisi dati FPEDIA...")
+        
+        try:
+            # Calcola convenienza FPEDIA
+            df_analyzed = calcola_convenienza_fpedia(df_fpedia.copy())
+            
+            # Calcola score FPEDIA per ogni ruolo
+            df_analyzed['Score_FPEDIA'] = 0.0
+            for ruolo in df_analyzed['Ruolo'].unique():
+                if pd.isna(ruolo):
+                    continue
+                mask = df_analyzed['Ruolo'] == ruolo
+                df_ruolo = df_analyzed[mask]
+                scores = calcola_score_fpedia(df_ruolo, ruolo)
+                df_analyzed.loc[mask, 'Score_FPEDIA'] = scores
+            
+            # Calcola prezzo massimo consigliato
+            df_analyzed = calcola_prezzo_massimo_consigliato(df_analyzed)
+            
+            # Aggiungi metadati
+            df_analyzed['Fonte'] = 'FPEDIA'
+            df_analyzed['Data_Analisi'] = pd.Timestamp.now()
+            
+            logger.info(f"Analisi FPEDIA completata per {len(df_analyzed)} giocatori")
+            return df_analyzed
+            
+        except Exception as e:
+            logger.error(f"Errore nell'analisi FPEDIA: {e}")
+            raise
+    
+    def analyze_fstats_data(self, df_fstats: pd.DataFrame) -> pd.DataFrame:
+        """
+        Analizza i dati FSTATS calcolando convenienza e prezzi consigliati.
+        
+        Args:
+            df_fstats: DataFrame con i dati FSTATS
+            
+        Returns:
+            DataFrame analizzato con colonne aggiuntive per convenienza e prezzi
+        """
+        logger.info("Iniziando analisi dati FSTATS...")
+        
+        try:
+            # Calcola convenienza FSTATS
+            df_analyzed = calcola_convenienza_FSTATS(df_fstats.copy())
+            
+            # Calcola score FSTATS per ogni ruolo
+            df_analyzed['Score_FSTATS'] = 0.0
+            for ruolo in df_analyzed['Ruolo'].unique():
+                if pd.isna(ruolo):
+                    continue
+                mask = df_analyzed['Ruolo'] == ruolo
+                df_ruolo = df_analyzed[mask]
+                scores = calcola_score_fstats(df_ruolo, ruolo)
+                df_analyzed.loc[mask, 'Score_FSTATS'] = scores
+            
+            # Calcola prezzo massimo consigliato
+            df_analyzed = calcola_prezzo_massimo_consigliato(df_analyzed)
+            
+            # Aggiungi metadati
+            df_analyzed['Fonte'] = 'FSTATS'
+            df_analyzed['Data_Analisi'] = pd.Timestamp.now()
+            
+            logger.info(f"Analisi FSTATS completata per {len(df_analyzed)} giocatori")
+            return df_analyzed
+            
+        except Exception as e:
+            logger.error(f"Errore nell'analisi FSTATS: {e}")
+            raise
+    
+    def merge_analyses(self, df_fpedia: pd.DataFrame, df_fstats: pd.DataFrame) -> pd.DataFrame:
+        """
+        Merge intelligente delle analisi FPEDIA e FSTATS.
+        
+        Args:
+            df_fpedia: DataFrame analizzato FPEDIA
+            df_fstats: DataFrame analizzato FSTATS
+            
+        Returns:
+            DataFrame merged con le migliori informazioni da entrambe le fonti
+        """
+        logger.info("Iniziando merge delle analisi...")
+        
+        try:
+            # Pulizia nomi per il match
+            df_fpedia_clean = df_fpedia.copy()
+            df_fstats_clean = df_fstats.copy()
+            
+            df_fpedia_clean['Nome_Clean'] = df_fpedia_clean['Nome'].str.strip().str.lower()
+            df_fstats_clean['Nome_Clean'] = df_fstats_clean['Nome'].str.strip().str.lower()
+            
+            # Merge principale sui nomi
+            df_merged = pd.merge(
+                df_fpedia_clean, 
+                df_fstats_clean,
+                on='Nome_Clean',
+                how='outer',
+                suffixes=('_FPEDIA', '_FSTATS')
+            )
+            
+            # Risolvi conflitti e crea colonne unificate
+            df_merged = self._resolve_merge_conflicts(df_merged)
+            
+            # Calcola score combinato
+            df_merged = self._calculate_combined_scores(df_merged)
+            
+            # Pulisci colonne temporanee
+            df_merged = df_merged.drop('Nome_Clean', axis=1, errors='ignore')
+            
+            logger.info(f"Merge completato: {len(df_merged)} giocatori nel dataset unificato")
+            return df_merged
+            
+        except Exception as e:
+            logger.error(f"Errore nel merge: {e}")
+            raise
+    
+    def _resolve_merge_conflicts(self, df_merged: pd.DataFrame) -> pd.DataFrame:
+        """Risolve i conflitti tra le colonne delle due fonti."""
+        
+        # Colonne da unificare con priorità
+        column_priorities = {
+            'Nome': 'FPEDIA',  # FPEDIA ha nomi più puliti
+            'Ruolo': 'FPEDIA',
+            'Squadra': 'FPEDIA',
+            'Convenienza': 'average',  # Media delle due fonti
+            'Prezzo_Massimo_Consigliato': 'average'
+        }
+        
+        for col, priority in column_priorities.items():
+            col_fpedia = f"{col}_FPEDIA"
+            col_fstats = f"{col}_FSTATS"
+            
+            if col_fpedia in df_merged.columns and col_fstats in df_merged.columns:
+                if priority == 'FPEDIA':
+                    df_merged[col] = df_merged[col_fpedia].fillna(df_merged[col_fstats])
+                elif priority == 'FSTATS':
+                    df_merged[col] = df_merged[col_fstats].fillna(df_merged[col_fpedia])
+                elif priority == 'average':
+                    df_merged[col] = df_merged[[col_fpedia, col_fstats]].mean(axis=1, skipna=True)
+            elif col_fpedia in df_merged.columns:
+                df_merged[col] = df_merged[col_fpedia]
+            elif col_fstats in df_merged.columns:
+                df_merged[col] = df_merged[col_fstats]
+        
+        return df_merged
+    
+    def _calculate_combined_scores(self, df_merged: pd.DataFrame) -> pd.DataFrame:
+        """Calcola score combinati dalle due fonti."""
+        
+        # Performance Score combinato (se disponibili entrambi i score)
+        if 'Score_FPEDIA' in df_merged.columns and 'Score_FSTATS' in df_merged.columns:
+            # Normalizza i punteggi (0-20 range)
+            score_fpedia_norm = df_merged['Score_FPEDIA'].fillna(0) / 100 * 20
+            score_fstats_norm = df_merged['Score_FSTATS'].fillna(0) / 100 * 20
+            
+            # Media pesata: FPEDIA 40%, FSTATS 60% (più oggettivo)
+            df_merged['Performance_Score'] = (
+                score_fpedia_norm * 0.4 + 
+                score_fstats_norm * 0.6
+            ).round(2)
+        elif 'Score_FPEDIA' in df_merged.columns:
+            df_merged['Performance_Score'] = (df_merged['Score_FPEDIA'].fillna(0) / 100 * 20).round(2)
+        elif 'Score_FSTATS' in df_merged.columns:
+            df_merged['Performance_Score'] = (df_merged['Score_FSTATS'].fillna(0) / 100 * 20).round(2)
+        else:
+            df_merged['Performance_Score'] = 10.0  # Score neutro
+        
+        # Convenienza combinata
+        conv_fpedia = df_merged.get('Convenienza_FPEDIA', pd.Series(0, index=df_merged.index))
+        conv_fstats = df_merged.get('Convenienza_FSTATS', pd.Series(0, index=df_merged.index))
+        
+        df_merged['Convenienza_Combinata'] = (
+            (conv_fpedia.fillna(0) * 0.4 + conv_fstats.fillna(0) * 0.6)
+        ).round(3)
+        
+        # Prezzo consigliato finale
+        prezzo_fpedia = df_merged.get('Prezzo_Massimo_Consigliato_FPEDIA', pd.Series(1, index=df_merged.index))
+        prezzo_fstats = df_merged.get('Prezzo_Massimo_Consigliato_FSTATS', pd.Series(1, index=df_merged.index))
+        
+        df_merged['Prezzo_Consigliato'] = (
+            (prezzo_fpedia.fillna(1) + prezzo_fstats.fillna(1)) / 2
+        ).round(1)
+        
+        return df_merged
+
+
+class AdvancedPlayerAnalyzer(AdvancedAnalyzer):
+    """
+    Mantiene compatibilità con il codice esistente.
+    Fornisce funzionalità avanzate per l'analisi e la ricerca dei giocatori.
     """
     
     def __init__(self, data_file: str = "data/output/perfect_merged_analysis.xlsx"):
+        super().__init__()
         self.data_file = data_file
         self.df = None
         self.load_data()
