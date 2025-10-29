@@ -9,10 +9,12 @@ def decode(stringa):
 
 # Percorsi dei file
 DATA_DIR = "data"
+RAW_DIR = os.path.join(DATA_DIR, "raw")
+INTERIM_DIR = os.path.join(DATA_DIR, "interim")
 OUTPUT_DIR = os.path.join(DATA_DIR, "output")
 GIOCATORI_URLS_FILE = os.path.join(DATA_DIR, "giocatori_urls.txt")
-GIOCATORI_CSV = os.path.join(DATA_DIR, "_giocatori.csv")
-PLAYERS_CSV = os.path.join(DATA_DIR, "_players.csv")
+GIOCATORI_CSV = os.path.join(RAW_DIR, "_giocatori.csv")
+PLAYERS_CSV = os.path.join(RAW_DIR, "_players.csv")
 CONVENIENZA_CSV = os.path.join(OUTPUT_DIR, "convenienza.csv")
 OUTPUT_EXCEL = os.path.join(OUTPUT_DIR, "fantacalcio_analysis.xlsx")
 

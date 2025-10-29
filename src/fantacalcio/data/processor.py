@@ -1,8 +1,27 @@
 # data_processor.py
 import pandas as pd
 from loguru import logger
-import config
 import os
+import sys
+from pathlib import Path
+
+# Import config dal modulo utils
+from ..utils import config
+
+
+class DataProcessor:
+    """Gestisce il processing e la pulizia dei dati FPEDIA e FSTATS."""
+    
+    def __init__(self):
+        self.config = config
+    
+    def process_fpedia_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Processa e pulisce i dati FPEDIA."""
+        return process_fpedia_data(df)
+    
+    def process_fstats_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Processa e pulisce i dati FSTATS."""  
+        return process_fstats_data(df)
 
 
 def load_dataframes() -> tuple[pd.DataFrame, pd.DataFrame]:

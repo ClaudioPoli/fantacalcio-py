@@ -9,10 +9,28 @@ from loguru import logger
 from dotenv import load_dotenv
 import pandas as pd
 import concurrent.futures
+import sys
+from pathlib import Path
 
-import config
+# Import config dal modulo utils
+from ..utils import config
 
 load_dotenv()
+
+
+class DataRetriever:
+    """Gestisce il recupero dei dati da FPEDIA e FSTATS."""
+    
+    def __init__(self):
+        self.config = config
+    
+    def scrape_fpedia(self) -> None:
+        """Orchestrates the scraping of FPEDIA."""
+        scrape_fpedia()
+    
+    def fetch_fstats_data(self) -> None:
+        """Fetches data from FSTATS API."""
+        fetch_FSTATS_data()
 
 
 def get_giocatori_urls() -> list:
