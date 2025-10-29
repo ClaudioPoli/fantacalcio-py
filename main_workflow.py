@@ -39,13 +39,15 @@ class FantacalcioWorkflow:
     
     def run_complete_workflow(self, 
                              update_data: bool = False,
-                             use_market_pricing: bool = True) -> None:
+                             use_market_pricing: bool = True,
+                             use_sos_calibrated: bool = True) -> None:
         """
         Esegue il flusso di lavoro completo.
         
         Args:
             update_data: Se True, aggiorna i dati FPEDIA e FSTATS
-            use_market_pricing: Se True, usa il pricing basato su mercato SOS
+            use_market_pricing: Se True, usa il pricing basato su mercato SOS (legacy)
+            use_sos_calibrated: Se True, usa il pricing calibrato su SOS (raccomandato)
         """
         print("🚀 AVVIO WORKFLOW COMPLETO FANTACALCIO")
         print("=" * 60)
@@ -68,7 +70,9 @@ class FantacalcioWorkflow:
         
         # Step 4: Calcolo prezzi finale (output)
         print("\n💰 STEP 4: Calcolo prezzi finale")
-        if use_market_pricing:
+        if use_sos_calibrated:
+            final_file = self._create_sos_calibrated_pricing(merged_file)
+        elif use_market_pricing:
             final_file = self._create_market_based_pricing(merged_file)
         else:
             final_file = self._create_standalone_pricing(merged_file)
@@ -475,9 +479,37 @@ class FantacalcioWorkflow:
         
         return df_merged
     
+    def _create_sos_calibrated_pricing(self, merged_file: str) -> str:
+        """Calcola i prezzi calibrati su SOS Fanta e salva in output."""
+        print("   💰 Calcolo prezzi calibrati su SOS Fanta...")
+        
+        sos_file = os.path.join(self.data_dir, "SOS Fanta 2025_26.xlsx")
+        if not os.path.exists(sos_file):
+            print(f"   ⚠️  File SOS non trovato: {sos_file}")
+            print("   🔄 Fallback a pricing autonomo...")
+            return self._create_standalone_pricing(merged_file)
+        
+        try:
+            from src.fantacalcio.analyzers.sos_calibrated_pricing import SOSCalibratedPricingCalculator
+            
+            calculator = SOSCalibratedPricingCalculator()
+            output_file = os.path.join(self.output_dir, "sos_calibrated_pricing.xlsx")
+            
+            # Processa i dati
+            calculator.process_data(merged_file, sos_file, output_file)
+            
+            print(f"   ✅ File finale salvato: output/sos_calibrated_pricing.xlsx")
+            return output_file
+            
+        except Exception as e:
+            print(f"   ❌ Errore nel pricing calibrato: {e}")
+            import traceback
+            traceback.print_exc()
+            return self._create_standalone_pricing(merged_file)
+    
     def _create_market_based_pricing(self, merged_file: str) -> str:
         """Calcola i prezzi basati su mercato SOS e salva in output."""
-        print("   💰 Calcolo prezzi basati su mercato SOS...")
+        print("   💰 Calcolo prezzi basati su mercato SOS (legacy)...")
         
         sos_file = os.path.join(self.data_dir, "SOS Fanta 2025_26.xlsx")
         if not os.path.exists(sos_file):
@@ -542,7 +574,18 @@ class FantacalcioWorkflow:
             df = pd.read_excel(final_file)
             
             total = len(df)
-            avg_price = df.get('Prezzo_Consigliato', pd.Series([0])).mean()
+            
+            # Determina quale colonna prezzo usare
+            price_col = None
+            if 'Prezzo_Calibrato' in df.columns:
+                price_col = 'Prezzo_Calibrato'
+            elif 'Prezzo_Consigliato' in df.columns:
+                price_col = 'Prezzo_Consigliato'
+            
+            if price_col:
+                avg_price = df[price_col].mean()
+            else:
+                avg_price = 0
             
             print(f"\n📈 STATISTICHE FINALI:")
             print(f"   👥 Giocatori analizzati: {total}")
@@ -556,12 +599,12 @@ class FantacalcioWorkflow:
                     print(f"   • {role}: {count} ({percentage:.1f}%)")
             
             # Top 5 più costosi
-            if 'Prezzo_Consigliato' in df.columns:
+            if price_col:
                 print(f"\n🏆 TOP 5 PIÙ COSTOSI:")
-                top_expensive = df.nlargest(5, 'Prezzo_Consigliato')
+                top_expensive = df.nlargest(5, price_col)
                 for _, p in top_expensive.iterrows():
                     print(f"   • {p.get('Nome', 'N/A')} ({p.get('Ruolo', 'N/A')}) - "
-                          f"{p.get('Prezzo_Consigliato', 0):.1f}€")
+                          f"{p.get(price_col, 0):.1f}€")
             
         except Exception as e:
             print(f"   ⚠️  Impossibile mostrare statistiche: {e}")
@@ -574,10 +617,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Esempi di utilizzo:
-    python main_workflow.py --update-data                    # Aggiorna dati e calcola prezzi mercato
-    python main_workflow.py --no-market                      # Usa solo pricing autonomo  
-    python main_workflow.py --update-data --no-market        # Aggiorna dati e pricing autonomo
-    python main_workflow.py                                  # Usa dati esistenti con pricing mercato
+    python main_workflow.py                                  # Usa dati esistenti con pricing calibrato SOS (default)
+    python main_workflow.py --update-data                    # Aggiorna dati e calcola prezzi calibrati SOS
+    python main_workflow.py --no-sos-calibrated              # Usa pricing legacy basato su mercato
+    python main_workflow.py --standalone                     # Usa solo pricing autonomo  
+    python main_workflow.py --update-data --standalone       # Aggiorna dati e pricing autonomo
         """
     )
     
@@ -590,7 +634,19 @@ Esempi di utilizzo:
     parser.add_argument(
         '--no-market',
         action='store_true',
-        help='Usa pricing autonomo invece di quello basato su mercato'
+        help='Usa pricing autonomo invece di quello basato su mercato (legacy)'
+    )
+    
+    parser.add_argument(
+        '--no-sos-calibrated',
+        action='store_true',
+        help='Disabilita il pricing calibrato su SOS (usa legacy market pricing)'
+    )
+    
+    parser.add_argument(
+        '--standalone',
+        action='store_true',
+        help='Usa solo pricing autonomo (nessun riferimento a SOS)'
     )
     
     parser.add_argument(
@@ -603,9 +659,15 @@ Esempi di utilizzo:
     
     try:
         workflow = FantacalcioWorkflow(args.data_dir)
+        
+        # Determina la modalità di pricing
+        use_sos_calibrated = not args.no_sos_calibrated and not args.standalone
+        use_market_pricing = not args.no_market and not args.standalone and not use_sos_calibrated
+        
         workflow.run_complete_workflow(
             update_data=args.update_data,
-            use_market_pricing=not args.no_market
+            use_market_pricing=use_market_pricing,
+            use_sos_calibrated=use_sos_calibrated
         )
     except Exception as e:
         print(f"❌ Errore durante l'esecuzione: {e}")
