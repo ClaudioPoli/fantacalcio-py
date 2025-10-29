@@ -1,34 +1,34 @@
 # 🏆 Fantacalcio Analysis System
 
-Sistema completo per l'analisi dei giocatori di fantacalcio con calcolo prezzi calibrati su **SOS Fanta 2025** e statistiche avanzate da **FPEDIA** e **FSTATS**.
+Sistema completo per l'analisi dei giocatori di fantacalcio basato esclusivamente su **statistiche FSTATS** con calcolo prezzi calibrati su **SOS Fanta 2025**.
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ Caratteristiche Principali
 
-### 🚀 **Un Solo Comando - Tutto Automatico**
+### 🚀 **Un Solo Comando - Tutto Automatico (Solo FSTATS)**
 ```bash
 python main.py
 ```
-- Verifica automatica aggiornamento dati
-- Scarica dati FPEDIA e FSTATS (solo se necessario)
-- Crea file di analisi completi
-- Calcola prezzi calibrati su SOS Fanta
+- Verifica automatica aggiornamento dati FSTATS
+- Scarica dati FSTATS (solo se necessario)
+- Crea file di analisi completo
+- Calcola prezzi basati su **19 indici tecnici FSTATS**
 - Genera output finale con tutte le metriche
 
-### 💰 **Pricing Calibrato su SOS Fanta**
-- Usa **SOS Fanta 2025** come baseline realistico
-- Calibra in base a **19+ indici tecnici FSTATS**
+### 💰 **Pricing Basato su Statistiche Reali**
+- Usa **statistiche FSTATS complete** per ogni giocatore
+- Calibra su **SOS Fanta 2025** come baseline (opzionale)
 - Enfatizza **pericolosità offensiva** (gol, assist, xG)
 - Considera **affidabilità** (presenze, minuti)
 - Bonus per performance eccezionali
 
-### 📊 **Analisi Multi-dimensionale**
-- **Offensive Score**: Gol, assist, xG, xA
-- **Defensive Score**: Clean sheets, gol subiti
+### 📊 **Analisi Multi-dimensionale (19+ Indici FSTATS)**
+- **Offensive Score**: Gol, assist, xG, xA, tiri in porta
+- **Defensive Score**: Clean sheets, gol subiti (portieri/difensori)
 - **Reliability Score**: Presenze, minuti, continuità
-- **Technical Score**: 19+ indici FSTATS specializzati
+- **Technical Score**: 19 indici FSTATS specializzati per ruolo
 
 ### 🔍 **Categorizzazione Assoluta**
 - **Top Player**: Performance eccezionali (>15.0 punti) - 3.3% dei giocatori
@@ -48,17 +48,16 @@ fantacalcio-py/
 │   │   ├── standalone_pricing.py     # Pricing autonomo
 │   │   └── market_pricing.py         # [Legacy] Market pricing
 │   ├── 📂 data/                  # Gestione dati
-│   │   ├── processor.py          # Elaborazione e merge
-│   │   └── retriever.py          # Download dati web
+│   │   ├── processor.py          # Elaborazione FSTATS
+│   │   └── retriever.py          # Download dati FSTATS
 │   └── 📂 utils/                 # Utilities
 ├── 📂 data/                      # Dati e analisi
-│   ├── fpedia_analysis.xlsx      # 📊 Analisi FPEDIA
-│   ├── FSTATS_analysis.xlsx      # 📊 Analisi FSTATS
-│   ├── SOS Fanta 2025_26.xlsx    # 💰 Prezzi riferimento SOS
+│   ├── FSTATS_analysis.xlsx      # 📊 Analisi FSTATS (auto-generato)
+│   ├── SOS Fanta 2025_26.xlsx    # 💰 Prezzi riferimento SOS (opzionale)
 │   ├── 📂 output/                # Output finale
-│   │   └── final_analysis.xlsx   # 🎯 FILE FINALE con tutto
-│   └── 📂 raw/                   # Dati grezzi scaricati
-├── main.py                       # 🚀 Script principale
+│   │   └── final_analysis.xlsx   # 🎯 FILE FINALE (89 colonne FSTATS)
+│   └── 📂 raw/                   # Dati grezzi FSTATS scaricati
+├── main.py                       # 🚀 Script principale (solo FSTATS)
 ├── QUICK_START.md                # 📖 Guida rapida
 └── README.md                     # Documentazione
 ```
@@ -85,17 +84,17 @@ pip install -r requirements.txt
 
 ## 💻 Utilizzo
 
-### 🚀 **Quick Start - Un Solo Comando**
+### 🚀 **Quick Start - Un Solo Comando (Solo FSTATS)**
 ```bash
 python main.py
 ```
 
 Questo comando esegue **automaticamente**:
-1. ✅ Verifica se i dati sono aggiornati (< 1 giorno)
-2. ✅ Scarica dati FPEDIA e FSTATS (solo se necessario)
-3. ✅ Crea `fpedia_analysis.xlsx` e `FSTATS_analysis.xlsx`
-4. ✅ Calcola prezzi calibrati su SOS Fanta
-5. ✅ Genera `data/output/final_analysis.xlsx` con **tutte le metriche**
+1. ✅ Verifica se i dati FSTATS sono aggiornati (< 1 giorno)
+2. ✅ Scarica dati FSTATS (solo se necessario)
+3. ✅ Crea `FSTATS_analysis.xlsx` con 499 giocatori
+4. ✅ Calcola prezzi basati su 19 indici tecnici FSTATS
+5. ✅ Genera `data/output/final_analysis.xlsx` con **89 colonne di metriche**
 
 ### ⚙️ **Opzioni Avanzate**
 ```bash
@@ -115,33 +114,34 @@ Vedi [QUICK_START.md](QUICK_START.md) per la guida dettagliata.
 ## 📊 Output e Risultati
 
 ### File Generati
-1. **`data/fpedia_analysis.xlsx`**: Analisi completa FPEDIA
-2. **`data/FSTATS_analysis.xlsx`**: Analisi completa FSTATS  
-3. **`data/output/final_analysis.xlsx`**: 🎯 **FILE FINALE** con tutto
+1. **`data/FSTATS_analysis.xlsx`**: Analisi completa FSTATS con 499 giocatori
+2. **`data/output/final_analysis.xlsx`**: 🎯 **FILE FINALE** con 89 colonne
 
-### Colonne nel File Finale
-Il file `final_analysis.xlsx` contiene **116 colonne** con:
+### Colonne nel File Finale (Solo FSTATS)
+Il file `final_analysis.xlsx` contiene **89 colonne** con dati FSTATS:
 
 #### Informazioni Base
 - `Nome`, `Ruolo`, `Squadra`
 
 #### Prezzi e Valutazione
 - `Prezzo_Calibrato` - **Prezzo consigliato finale**
-- `Prezzo` - Prezzo SOS Fanta (riferimento)
+- `Prezzo` - Prezzo SOS Fanta (riferimento, se disponibile)
 - `Differenza_vs_SOS` - Scostamento dal SOS
 - `Categoria_Performance` - Fenomeno, Top Player, Eccellente, Buono, Nella Media, Sottotono, Scarso
 
-#### Scores Componenti
+#### Scores Componenti (Basati su FSTATS)
 - `Total_Score` - Punteggio totale (0-100)
 - `Offensive_Score` - Pericolosità offensiva
 - `Defensive_Score` - Solidità difensiva  
 - `Reliability_Score` - Affidabilità e continuità
-- `Technical_Score` - Qualità tecnica (indici FSTATS)
+- `Technical_Score` - Qualità tecnica (19 indici FSTATS)
 
-#### Statistiche Complete
-- **FPEDIA**: Fantamedia, presenze, gol/assist previsti, trend
-- **FSTATS**: 19+ indici tecnici specializzati
-- Goals, assists, xG, xA, presenze, minuti, cartellini, clean sheets
+#### Statistiche FSTATS Complete (89 colonne totali)
+- **Base**: goals, assists, presences, avg, fanta_avg, minutes
+- **xG/xA**: xgFromOpenPlays, xA, xG/90min, xA/90min
+- **Portieri**: gkCleanSheets, gkConcededGoals, gkPenaltiesSaved
+- **Cartellini**: yellowCards, redCards, penalties
+- **19 Indici Tecnici**: Shot_on_target_Index, Defense_solidity_Index, Pass_leading_chances_Index, ecc.
 
 ### File Generati
 1. **`standalone_pricing_analysis.xlsx`**: 🎯 **Risultati finali autonomi**

@@ -4,9 +4,9 @@
 Script principale per l'analisi completa dei giocatori di fantacalcio.
 
 Questo script esegue automaticamente:
-1. Scraping dati da FPEDIA e FSTATS (se necessario)
-2. Creazione file fpedia_analysis.xlsx e FSTATS_analysis.xlsx
-3. Calcolo prezzi calibrati su SOS Fanta
+1. Scaricamento dati FSTATS (se necessario)
+2. Creazione file FSTATS_analysis.xlsx
+3. Calcolo prezzi basati su statistiche FSTATS
 4. Output finale con tutte le metriche e prezzi consigliati
 """
 
@@ -28,13 +28,13 @@ logger = logging.getLogger(__name__)
 # Aggiungi la root al path per gli import
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.fantacalcio.data.retriever import scrape_fpedia, fetch_FSTATS_data
-from src.fantacalcio.data.processor import process_fpedia_data, process_FSTATS_data
+from src.fantacalcio.data.retriever import fetch_FSTATS_data
+from src.fantacalcio.data.processor import process_FSTATS_data
 from src.fantacalcio.analyzers.sos_calibrated_pricing import SOSCalibratedPricingCalculator
 
 
 class FantacalcioMain:
-    """Gestore principale per l'analisi fantacalcio completa."""
+    """Gestore principale per l'analisi fantacalcio basata su FSTATS."""
     
     def __init__(self, data_dir: str = "data"):
         self.data_dir = data_dir
@@ -45,52 +45,39 @@ class FantacalcioMain:
         os.makedirs(self.raw_dir, exist_ok=True)
         os.makedirs(self.output_dir, exist_ok=True)
         
-        # File paths
-        self.fpedia_csv = os.path.join(self.raw_dir, "_giocatori.csv")
+        # File paths - Solo FSTATS
         self.fstats_csv = os.path.join(self.raw_dir, "_players.csv")
-        self.fpedia_xlsx = os.path.join(self.data_dir, "fpedia_analysis.xlsx")
         self.fstats_xlsx = os.path.join(self.data_dir, "FSTATS_analysis.xlsx")
         self.sos_file = os.path.join(self.data_dir, "SOS Fanta 2025_26.xlsx")
         self.output_file = os.path.join(self.output_dir, "final_analysis.xlsx")
     
     def check_data_freshness(self) -> bool:
         """
-        Verifica se i dati sono aggiornati (meno di 1 giorno).
+        Verifica se i dati FSTATS sono aggiornati (meno di 1 giorno).
         
         Returns:
             True se i dati sono freschi, False se devono essere aggiornati
         """
-        files_to_check = [self.fpedia_csv, self.fstats_csv]
+        if not os.path.exists(self.fstats_csv):
+            logger.info(f"File FSTATS non trovato - scaricamento necessario")
+            return False
         
-        for file in files_to_check:
-            if not os.path.exists(file):
-                logger.info(f"File {file} non trovato - scaricamento necessario")
-                return False
-            
-            # Controlla età del file
-            file_time = datetime.fromtimestamp(os.path.getmtime(file))
-            age = datetime.now() - file_time
-            
-            if age > timedelta(days=1):
-                logger.info(f"File {file} ha più di 1 giorno - scaricamento necessario")
-                return False
+        # Controlla età del file
+        file_time = datetime.fromtimestamp(os.path.getmtime(self.fstats_csv))
+        age = datetime.now() - file_time
         
-        logger.info("I dati sono aggiornati (meno di 1 giorno)")
+        if age > timedelta(days=1):
+            logger.info(f"File FSTATS ha più di 1 giorno - scaricamento necessario")
+            return False
+        
+        logger.info("I dati FSTATS sono aggiornati (meno di 1 giorno)")
         return True
     
     def update_data(self):
-        """Scarica i dati aggiornati da FPEDIA e FSTATS."""
+        """Scarica i dati aggiornati da FSTATS."""
         logger.info("=" * 60)
-        logger.info("STEP 1: Scaricamento dati da FPEDIA e FSTATS")
+        logger.info("STEP 1: Scaricamento dati FSTATS")
         logger.info("=" * 60)
-        
-        try:
-            logger.info("Scaricamento dati FPEDIA...")
-            scrape_fpedia()
-            logger.info("✅ Dati FPEDIA scaricati con successo")
-        except Exception as e:
-            logger.error(f"❌ Errore nello scaricamento FPEDIA: {e}")
-            raise
         
         try:
             logger.info("Scaricamento dati FSTATS...")
@@ -101,22 +88,11 @@ class FantacalcioMain:
             raise
     
     def create_analysis_files(self):
-        """Crea i file di analisi FPEDIA e FSTATS."""
+        """Crea il file di analisi FSTATS."""
         logger.info("")
         logger.info("=" * 60)
-        logger.info("STEP 2: Creazione file analisi FPEDIA e FSTATS")
+        logger.info("STEP 2: Creazione file analisi FSTATS")
         logger.info("=" * 60)
-        
-        # FPEDIA
-        logger.info("Processamento dati FPEDIA...")
-        if not os.path.exists(self.fpedia_csv):
-            raise FileNotFoundError(f"File FPEDIA non trovato: {self.fpedia_csv}")
-        
-        df_fpedia = pd.read_csv(self.fpedia_csv)
-        df_fpedia = process_fpedia_data(df_fpedia)
-        df_fpedia = self._calculate_fpedia_scores(df_fpedia)
-        df_fpedia.to_excel(self.fpedia_xlsx, index=False)
-        logger.info(f"✅ File FPEDIA salvato: {self.fpedia_xlsx}")
         
         # FSTATS
         logger.info("Processamento dati FSTATS...")
@@ -129,26 +105,6 @@ class FantacalcioMain:
         df_fstats.to_excel(self.fstats_xlsx, index=False)
         logger.info(f"✅ File FSTATS salvato: {self.fstats_xlsx}")
     
-    def _calculate_fpedia_scores(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Calcola i punteggi per i dati FPEDIA."""
-        df_result = df.copy()
-        
-        def safe_numeric(col_name, default=0):
-            if col_name in df_result.columns:
-                return pd.to_numeric(df_result[col_name], errors='coerce').fillna(default)
-            return default
-        
-        df_result['Convenienza'] = (
-            safe_numeric('Punteggio') * 0.3 +
-            safe_numeric('Fantamedia anno 2024-2025') * 0.4 +
-            safe_numeric('Presenze 2024-2025') * 0.2 +
-            safe_numeric('Gol previsti') * 0.1
-        )
-        
-        df_result['Prezzo_Massimo_Consigliato'] = (df_result['Convenienza'] / 10).clip(1, 50)
-        
-        return df_result
-    
     def _calculate_fstats_scores(self, df: pd.DataFrame) -> pd.DataFrame:
         """Calcola i punteggi per i dati FSTATS."""
         df_result = df.copy()
@@ -158,6 +114,7 @@ class FantacalcioMain:
                 return pd.to_numeric(df_result[col_name], errors='coerce').fillna(default)
             return default
         
+        # Score basato su statistiche FSTATS
         df_result['Convenienza'] = (
             safe_numeric('Media voto') * 0.4 +
             safe_numeric('Gol fatti') * 0.3 +
@@ -169,100 +126,36 @@ class FantacalcioMain:
         
         return df_result
     
-    def merge_and_calculate_prices(self):
-        """Merge dei dati e calcolo prezzi calibrati."""
+    def calculate_prices(self):
+        """Calcola prezzi basati su FSTATS."""
         logger.info("")
         logger.info("=" * 60)
-        logger.info("STEP 3: Merge dati e calcolo prezzi calibrati")
+        logger.info("STEP 3: Calcolo prezzi basati su statistiche FSTATS")
         logger.info("=" * 60)
         
-        # Carica i file di analisi
-        logger.info("Caricamento file FPEDIA e FSTATS...")
-        df_fpedia = pd.read_excel(self.fpedia_xlsx)
+        # Carica il file FSTATS
+        logger.info("Caricamento file FSTATS...")
         df_fstats = pd.read_excel(self.fstats_xlsx)
-        
-        # Merge dei dati
-        logger.info("Merge dei dati...")
-        df_merged = self._merge_dataframes(df_fpedia, df_fstats)
         
         # Calcolo prezzi calibrati
         if not os.path.exists(self.sos_file):
             logger.warning(f"File SOS non trovato: {self.sos_file}")
-            logger.warning("Impossibile calcolare prezzi calibrati senza SOS Fanta")
-            # Salva solo i dati merged
-            df_merged.to_excel(self.output_file, index=False)
+            logger.warning("Calcolo prezzi senza calibrazione SOS")
+            # Usa solo le statistiche FSTATS
+            df_fstats.to_excel(self.output_file, index=False)
             logger.info(f"✅ File salvato (senza calibrazione SOS): {self.output_file}")
             return
         
         logger.info("Calcolo prezzi calibrati su SOS Fanta...")
         calculator = SOSCalibratedPricingCalculator()
         
-        # Salva temporaneamente il merged
-        temp_merged = os.path.join(self.output_dir, "_temp_merged.xlsx")
-        df_merged.to_excel(temp_merged, index=False)
-        
-        # Calcola prezzi
-        df_final = calculator.process_data(temp_merged, self.sos_file, self.output_file)
-        
-        # Rimuovi file temporaneo
-        if os.path.exists(temp_merged):
-            os.remove(temp_merged)
+        # Calcola prezzi usando solo FSTATS
+        df_final = calculator.process_data(self.fstats_xlsx, self.sos_file, self.output_file)
         
         logger.info(f"✅ File finale salvato: {self.output_file}")
         
         # Statistiche
         self._print_final_stats(df_final)
-    
-    def _merge_dataframes(self, df_fpedia: pd.DataFrame, df_fstats: pd.DataFrame) -> pd.DataFrame:
-        """Merge intelligente dei due dataframes."""
-        import re
-        import unicodedata
-        
-        def normalize_name(name):
-            if pd.isna(name):
-                return ""
-            
-            name = str(name).strip()
-            name = unicodedata.normalize('NFD', name)
-            name = ''.join(c for c in name if unicodedata.category(c) != 'Mn')
-            name = re.sub(r'[^\w\s]', ' ', name)
-            name = re.sub(r'\s+', ' ', name).strip()
-            name = name.lower()
-            
-            parts = name.split()
-            if len(parts) >= 2:
-                if len(parts[0]) > len(parts[-1]):
-                    name = parts[-1] + " " + " ".join(parts[:-1])
-            
-            return name
-        
-        df_fpedia_clean = df_fpedia.copy()
-        df_fstats_clean = df_fstats.copy()
-        
-        df_fpedia_clean['Nome_Clean'] = df_fpedia_clean['Nome'].apply(normalize_name)
-        df_fstats_clean['Nome_Clean'] = df_fstats_clean['Nome'].apply(normalize_name)
-        
-        # Merge
-        df_merged = pd.merge(
-            df_fpedia_clean, 
-            df_fstats_clean,
-            on='Nome_Clean',
-            how='outer',
-            suffixes=('_FPEDIA', '_FSTATS')
-        )
-        
-        # Risolvi conflitti
-        df_merged['Nome'] = df_merged['Nome_FPEDIA'].fillna(df_merged['Nome_FSTATS'])
-        df_merged['Ruolo'] = df_merged['Ruolo_FPEDIA'].fillna(df_merged['Ruolo_FSTATS'])
-        
-        if 'Squadra_FPEDIA' in df_merged.columns:
-            df_merged['Squadra'] = df_merged['Squadra_FPEDIA'].fillna(df_merged.get('Squadra_FSTATS', ''))
-        
-        df_merged = df_merged.drop('Nome_Clean', axis=1, errors='ignore')
-        
-        logger.info(f"Merge completato: {len(df_merged)} giocatori totali")
-        
-        return df_merged
     
     def _print_final_stats(self, df: pd.DataFrame):
         """Stampa statistiche finali."""
@@ -295,25 +188,25 @@ class FantacalcioMain:
     
     def run(self, force_update: bool = False):
         """
-        Esegue il workflow completo.
+        Esegue il workflow completo basato solo su FSTATS.
         
         Args:
             force_update: Se True, forza il download dei dati anche se freschi
         """
-        logger.info("🏆 FANTACALCIO ANALYSIS - AVVIO")
+        logger.info("🏆 FANTACALCIO ANALYSIS - AVVIO (Solo FSTATS)")
         logger.info("=" * 60)
         
-        # Step 1: Verifica e aggiornamento dati
+        # Step 1: Verifica e aggiornamento dati FSTATS
         if force_update or not self.check_data_freshness():
             self.update_data()
         else:
             logger.info("⏭️  STEP 1: Saltato (dati già aggiornati)")
         
-        # Step 2: Creazione file analisi
+        # Step 2: Creazione file analisi FSTATS
         self.create_analysis_files()
         
-        # Step 3: Merge e calcolo prezzi
-        self.merge_and_calculate_prices()
+        # Step 3: Calcolo prezzi
+        self.calculate_prices()
         
         logger.info("")
         logger.info("=" * 60)
@@ -324,14 +217,14 @@ class FantacalcioMain:
 
 
 def main():
-    """Entry point principale."""
+    """Entry point principale - Analisi basata solo su FSTATS."""
     parser = argparse.ArgumentParser(
-        description='Fantacalcio Analysis - Script principale',
+        description='Fantacalcio Analysis - Analisi basata su FSTATS',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Esempi di utilizzo:
-    python main.py                    # Esegue l'analisi completa (aggiorna solo se necessario)
-    python main.py --force-update     # Forza l'aggiornamento dei dati
+    python main.py                    # Esegue l'analisi FSTATS completa (aggiorna solo se necessario)
+    python main.py --force-update     # Forza l'aggiornamento dei dati FSTATS
     python main.py --data-dir /path   # Usa una directory dati personalizzata
         """
     )
