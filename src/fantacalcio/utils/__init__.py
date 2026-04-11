@@ -1,1 +1,1 @@
-"""Utilities package for fantacalcio analysis."""
+"""Configurazione e utilità."""

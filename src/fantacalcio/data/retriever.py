@@ -1,256 +1,342 @@
-# data_retriever.py
+"""
+Data retriever: scaricamento automatico dati da FSTATS (API) e FPEDIA (scraping).
+
+Supporta:
+- Refresh automatico basato sull'età del file (config.DATA_MAX_AGE_HOURS)
+- Flag force per forzare il riscrittura
+- Retry con backoff esponenziale
+- Validazione dei dati scaricati
+"""
+
 import os
 import time
+from datetime import datetime, timedelta
 from random import randint
+
+import concurrent.futures
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
-from loguru import logger
 from dotenv import load_dotenv
-import pandas as pd
-import concurrent.futures
-import sys
-from pathlib import Path
+from loguru import logger
+from tqdm import tqdm
 
-# Import config dal modulo utils
 from ..utils import config
 
 load_dotenv()
 
 
-class DataRetriever:
-    """Gestisce il recupero dei dati da FPEDIA e FSTATS."""
-    
-    def __init__(self):
-        self.config = config
-    
-    def scrape_fpedia(self) -> None:
-        """Orchestrates the scraping of FPEDIA."""
-        scrape_fpedia()
-    
-    def fetch_fstats_data(self) -> None:
-        """Fetches data from FSTATS API."""
-        fetch_FSTATS_data()
+# ---------------------------------------------------------------------------
+# Utilità
+# ---------------------------------------------------------------------------
+
+def _is_stale(filepath: str, max_age_hours: int = None) -> bool:
+    """Ritorna True se il file non esiste o è più vecchio di max_age_hours."""
+    if max_age_hours is None:
+        max_age_hours = config.DATA_MAX_AGE_HOURS
+    if not os.path.exists(filepath):
+        return True
+    mtime = datetime.fromtimestamp(os.path.getmtime(filepath))
+    return datetime.now() - mtime > timedelta(hours=max_age_hours)
 
 
-def get_giocatori_urls() -> list:
-    """Scrapes FPEDIA to get all player URLs."""
-    giocatori_urls = []
-    if not os.path.exists(config.GIOCATORI_URLS_FILE):
-        logger.debug("Scraping player URLs from FPEDIA...")
-        for ruolo in tqdm(config.RUOLI):
-            url = config.FPEDIA_URL + ruolo.lower() + "/"
-            try:
-                response = requests.get(url, headers=config.HEADERS)
-                response.raise_for_status()
-                soup = BeautifulSoup(response.content, "html.parser")
-                for giocatore in soup.find_all("article"):
-                    calciatore_url = giocatore.find("a").get("href")
-                    if calciatore_url:
-                        giocatori_urls.append(calciatore_url)
-            except requests.exceptions.RequestException as e:
-                logger.error(f"Failed to retrieve URLs for role '{ruolo}': {e}")
-                continue
-
-        if not giocatori_urls:
-            logger.warning(
-                "No player URLs were scraped from FPEDIA. "
-                "The website structure may have changed, or the request was blocked."
-            )
-        else:
-            with open(config.GIOCATORI_URLS_FILE, "w") as fp:
-                for item in giocatori_urls:
-                    fp.write(f"{item}\n")
-            logger.debug(f"{len(giocatori_urls)} player URLs saved.")
-    else:
-        logger.debug("Reading player URLs from cache.")
-        with open(config.GIOCATORI_URLS_FILE, "r") as fp:
-            giocatori_urls = fp.readlines()
-    return [url.strip() for url in giocatori_urls]
+def _request_with_retry(method: str, url: str, max_retries: int = None, **kwargs) -> requests.Response:
+    """Esegue una richiesta HTTP con retry e backoff esponenziale."""
+    if max_retries is None:
+        max_retries = config.MAX_RETRIES
+    last_exc = None
+    for attempt in range(max_retries):
+        try:
+            resp = requests.request(method, url, timeout=30, **kwargs)
+            resp.raise_for_status()
+            return resp
+        except requests.RequestException as exc:
+            last_exc = exc
+            if attempt < max_retries - 1:
+                wait = config.RETRY_BACKOFF_BASE * (2 ** attempt)
+                logger.warning(f"Attempt {attempt + 1}/{max_retries} failed for {url}: {exc}. Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                logger.error(f"All {max_retries} attempts failed for {url}: {exc}")
+    raise last_exc
 
 
-def get_attributi_giocatore(url: str) -> dict:
-    """Scrapes a single player's page on FPEDIA for their attributes."""
-    logger.debug(f"Scraping attributes for player from URL: {url}")
-    time.sleep(randint(1000, 8000) / 1000)
-    attributi = dict()
-    html = requests.get(url.strip())
-    soup = BeautifulSoup(html.content, "html.parser")
+# ---------------------------------------------------------------------------
+# FSTATS (fantagoat API)
+# ---------------------------------------------------------------------------
 
-    attributi["Nome"] = soup.select_one("h1").get_text().strip()
-
-    selettore = "div.col_one_fourth:nth-of-type(1) span.stickdan"
-    attributi["Punteggio"] = soup.select_one(selettore).text.strip().replace("/100", "")
-
-    selettore = "	div.col_one_fourth:nth-of-type(n+2) div"
-    medie = [el.find("span").text.strip() for el in soup.select(selettore)]
-    anni = [
-        el.find("strong").text.split(" ")[-1].strip() for el in soup.select(selettore)
-    ]
-    i = 0
-    for anno in anni:
-        attributi[f"Fantamedia anno {anno}"] = medie[i]
-        i += 1
-
-    selettore = "div.col_one_third:nth-of-type(2) div"
-    stats_ultimo_anno = soup.select_one(selettore)
-    parametri = [
-        el.text.strip().replace(":", "") for el in stats_ultimo_anno.find_all("strong")
-    ]
-    valori = [el.text.strip() for el in stats_ultimo_anno.find_all("span")]
-    attributi.update(dict(zip(parametri, valori)))
-
-    selettore = ".col_one_third.col_last div"
-    stats_previste = soup.select_one(selettore)
-    parametri = [
-        el.text.strip().replace(":", "") for el in stats_previste.find_all("strong")
-    ]
-    valori = [el.text.strip() for el in stats_previste.find_all("span")]
-    attributi.update(dict(zip(parametri, valori)))
-
-    selettore = ".label12 span.label"
-    ruolo = soup.select_one(selettore)
-    attributi["Ruolo"] = ruolo.get_text().strip()
-
-    selettore = "span.stickdanpic"
-    skills = [el.text for el in soup.select(selettore)]
-    attributi["Skills"] = skills
-
-    selettore = "div.progress-percent"
-    investimento = soup.select(selettore)[2]
-    attributi["Buon investimento"] = investimento.text.replace("%", "")
-
-    selettore = "div.progress-percent"
-    investimento = soup.select(selettore)[3]
-    attributi["Resistenza infortuni"] = investimento.text.replace("%", "")
-
-    selettore = "img.inf_calc"
-    try:
-        consigliato = soup.select_one(selettore).get("title")
-        if "Consigliato per la giornata" in consigliato:
-            attributi["Consigliato prossima giornata"] = True
-        else:
-            attributi["Consigliato prossima giornata"] = False
-
-    except:
-        attributi["Consigliato prossima giornata"] = False
-
-    selettore = "span.new_calc"
-    nuovo = soup.select_one(selettore)
-    if not nuovo == None:
-        attributi["Nuovo acquisto"] = True
-    else:
-        attributi["Nuovo acquisto"] = False
-
-    selettore = "img.inf_calc"
-    try:
-        infortunato = soup.select_one(selettore).get("title")
-        if "Infortunato" in infortunato:
-            attributi["Infortunato"] = True
-        else:
-            attributi["Infortunato"] = False
-
-    except:
-        attributi["Infortunato"] = False
-
-    selettore = "#content > div > div.section.nobg.nomargin > div > div > div:nth-child(2) > div.col_three_fifth > div.promo.promo-border.promo-light.row > div:nth-child(3) > div:nth-child(1) > div > img"
-    squadra = soup.select_one(selettore).get("title").split(":")[1].strip()
-    attributi["Squadra"] = squadra
-
-    selettore = "	div.col_one_fourth:nth-of-type(n+2) div"
-    try:
-        trend = soup.select(selettore)[0].find("i").get("class")[1]
-        if trend == "icon-arrow-up":
-            attributi["Trend"] = "UP"
-        else:
-            attributi["Trend"] = "DOWN"
-    except:
-        attributi["Trend"] = "STABLE"
-
-    selettore = "div.col_one_fourth:nth-of-type(2) span.rouge"
-    presenze_attuali = soup.select_one(selettore).text
-    attributi["Presenze campionato corrente"] = presenze_attuali
-
-    return attributi
-
-
-def scrape_fpedia():
+def fetch_fstats_data(force: bool = False) -> pd.DataFrame | None:
     """
-    Orchestrates the scraping of FPEDIA.
-    Fetches all player URLs and then scrapes each player's page for their attributes in parallel.
-    Saves the data to a CSV file.
+    Scarica i dati giocatori dall'API FSTATS (fantagoat).
+
+    Args:
+        force: se True, scarica anche se il file è recente.
+
+    Returns:
+        DataFrame con i dati scaricati, o None se il download è saltato / fallito.
     """
-    if os.path.exists(config.GIOCATORI_CSV):
-        logger.debug(f"{config.GIOCATORI_CSV} already exists. Skipping scraping.")
-        return
-
-    urls = get_giocatori_urls()
-    giocatori = []
-    logger.debug("Scraping individual player data from website...")
-
-    with concurrent.futures.ThreadPoolExecutor(
-        max_workers=config.MAX_WORKERS
-    ) as executor:
-        future_to_url = {
-            executor.submit(get_attributi_giocatore, url): url for url in urls
-        }
-        for future in tqdm(
-            concurrent.futures.as_completed(future_to_url), total=len(urls)
-        ):
-            url = future_to_url[future]
-            try:
-                attributi = future.result()
-                if attributi:
-                    giocatori.append(attributi)
-            except Exception as exc:
-                logger.error(f"{url} generated an exception: {exc}")
-
-    df = pd.DataFrame(giocatori)
-    df.to_csv(config.GIOCATORI_CSV, index=False)
-    logger.debug("FPEDIA data saved to CSV.")
-
-
-def fetch_FSTATS_data():
-    """
-    Logs into FSTATS, fetches player data from the API,
-    and saves it to a CSV file.
-    """
-    if os.path.exists(config.PLAYERS_CSV):
-        logger.debug(f"{config.PLAYERS_CSV} already exists. Skipping download.")
-        return
+    if not force and not _is_stale(config.PLAYERS_CSV):
+        logger.info("FSTATS: dati aggiornati, download saltato.")
+        return pd.read_csv(config.PLAYERS_CSV, sep=";")
 
     user = os.getenv("FSTATS_MAIL")
     password = os.getenv("FSTATS_PASSWORD")
-
     if not user or not password:
-        logger.error("FSTATS credentials not found in .env file. Skipping download.")
-        return
+        logger.error("FSTATS: credenziali non trovate in .env (FSTATS_MAIL / FSTATS_PASSWORD).")
+        return None
 
-    # 1. Login and get token
-    logger.debug("Logging into FSTATS...")
+    # 1. Login
+    logger.info("FSTATS: login in corso...")
     login_payload = {"username": user, "password": password}
-    headers = {"content-type": "application/json"}
     try:
-        response = requests.post(
-            config.FSTATS_LOGIN_URL, json=login_payload, headers=headers
+        resp = _request_with_retry(
+            "POST", config.FSTATS_LOGIN_URL,
+            json=login_payload,
+            headers={"content-type": "application/json"},
         )
-        response.raise_for_status()
-        token = response.json()["access_token"]
-        logger.debug("Login successful.")
-    except requests.exceptions.RequestException as e:
-        logger.error(f"FSTATS login failed: {e}")
-        return
+        token = resp.json()["access_token"]
+        logger.info("FSTATS: login riuscito.")
+    except (requests.RequestException, KeyError) as exc:
+        logger.error(f"FSTATS: login fallito: {exc}")
+        return None
 
-    # 2. Fetch player data
-    logger.debug("Fetching player data from FSTATS API...")
-    auth_headers = {"authorization": f"Bearer {token}"}
+    # 2. Download dati giocatori
+    logger.info("FSTATS: scaricamento dati giocatori...")
     try:
-        response = requests.get(config.FSTATS_PLAYERS_URL, headers=auth_headers)
-        response.raise_for_status()
-        players_data = response.json()["results"]
+        resp = _request_with_retry(
+            "GET", config.FSTATS_PLAYERS_URL,
+            headers={"authorization": f"Bearer {token}"},
+        )
+        players = resp.json()["results"]
+    except (requests.RequestException, KeyError) as exc:
+        logger.error(f"FSTATS: download fallito: {exc}")
+        return None
 
-        df = pd.DataFrame(players_data)
-        df.to_csv(config.PLAYERS_CSV, index=False, sep=";")
-        logger.debug("FSTATS data saved to CSV.")
-    except requests.exceptions.RequestException as e:
-        logger.error(f"FSTATS data fetch failed: {e}")
+    df = pd.DataFrame(players)
+
+    # 3. Validazione
+    if df.empty:
+        logger.error("FSTATS: nessun giocatore ricevuto dall'API.")
+        return None
+    if len(df) < 100:
+        logger.warning(f"FSTATS: solo {len(df)} giocatori ricevuti (attesi ~500). Possibile problema API.")
+
+    # 4. Salva
+    os.makedirs(os.path.dirname(config.PLAYERS_CSV), exist_ok=True)
+    df.to_csv(config.PLAYERS_CSV, index=False, sep=";")
+    logger.info(f"FSTATS: {len(df)} giocatori salvati in {config.PLAYERS_CSV}")
+    return df
+
+
+# ---------------------------------------------------------------------------
+# FPEDIA (fantacalciopedia.com scraping)
+# ---------------------------------------------------------------------------
+
+def _get_player_urls(force: bool = False) -> list[str]:
+    """Recupera la lista di URL dei giocatori da FPEDIA."""
+    if not force and os.path.exists(config.GIOCATORI_URLS_FILE):
+        logger.info("FPEDIA: caricamento URL dalla cache.")
+        with open(config.GIOCATORI_URLS_FILE, "r") as f:
+            return [line.strip() for line in f if line.strip()]
+
+    logger.info("FPEDIA: scraping URL giocatori dalle pagine ruolo...")
+    urls: list[str] = []
+    for ruolo in tqdm(config.RUOLI, desc="Ruoli FPEDIA"):
+        page_url = config.FPEDIA_URL + ruolo.lower() + "/"
+        try:
+            resp = _request_with_retry("GET", page_url, headers=config.HEADERS)
+            soup = BeautifulSoup(resp.content, "html.parser")
+            for article in soup.find_all("article"):
+                link = article.find("a")
+                if link and link.get("href"):
+                    urls.append(link["href"])
+        except requests.RequestException as exc:
+            logger.error(f"FPEDIA: errore scraping ruolo '{ruolo}': {exc}")
+
+    if not urls:
+        logger.error("FPEDIA: nessun URL giocatore trovato. Struttura del sito cambiata?")
+        return []
+
+    with open(config.GIOCATORI_URLS_FILE, "w") as f:
+        f.write("\n".join(urls))
+    logger.info(f"FPEDIA: {len(urls)} URL salvati.")
+    return urls
+
+
+def _scrape_player(url: str) -> dict | None:
+    """Scrapea la pagina di un singolo giocatore FPEDIA."""
+    time.sleep(randint(1000, 5000) / 1000)  # rate limiting
+    try:
+        resp = _request_with_retry("GET", url.strip(), headers=config.HEADERS)
+        soup = BeautifulSoup(resp.content, "html.parser")
+    except requests.RequestException as exc:
+        logger.warning(f"FPEDIA: errore pagina {url}: {exc}")
+        return None
+
+    attr: dict = {}
+    try:
+        attr["Nome"] = soup.select_one("h1").get_text().strip()
+    except AttributeError:
+        logger.warning(f"FPEDIA: nome non trovato per {url}")
+        return None
+
+    # Punteggio /100
+    try:
+        sel = "div.col_one_fourth:nth-of-type(1) span.stickdan"
+        attr["Punteggio"] = soup.select_one(sel).text.strip().replace("/100", "")
+    except AttributeError:
+        attr["Punteggio"] = ""
+
+    # Fantamedie storiche
+    sel = "\tdiv.col_one_fourth:nth-of-type(n+2) div"
+    elements = soup.select(sel)
+    for el in elements:
+        try:
+            media = el.find("span").text.strip()
+            anno = el.find("strong").text.split(" ")[-1].strip()
+            attr[f"Fantamedia anno {anno}"] = media
+        except AttributeError:
+            pass
+
+    # Statistiche ultimo anno
+    try:
+        sel = "div.col_one_third:nth-of-type(2) div"
+        stats_el = soup.select_one(sel)
+        if stats_el:
+            keys = [e.text.strip().replace(":", "") for e in stats_el.find_all("strong")]
+            vals = [e.text.strip() for e in stats_el.find_all("span")]
+            attr.update(dict(zip(keys, vals)))
+    except Exception:
+        pass
+
+    # Previsioni
+    try:
+        sel = ".col_one_third.col_last div"
+        pred_el = soup.select_one(sel)
+        if pred_el:
+            keys = [e.text.strip().replace(":", "") for e in pred_el.find_all("strong")]
+            vals = [e.text.strip() for e in pred_el.find_all("span")]
+            attr.update(dict(zip(keys, vals)))
+    except Exception:
+        pass
+
+    # Ruolo
+    try:
+        attr["Ruolo"] = soup.select_one(".label12 span.label").get_text().strip()
+    except AttributeError:
+        attr["Ruolo"] = ""
+
+    # Skills
+    attr["Skills"] = [el.text for el in soup.select("span.stickdanpic")]
+
+    # Buon investimento / Resistenza infortuni
+    progress = soup.select("div.progress-percent")
+    try:
+        attr["Buon investimento"] = progress[2].text.replace("%", "")
+    except (IndexError, AttributeError):
+        attr["Buon investimento"] = ""
+    try:
+        attr["Resistenza infortuni"] = progress[3].text.replace("%", "")
+    except (IndexError, AttributeError):
+        attr["Resistenza infortuni"] = ""
+
+    # Consigliato / Infortunato
+    try:
+        inf_img = soup.select_one("img.inf_calc")
+        title = inf_img.get("title", "") if inf_img else ""
+        attr["Consigliato prossima giornata"] = "Consigliato per la giornata" in title
+        attr["Infortunato"] = "Infortunato" in title
+    except Exception:
+        attr["Consigliato prossima giornata"] = False
+        attr["Infortunato"] = False
+
+    # Nuovo acquisto
+    attr["Nuovo acquisto"] = soup.select_one("span.new_calc") is not None
+
+    # Squadra
+    try:
+        sel = (
+            "#content > div > div.section.nobg.nomargin > div > div > div:nth-child(2) "
+            "> div.col_three_fifth > div.promo.promo-border.promo-light.row "
+            "> div:nth-child(3) > div:nth-child(1) > div > img"
+        )
+        attr["Squadra"] = soup.select_one(sel).get("title").split(":")[1].strip()
+    except (AttributeError, IndexError):
+        attr["Squadra"] = ""
+
+    # Trend
+    try:
+        sel = "\tdiv.col_one_fourth:nth-of-type(n+2) div"
+        trend_class = soup.select(sel)[0].find("i").get("class")[1]
+        attr["Trend"] = "UP" if trend_class == "icon-arrow-up" else "DOWN"
+    except Exception:
+        attr["Trend"] = "STABLE"
+
+    # Presenze campionato corrente
+    try:
+        sel = "div.col_one_fourth:nth-of-type(2) span.rouge"
+        attr["Presenze campionato corrente"] = soup.select_one(sel).text
+    except AttributeError:
+        attr["Presenze campionato corrente"] = ""
+
+    return attr
+
+
+def fetch_fpedia_data(force: bool = False) -> pd.DataFrame | None:
+    """
+    Scrapea tutti i giocatori da FPEDIA.
+
+    Args:
+        force: se True, riscrape anche se il file è recente.
+
+    Returns:
+        DataFrame con i dati, o None se il download fallisce.
+    """
+    if not force and not _is_stale(config.GIOCATORI_CSV):
+        logger.info("FPEDIA: dati aggiornati, scraping saltato.")
+        return pd.read_csv(config.GIOCATORI_CSV)
+
+    urls = _get_player_urls(force=force)
+    if not urls:
+        return None
+
+    logger.info(f"FPEDIA: scraping {len(urls)} giocatori...")
+    players: list[dict] = []
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
+        future_map = {executor.submit(_scrape_player, url): url for url in urls}
+        for future in tqdm(concurrent.futures.as_completed(future_map), total=len(urls), desc="FPEDIA"):
+            url = future_map[future]
+            try:
+                result = future.result()
+                if result:
+                    players.append(result)
+            except Exception as exc:
+                logger.error(f"FPEDIA: errore per {url}: {exc}")
+
+    if not players:
+        logger.error("FPEDIA: nessun giocatore scaricato.")
+        return None
+
+    df = pd.DataFrame(players)
+
+    # Validazione
+    if len(df) < 100:
+        logger.warning(f"FPEDIA: solo {len(df)} giocatori (attesi ~500). Possibile problema.")
+
+    os.makedirs(os.path.dirname(config.GIOCATORI_CSV), exist_ok=True)
+    df.to_csv(config.GIOCATORI_CSV, index=False)
+    logger.info(f"FPEDIA: {len(df)} giocatori salvati in {config.GIOCATORI_CSV}")
+    return df
+
+
+# ---------------------------------------------------------------------------
+# Interfaccia pubblica
+# ---------------------------------------------------------------------------
+
+def fetch_all(force: bool = False) -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
+    """Scarica dati da entrambe le fonti. Ritorna (df_fstats, df_fpedia)."""
+    df_fstats = fetch_fstats_data(force=force)
+    df_fpedia = fetch_fpedia_data(force=force)
+    return df_fstats, df_fpedia
+

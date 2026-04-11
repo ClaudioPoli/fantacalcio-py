@@ -1,1 +1,1 @@
-"""Analyzers package for fantacalcio analysis."""
+"""Motori di analisi e pricing."""
