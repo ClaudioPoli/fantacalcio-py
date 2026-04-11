@@ -1,1 +1,1 @@
-"""Data handling package for fantacalcio analysis."""
+"""Download, pulizia e integrazione dati da FSTATS e FPEDIA."""

@@ -1,10 +1,13 @@
 [tool.poetry]
-name = "fantacalcio-py-main"
-version = "0.1.0"
-description = ""
+name = "fantacalcio-py"
+version = "2.0.0"
+description = "Analisi giocatori e calcolo prezzi d'asta per il fantacalcio"
 authors = ["piopy"]
 readme = "README.md"
 package-mode = false
+
+[tool.poetry.scripts]
+fantacalcio = "main:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"

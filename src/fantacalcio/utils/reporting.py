@@ -1,230 +1,94 @@
 """
-Report tecnico dettagliato sui nuovi calcoli del pricing che include
-tutti gli indici tecnici per una valutazione più precisa dei giocatori.
+Generazione report per l'analisi fantacalcio.
+
+Produce un riepilogo testuale e un Excel formattato
+a partire dal DataFrame finale (output di pricing_engine).
 """
 
 import pandas as pd
-import numpy as np
-from typing import Dict, List, Optional
-import logging
-
-logger = logging.getLogger(__name__)
+from loguru import logger
 
 
-class ReportGenerator:
-    """Gestisce la generazione di report e statistiche."""
-    
-    def __init__(self):
-        pass
-    
-    def generate_summary_report(self, df: pd.DataFrame, output_file: Optional[str] = None) -> str:
-        """
-        Genera un report riassuntivo dei dati.
-        
-        Args:
-            df: DataFrame da analizzare
-            output_file: File di output opzionale
-            
-        Returns:
-            Stringa con il report
-        """
-        if df.empty:
-            return "Dataset vuoto - nessun report da generare"
-        
-        report_lines = []
-        report_lines.append("📊 REPORT RIASSUNTIVO FANTACALCIO")
-        report_lines.append("=" * 50)
-        
-        # Statistiche base
-        total_players = len(df)
-        report_lines.append(f"👥 Giocatori totali: {total_players}")
-        
-        # Distribuzione per ruolo
-        if 'Ruolo' in df.columns:
-            report_lines.append("\n📈 Distribuzione per ruolo:")
-            role_counts = df['Ruolo'].value_counts()
-            for role, count in role_counts.items():
-                percentage = (count / total_players) * 100
-                report_lines.append(f"   • {role}: {count} ({percentage:.1f}%)")
-        
-        # Prezzi (se disponibili)
-        price_cols = [col for col in df.columns if 'Prezzo' in col and 'Consigliato' in col]
-        if price_cols:
-            price_col = price_cols[0]
-            avg_price = df[price_col].mean()
-            min_price = df[price_col].min()
-            max_price = df[price_col].max()
-            
-            report_lines.append(f"\n💰 Analisi prezzi:")
-            report_lines.append(f"   • Prezzo medio: {avg_price:.1f}€")
-            report_lines.append(f"   • Prezzo minimo: {min_price:.1f}€")
-            report_lines.append(f"   • Prezzo massimo: {max_price:.1f}€")
-        
-        # Performance (se disponibile)
-        if 'Performance_Score' in df.columns:
-            avg_perf = df['Performance_Score'].mean()
-            report_lines.append(f"\n🏆 Performance media: {avg_perf:.2f}/20")
-        
-        report_text = "\n".join(report_lines)
-        
-        if output_file:
-            with open(output_file, 'w', encoding='utf-8') as f:
-                f.write(report_text)
-            logger.info(f"Report salvato in: {output_file}")
-        
-        return report_text
+# ---------------------------------------------------------------------------
+# Report testuale
+# ---------------------------------------------------------------------------
+
+def print_summary(df: pd.DataFrame) -> None:
+    """Stampa un riepilogo sintetico dei risultati."""
+    logger.info("")
+    logger.info("=" * 60)
+    logger.info("RIEPILOGO")
+    logger.info("=" * 60)
+
+    logger.info(f"Giocatori totali: {len(df)}")
+    if "_source" in df.columns:
+        for src, count in df["_source"].value_counts().items():
+            logger.info(f"  {src}: {count}")
+
+    if "prezzo_consigliato" not in df.columns:
+        return
+
+    logger.info("")
+    for role in ["P", "D", "C", "A"]:
+        role_df = df[df["Ruolo"] == role]
+        if role_df.empty:
+            continue
+        top3 = role_df.nlargest(3, "prezzo_consigliato")
+        logger.info(f"Top 3 {role}:")
+        for _, p in top3.iterrows():
+            logger.info(
+                f"  {p['Nome']} ({p.get('Squadra', '?')}) — "
+                f"€{p['prezzo_consigliato']:.0f} [{p['categoria']}] "
+                f"score={p['score_composite']:.1f}"
+            )
+        logger.info("")
 
 
-def generate_technical_report():
-    """Genera un report dettagliato sui miglioramenti apportati al sistema di pricing."""
-    
-    print("=" * 80)
-    print("🔬 REPORT TECNICO: SISTEMA DI PRICING CON INDICI TECNICI")
-    print("=" * 80)
-    
-    # Carica i dati aggiornati
-    df = pd.read_excel('data/output/perfect_merged_analysis.xlsx')
-    
-    print(f"\n📊 STATISTICHE GENERALI")
-    print(f"{'='*50}")
-    print(f"• Giocatori totali analizzati: {len(df)}")
-    print(f"• Con prezzo SOS Fanta: {df['Prezzo'].notna().sum()} ({df['Prezzo'].notna().sum()/len(df)*100:.1f}%)")
-    print(f"• Performance Score media: {df['Performance_Score'].mean():.2f}")
-    print(f"• Top Performers (score > 10): {(df['Performance_Score'] > 10).sum()}")
-    
-    print(f"\n🎯 INDICI TECNICI UTILIZZATI NEL CALCOLO")
-    print(f"{'='*50}")
-    
-    technical_indices = [
-        "FSTATS_Shot_on_goal_Index", "FSTATS_Shot_on_target_Index",
-        "FSTATS_Offensive_actions_Index", "FSTATS_Attacking_area_Index", 
-        "FSTATS_Dribbles_successful_Index", "FSTATS_Deep_runs_Index",
-        "FSTATS_Pass_leading_chances_Index", "FSTATS_Offensive_verticalization_Index",
-        "FSTATS_Cross_accuracy_Index", "FSTATS_Pass_forward_accuracy_Index",
-        "FSTATS_Defense_solidity_Index", "FSTATS_Air_challenge_offensive_Index",
-        "FSTATS_Set_piece_attack_Index"
-    ]
-    
-    # Pesi per ruolo
-    role_weights = {
-        'ATT': {
-            'Shot_on_target': 1.8, 'Shot_on_goal': 1.5, 'Offensive_actions': 1.2,
-            'Attacking_area': 1.0, 'Dribbles': 0.8, 'Deep_runs': 1.0
-        },
-        'CEN': {
-            'Pass_leading_chances': 1.5, 'Offensive_verticalization': 1.2,
-            'Cross_accuracy': 1.0, 'Pass_forward': 1.1, 'Offensive_actions': 1.0
-        },
-        'DIF': {
-            'Defense_solidity': 1.5, 'Air_challenge': 1.2, 'Pass_forward': 0.8,
-            'Set_piece_attack': 1.3, 'Cross_accuracy': 0.7
-        },
-        'POR': {
-            'Defense_solidity': 2.0, 'Pass_accuracy': 0.5
-        }
-    }
-    
-    for role, weights in role_weights.items():
-        print(f"\n🏷️  {role}:")
-        for metric, weight in weights.items():
-            print(f"   • {metric}: peso {weight}")
-    
-    print(f"\n🏆 TOP 10 GIOCATORI PER PERFORMANCE TECNICA")
-    print(f"{'='*80}")
-    
-    top_players = df.nlargest(10, 'Performance_Score')
-    for i, (_, player) in enumerate(top_players.iterrows(), 1):
-        price_sos = f"{player['Prezzo']:.1f}€" if not pd.isna(player['Prezzo']) else "N/A"
-        price_calc = f"{player['Prezzo_Consigliato']:.1f}€"
-        
-        print(f"{i:2d}. {player['Nome']:<25} ({player['Ruolo']}) "
-              f"Perf: {player['Performance_Score']:5.1f} | "
-              f"SOS: {price_sos:>7} | Calc: {price_calc:>7}")
-    
-    print(f"\n💎 MIGLIORI OPPORTUNITÀ TECNICHE")
-    print(f"{'='*80}")
-    print("Giocatori con alta performance tecnica ma prezzo contenuto:")
-    
-    # Trova giocatori con ottime performance ma prezzo basso
-    opportunities = df[
-        (df['Prezzo'].notna()) & 
-        (df['Performance_Score'] > 12) & 
-        (df['Prezzo'] <= 30)
-    ].sort_values('Performance_Score', ascending=False)
-    
-    for i, (_, player) in enumerate(opportunities.head(10).iterrows(), 1):
-        # Trova l'indice tecnico più alto per questo giocatore
-        player_indices = {}
-        for idx_col in technical_indices:
-            if idx_col in df.columns:
-                val = player.get(idx_col, 0)
-                if val > 0:  # Ignora -1 e valori nulli
-                    player_indices[idx_col.replace('FSTATS_', '').replace('_Index', '')] = val
-        
-        best_skill = max(player_indices, key=player_indices.get) if player_indices else "N/A"
-        best_value = player_indices.get(best_skill, 0)
-        
-        print(f"{i:2d}. {player['Nome']:<25} ({player['Ruolo']}) "
-              f"{player['Prezzo']:4.0f}€ | Perf: {player['Performance_Score']:5.1f} | "
-              f"Best: {best_skill} ({best_value:.1f})")
-    
-    print(f"\n📈 ANALISI PER RUOLO")
-    print(f"{'='*80}")
-    
-    for role in ['ATT', 'CEN', 'DIF', 'POR']:
-        role_players = df[df['Ruolo'] == role]
-        if len(role_players) > 0:
-            avg_perf = role_players['Performance_Score'].mean()
-            top_player = role_players.nlargest(1, 'Performance_Score').iloc[0]
-            
-            print(f"\n🎯 {role} ({len(role_players)} giocatori):")
-            print(f"   • Performance media: {avg_perf:.2f}")
-            print(f"   • Top performer: {top_player['Nome']} ({top_player['Performance_Score']:.1f})")
-            print(f"   • Prezzo medio SOS: {role_players['Prezzo'].mean():.1f}€")
-    
-    print(f"\n🔍 ESEMPI DI VALUTAZIONE TECNICA")
-    print(f"{'='*80}")
-    
-    # Esempi specifici per ogni ruolo
-    examples = {
-        'ATT': 'LOOKMAN ADEMOLA',
-        'CEN': 'CALHANOGLU HAKAN', 
-        'DIF': 'DUMFRIES DENZEL',
-        'POR': 'MERET ALEX'
-    }
-    
-    for role, player_name in examples.items():
-        player_data = df[df['Nome'] == player_name]
-        if len(player_data) > 0:
-            player = player_data.iloc[0]
-            print(f"\n🔸 {player_name} ({role}):")
-            print(f"   Performance Score: {player['Performance_Score']:.1f}")
-            print(f"   Prezzo SOS: {player['Prezzo']:.1f}€")
-            print(f"   Prezzo Calcolato: {player['Prezzo_Consigliato']:.1f}€")
-            
-            # Mostra i 3 indici tecnici più alti
-            player_indices = []
-            for idx_col in technical_indices:
-                if idx_col in df.columns:
-                    val = player.get(idx_col, 0)
-                    if val > 0:
-                        player_indices.append((idx_col.replace('FSTATS_', '').replace('_Index', ''), val))
-            
-            player_indices.sort(key=lambda x: x[1], reverse=True)
-            print("   Top 3 Skills:")
-            for skill, value in player_indices[:3]:
-                print(f"     • {skill}: {value:.1f}")
-    
-    print(f"\n✅ CONCLUSIONI")
-    print(f"{'='*80}")
-    print("• Il nuovo sistema integra 19 indici tecnici specializzati")
-    print("• Ogni ruolo ha pesi ottimizzati per le skill più rilevanti")  
-    print("• Performance score più accurati (+0.5 punti di media)")
-    print("• Migliore identificazione di giocatori di qualità (+48 Top Players)")
-    print("• Prezzi più realistici basati su abilità tecniche specifiche")
-    
-    print("\n" + "="*80)
+# ---------------------------------------------------------------------------
+# Salvataggio Excel
+# ---------------------------------------------------------------------------
+
+_EXPORT_COLUMNS = [
+    "Nome", "Ruolo", "Squadra", "_source",
+    "prezzo_consigliato", "categoria",
+    "score_composite", "score_offensive", "score_defensive",
+    "score_reliability", "score_technical", "score_historical",
+]
 
 
-if __name__ == "__main__":
-    generate_technical_report()
+def save_excel(df: pd.DataFrame, path: str) -> None:
+    """
+    Salva il DataFrame finale in Excel ordinato per ruolo e prezzo.
+
+    Args:
+        df: DataFrame con prezzi calcolati.
+        path: percorso file di output.
+    """
+    role_order = {"P": 0, "D": 1, "C": 2, "A": 3}
+    out = df.copy()
+    out["_role_order"] = out["Ruolo"].map(role_order).fillna(4)
+    out = out.sort_values(["_role_order", "prezzo_consigliato"], ascending=[True, False])
+    out = out.drop(columns=["_role_order"])
+
+    out.to_excel(path, index=False)
+    logger.info(f"File Excel salvato: {path}")
+
+
+def save_summary_excel(df: pd.DataFrame, path: str) -> None:
+    """
+    Salva un Excel sintetico con solo le colonne principali.
+
+    Args:
+        df: DataFrame con prezzi calcolati.
+        path: percorso file di output.
+    """
+    cols = [c for c in _EXPORT_COLUMNS if c in df.columns]
+    out = df[cols].copy()
+
+    role_order = {"P": 0, "D": 1, "C": 2, "A": 3}
+    out["_role_order"] = out["Ruolo"].map(role_order).fillna(4)
+    out = out.sort_values(["_role_order", "prezzo_consigliato"], ascending=[True, False])
+    out = out.drop(columns=["_role_order"])
+
+    out.to_excel(path, index=False)
+    logger.info(f"Riepilogo Excel salvato: {path}")
