@@ -58,7 +58,6 @@ fantacalcio-py/
 │   │   └── final_analysis.xlsx   # 🎯 FILE FINALE (89 colonne FSTATS)
 │   └── 📂 raw/                   # Dati grezzi FSTATS scaricati
 ├── main.py                       # 🚀 Script principale (solo FSTATS)
-├── QUICK_START.md                # 📖 Guida rapida
 └── README.md                     # Documentazione
 ```
 
@@ -107,9 +106,6 @@ python main.py --data-dir /percorso/custom
 # Help completo
 python main.py --help
 ```
-
-### 📖 **Guida Completa**
-Vedi [QUICK_START.md](QUICK_START.md) per la guida dettagliata.
 
 ## 📊 Output e Risultati
 
